@@ -1,0 +1,1 @@
+Plattform für erhöhte Effizienz und Produktivität.
