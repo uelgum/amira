@@ -1,0 +1,11 @@
+{
+  "name": "amira-backend",
+  "version": "1.0.0-alpha",
+  "description": "Backend für Amira.",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Wlad G. Gumenyuk",
+  "license": "GPL-3.0"
+}
