@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "baseUrl": "./src",
+        "paths": {
+            "@middleware/*": [ "./middleware/*" ],
+            "@models/*": [ "./models/*" ],
+            "@services/*": [ "./services/*" ],
+            "@structs/*": [ "./structs/*" ],
+            "@utils/*": [ "./utils/*" ],
+            "@config": [ "./config" ],
+            "@routes": [ "./routes" ]
+        },
+        "esModuleInterop": true,
+        "removeComments": true,
+        "strict": true
+    },
+    "exclude": [
+        "./node_modules"
+    ]
+}
