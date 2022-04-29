@@ -1,0 +1,27 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/typescript"
+    ],
+    "env": {
+        "production": {
+            "comments": false,
+            "presets": [
+                [
+                    "minify", {
+                        "builtIns": false
+                    }
+                ]
+            ]
+        }
+    },
+    "plugins": [
+        [ "@babel/transform-runtime" ],
+        [
+            "module-resolver", {
+                "cwd": "./src",
+                "alias": {}
+            }
+        ]
+    ]
+}
