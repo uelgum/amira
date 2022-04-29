@@ -1,27 +1,36 @@
 {
-    "presets": [
-        "@babel/preset-env",
-        "@babel/typescript"
-    ],
-    "env": {
-        "production": {
-            "comments": false,
-            "presets": [
-                [
-                    "minify", {
-                        "builtIns": false
-                    }
-                ]
-            ]
-        }
-    },
-    "plugins": [
-        [ "@babel/transform-runtime" ],
+  "presets": [
+    "@babel/preset-env",
+    "@babel/typescript"
+  ],
+  "env": {
+    "production": {
+      "comments": false,
+      "presets": [
         [
-            "module-resolver", {
-                "cwd": "./src",
-                "alias": {}
-            }
+          "minify", {
+            "builtIns": false
+          }
         ]
+      ]
+    }
+  },
+  "plugins": [
+    [ "@babel/transform-runtime" ],
+    [
+      "module-resolver", {
+        "cwd": "./src",
+        "alias": {
+          "@controller": "./controller",
+          "@middleware": "./middleware",
+          "@models": "./models",
+          "@routes": "./routes",
+          "@schemas": "./schemas",
+          "@services": "./services",
+          "@structs": "./structs",
+          "@utils": "./utils"
+        }
+      }
     ]
+  ]
 }

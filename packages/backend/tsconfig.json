@@ -1,20 +1,30 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "baseUrl": "./src",
-        "paths": {},
-        "typeRoots": [
-            "./node_modules/@types",
-            "./src/types"
-        ],
-        "esModuleInterop": true,
-        "removeComments": true,
-        "strict": true
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "@controller/*": [ "./controller/*" ],
+      "@middleware/*": [ "./middleware/*" ],
+      "@models/*": [ "./models/*" ],
+      "@routes/*": [ "./routes/*" ],
+      "@schemas/*": [ "./schemas/*" ],
+      "@services/*": [ "./services/*" ],
+      "@structs/*": [ "./structs/*" ],
+      "@utils/*": [ "./utils/*" ],
+      "@config": [ "./config" ]
     },
-    "exclude": [
-        "./node_modules",
-        "./src/types"
-    ]
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    "esModuleInterop": true,
+    "removeComments": true,
+    "strict": true
+  },
+  "exclude": [
+    "./node_modules",
+    "./src/types"
+  ]
 }
