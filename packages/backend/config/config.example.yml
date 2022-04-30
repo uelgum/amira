@@ -1,0 +1,12 @@
+# Port
+port: 3000
+
+# JWT-Schlüssel
+jwtKey: ""
+
+# MongoDB
+mongo:
+  host: "127.0.0.1"
+  username: ""
+  password: ""
+  database: ""
