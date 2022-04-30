@@ -28,7 +28,8 @@
           "@schemas": "./schemas",
           "@services": "./services",
           "@structs": "./structs",
-          "@utils": "./utils"
+          "@utils": "./utils",
+          "@config": "./config"
         }
       }
     ]
