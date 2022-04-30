@@ -6,7 +6,13 @@ jwtKey: ""
 
 # MongoDB
 mongo:
-  host: "127.0.0.1"
+  host: ""
   username: ""
   password: ""
   database: ""
+
+# E-Mail
+email:
+  host: ""
+  username: ""
+  password: ""

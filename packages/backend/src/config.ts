@@ -14,6 +14,11 @@ type Config = {
         password: string;
         database: string;
     };
+    email: {
+        host: string;
+        username: string;
+        password: string;
+    };
 };
 // #endregion
 
