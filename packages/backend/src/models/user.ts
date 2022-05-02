@@ -9,6 +9,8 @@ type User = {
     emailUnverified?: boolean;
     admin?: boolean;
     password: string;
+    key: string;
+    recoveryKey: string;
     contacts: string[];
     createdAt: number;
 };
@@ -25,6 +27,8 @@ const userSchema = new Schema<User>({
     emailUnverified: { type: Boolean },
     admin: { type: Boolean },
     password: { type: String, required: true },
+    key: { type: String, required: true },
+    recoveryKey: { type: String, required: true },
     contacts: [ { type: String, required: true } ],
     createdAt: { type: Number }
 });
