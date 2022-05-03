@@ -5,6 +5,7 @@ import { Server as SocketIO } from "socket.io";
 import mongoose from "mongoose";
 import logger from "@controller/logger";
 import routes from "@routes/api";
+import errorHandler from "@routes/error";
 import getVersion from "@utils/getVersion";
 import config, { validateConfig } from "@config";
 
@@ -32,7 +33,9 @@ class Server {
     private init() {
         this.app.use(cors());
         this.app.use(express.json());
+        
         this.app.use("/api", routes);
+        this.app.use(errorHandler);
 
         // TODO SocketIO
     }
