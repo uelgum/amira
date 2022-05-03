@@ -13,7 +13,7 @@ const isLoggedOut = async (req: Request, res: Response, next: Next) => {
     const header = req.headers.authorization;
 
     if(header) {
-        sendError(res, new AmiraError(403, "LOGOUT_REQUIRED"));
+        sendError(res, new AmiraError(401, "AUTHENTICATION_ERROR", "LOGOUT_REQUIRED"));
         return;
     }
 

@@ -15,21 +15,21 @@ const isLoggedIn = async (req: Request, res: Response, next: Next) => {
     const header = req.headers.authorization;
 
     if(!header) {
-        sendError(res, new AmiraError(401, "LOGIN_REQUIRED"));
+        sendError(res, new AmiraError(401, "AUTHENTICATION_ERROR", "LOGIN_REQUIRED"));
         return;
     }
 
     const [ schema, token ] = header.split(" ");
 
     if(!token || schema !== "Bearer") {
-        sendError(res, new AmiraError(400, "INVALID_TOKEN"));
+        sendError(res, new AmiraError(401, "AUTHENTICATION_ERROR", "INVALID_TOKEN"));
         return;
     }
 
     try {
         res.locals = await jwt.verify(token, config.jwtKey);
     } catch(error) {
-        sendError(res, new AmiraError(400, "INVALID_TOKEN"));
+        sendError(res, new AmiraError(401, "AUTHENTICATION_ERROR", "INVALID_TOKEN"));
         return;
     }
 
