@@ -9,16 +9,40 @@ import errorHandler from "@routes/error";
 import getVersion from "@utils/getVersion";
 import config, { validateConfig } from "@config";
 
+/**
+    Server für Amira.
+*/
 class Server {
     // #region Attribute
+    /**
+        Express-App.
+    */
     private app: express.Application;
+    
+    /**
+        HTTP-Server.
+    */
     private server: http.Server;
+
+    /**
+        Socket-Server.
+    */
     private io: SocketIO;
 
+    /**
+        Port des Servers.
+    */
     public readonly port: number;
+
+    /**
+        Version des Servers.
+    */
     public readonly version: string;
     // #endregion
 
+    /**
+        Konstruktor von `Server`.
+    */
     constructor() {
         this.app = express();
         this.server = http.createServer(this.app);
@@ -30,6 +54,9 @@ class Server {
         this.init();
     }
 
+    /**
+        Initialisiert den Server.
+    */
     private init() {
         this.app.use(cors());
         this.app.use(express.json());
@@ -40,6 +67,9 @@ class Server {
         // TODO SocketIO
     }
 
+    /**
+        Stellt eine Verbindung zu MongoDB her.
+    */
     private connectMongo() {
         const { host, username, password, database } = config.mongo;
         const uri = `mongodb://${host}`;
@@ -54,6 +84,9 @@ class Server {
         logger.info("MongoDB verbunden");
     }
 
+    /**
+        Startet den Server.
+    */
     public async start() {
         logger.info(`Starte Amira BE (v${this.version})`);
 
