@@ -49,6 +49,27 @@ const configSchema = Joi.object({
             .messages({
                 "string.empty": "'mongo.database' muss ein String sein"
             }),
+    }),
+
+    // E-Mail
+    email: Joi.object({
+        // Host
+        host: Joi.string()
+            .messages({
+                "string.empty": "'email.host' muss ein String sein"
+            }),
+
+        // Nutzername
+        username: Joi.string()
+            .messages({
+                "string.empty": "'email.username' muss ein String sein"
+            }),
+
+        // Passwort
+        password: Joi.string()
+            .messages({
+                "string.empty": "'email.password' muss ein String sein"
+            }),
     })
 });
 
