@@ -11,6 +11,7 @@
   "author": "Wlad G. Gumenyuk",
   "license": "GPL-3.0",
   "dependencies": {
+    "@types/crypto-js": "^4.1.1",
     "ape-logger": "https://wlad.gumenyuk.de/packages/ape-logger.tar.gz",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
