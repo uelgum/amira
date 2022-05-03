@@ -18,13 +18,15 @@ const sendData = (res: Response, data: Record<string, any>) => {
 const sendError = (res: Response, error: any) => {
     const status = (error instanceof AmiraError) ? error.status : 500;
     const code = (error instanceof AmiraError) ? error.code : "INTERNAL_ERROR";
+    const subcode = (error instanceof AmiraError) ? error.subcode : null;
     
     res.status(status);
     res.json({
         status: "err",
         err: {
             status,
-            code
+            code,
+            ...(!!subcode && { subcode })
         }
     });
 };
