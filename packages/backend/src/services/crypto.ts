@@ -21,14 +21,14 @@ const comparePasswords = async (password: string, hashed: string) => {
 /**
     Verschlüsselt einen String mit AES256.
 */
-const encrypt = (data, key) => {
+const encrypt = (data: string, key: string) => {
     return AES.encrypt(data, key).toString();
 };
 
 /**
     Entschlüsselt einen String mit AES256.
 */
-const decrypt = (encrypted, key) => {
+const decrypt = (encrypted: string, key: string) => {
     return AES.decrypt(encrypted, key).toString(enc.Utf8);
 };
 
