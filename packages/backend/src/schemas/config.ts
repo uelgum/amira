@@ -69,7 +69,7 @@ const configSchema = Joi.object({
         password: Joi.string()
             .messages({
                 "string.empty": "'email.password' muss ein String sein"
-            }),
+            })
     })
 });
 
