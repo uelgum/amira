@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 // #region Types
 type EmailVerification = {
     id: string;
-    hash: string;
+    code: string;
     createdAt: number;
 };
 // #endregion
@@ -13,7 +13,7 @@ type EmailVerification = {
 */
 const emailVerificationSchema = new Schema<EmailVerification>({
     id: { type: String, required: true },
-    hash: { type: String, required: true },
+    code: { type: String, required: true },
     createdAt: { type: Number, required: true }
 });
 
