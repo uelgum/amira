@@ -4,7 +4,7 @@ import { AES, SHA256, MD5, enc } from "crypto-js";
 import randomString, { GenerateOptions } from "randomstring";
 
 /**
-    Hashed das Passwort des Nutzers.
+    Hashed das Passwort des Nutzers mit `bcrypt`.
 */
 const hashPassword = async (password: string) => {
     const salt = await bcrypt.genSalt(10);
@@ -12,7 +12,7 @@ const hashPassword = async (password: string) => {
 };
 
 /**
-    Überprüft das angegebene Passwort mit dem Hash.
+    Überprüft das angegebene Passwort mit `bcrypt`.
 */
 const comparePasswords = async (password: string, hashed: string) => {
     return bcrypt.compare(password, hashed);
