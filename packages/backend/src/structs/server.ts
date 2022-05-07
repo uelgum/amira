@@ -7,6 +7,7 @@ import logger from "@controller/logger";
 import routes from "@routes/api";
 import errorHandler from "@routes/error";
 import getVersion from "@utils/getVersion";
+import isLoggedIn from "@middleware/socket/isLoggedIn";
 import config, { validateConfig } from "@config";
 
 /**
@@ -65,6 +66,7 @@ class Server {
         this.app.use(errorHandler);
 
         // TODO SocketIO
+        this.io.use(isLoggedIn);
     }
 
     /**
