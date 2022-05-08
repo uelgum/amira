@@ -4,6 +4,9 @@ import root from "@utils/root";
 
 const LOGS_PATH = path.join(root, "logs");
 
+/**
+    Logger für Amira.
+*/
 const logger = new Logger({
     level: "INFO",
     path: LOGS_PATH
