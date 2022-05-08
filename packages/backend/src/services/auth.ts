@@ -52,12 +52,15 @@ const login = async (data: Record<string, any>) => {
     const payload = {
         name: getFirstName(user.firstName),
         key: passwordKey,
-        ...(user.admin && { admin: true }),
+        ...(user.admin && { admin: true })
     };
 
     const token = await generateJwt(payload);
 
-    return `Bearer ${token}`;
+    return {
+        token: `Bearer ${token}`,
+        emailUnverified: user.emailUnverified
+    };
 };
 
 /**
