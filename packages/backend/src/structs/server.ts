@@ -8,6 +8,7 @@ import routes from "@routes/api";
 import errorHandler from "@routes/error";
 import getVersion from "@utils/getVersion";
 import isLoggedIn from "@middleware/socket/isLoggedIn";
+import handleSocketConnection from "@events/connection";
 import config, { validateConfig } from "@config";
 
 /**
@@ -65,8 +66,8 @@ class Server {
         this.app.use("/api", routes);
         this.app.use(errorHandler);
 
-        // TODO SocketIO
         this.io.use(isLoggedIn);
+        this.io.on("connection", handleSocketConnection);
     }
 
     /**
