@@ -5,6 +5,7 @@
     "baseUrl": "./src",
     "paths": {
       "@controller/*": [ "./controller/*" ],
+      "@events/*": [ "./events/*" ],
       "@middleware/*": [ "./middleware/*" ],
       "@models/*": [ "./models/*" ],
       "@routes/*": [ "./routes/*" ],
