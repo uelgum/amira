@@ -1,7 +1,7 @@
 import SocketManager from "@structs/socketManager";
 
 /**
-    Socket-Mananger.
+    Socket-Mananger für Amira.
 */
 const sockets = new SocketManager();
 
