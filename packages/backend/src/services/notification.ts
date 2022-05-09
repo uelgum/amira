@@ -3,7 +3,8 @@ import User from "@models/user";
 import getFirstName from "@utils/getFirstName";
 
 /**
-    Schickt ein Presence-Update an alle verbundenen Kontakte
+    Schickt ein Presence-Update an alle verbundenen Kontakte.
+    Echtzeit-Benachrichtung.
 */
 const presenceUpdate = async (id: string, status: string) => {
     const user = await User.findOne({ id });
