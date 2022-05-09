@@ -1,4 +1,5 @@
 import sockets from "@controller/sockets";
+import Contact from "@models/contact";
 import User from "@models/user";
 import getFirstName from "@utils/getFirstName";
 
@@ -9,19 +10,29 @@ import getFirstName from "@utils/getFirstName";
 const presenceUpdate = async (id: string, status: string) => {
     const user = await User.findOne({ id });
 
-    if(user.contacts.length === 0) return;
+    const contacts = await Contact.find({
+        $or: [
+            { contactId1: id },
+            { contactId2: id }
+        ]
+    });
 
-    for(const contactId of user.contacts) {
+    for(const contact of contacts) {
+        if(!contact.confirmed) continue;
+
+        // ID des Kontaktes finden
+        const contactId = (user.id === contact.contactId1) ?
+            contact.contactId2 :
+            contact.contactId1;
+
         if(!sockets.has(contactId)) continue;
 
-        const contact = sockets.get(contactId);
+        const contactSocket = sockets.get(contactId);
 
-        contact.emit("presenceUpdate", {
+        contactSocket.emit("presenceUpdate", {
+            id: user.id,
             status,
-            contact: {
-                id: user.id,
-                name: getFirstName(user.firstName)
-            }
+            name: getFirstName(user.firstName)
         });
     }
 };
