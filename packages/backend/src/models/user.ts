@@ -11,7 +11,6 @@ type User = {
     password: string;
     key: string;
     recoveryKey: string;
-    contacts: string[];
     createdAt: number;
 };
 // #endregion
@@ -29,7 +28,6 @@ const userSchema = new Schema<User>({
     password: { type: String, required: true },
     key: { type: String, required: true },
     recoveryKey: { type: String, required: true },
-    contacts: [ { type: String, required: true } ],
     createdAt: { type: Number }
 });
 
