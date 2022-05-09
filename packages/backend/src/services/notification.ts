@@ -8,6 +8,8 @@ import getFirstName from "@utils/getFirstName";
 const presenceUpdate = async (id: string, status: string) => {
     const user = await User.findOne({ id });
 
+    if(user.contacts.length === 0) return;
+
     for(const contactId of user.contacts) {
         if(!sockets.has(contactId)) continue;
 
