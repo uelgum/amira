@@ -3,8 +3,9 @@ import { Schema, model } from "mongoose";
 // #region Types
 type Notification = {
     id: string;
+    type: string;
     recipientId: string;
-    content: string;
+    data: Record<string, any>;
     createdAt: number;
 };
 // #endregion
@@ -14,8 +15,9 @@ type Notification = {
 */
 const notificationSchema = new Schema<Notification>({
     id: { type: String, required: true },
+    type: { type: String, required: true },
     recipientId: { type: String, required: true },
-    content: { type: String, required: true },
+    data: { type: Map, required: true },
     createdAt: { type: Number, required: true }
 });
 
