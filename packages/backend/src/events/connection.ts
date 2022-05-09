@@ -1,6 +1,8 @@
 import sockets from "@controller/sockets";
 import type { Socket } from "socket.io";
-import type User from "@models/user";
+
+// Services
+import { presenceUpdate } from "@services/notification";
 
 // Events
 import onDisconnect from "@events/disconnect";
@@ -15,6 +17,8 @@ const onConnection = async (socket: Socket) => {
     socket.on("disconnect", onDisconnect.bind(null, socket));
 
     sockets.add(socket);
+
+    presenceUpdate(id, "online");
 };
 
 export default onConnection;

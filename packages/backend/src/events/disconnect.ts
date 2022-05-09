@@ -1,15 +1,19 @@
 import sockets from "@controller/sockets";
 import type { Socket } from "socket.io";
-import type User from "@models/user";
+
+// Services
+import { presenceUpdate } from "@services/notification";
 
 /**
     Handler für das `disconnect`-Event.
     Wird ausgeführt, sobald ein Socket die Verbindung trennt.
 */
 const onDisconnect = async (socket: Socket) => {
-    sockets.remove(socket.data.id);
+    const id = socket.data.id;
+    
+    sockets.remove(id);
 
-    // TODO Presence Update
+    presenceUpdate(id, "offline");
 };
 
 export default onDisconnect;
