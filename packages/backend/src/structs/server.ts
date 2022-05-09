@@ -48,7 +48,12 @@ class Server {
     constructor() {
         this.app = express();
         this.server = http.createServer(this.app);
-        this.io = new SocketIO(this.server);
+
+        this.io = new SocketIO(this.server, {
+            cors: {
+                origin: "*"
+            }
+        });
 
         this.port = config.port;
         this.version = getVersion();
