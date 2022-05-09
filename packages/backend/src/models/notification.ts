@@ -3,7 +3,7 @@ import { Schema, model } from "mongoose";
 // #region Types
 type Notification = {
     id: string;
-    userId: string;
+    recipientId: string;
     content: string;
     createdAt: number;
 };
@@ -14,7 +14,7 @@ type Notification = {
 */
 const notificationSchema = new Schema<Notification>({
     id: { type: String, required: true },
-    userId: { type: String, required: true },
+    recipientId: { type: String, required: true },
     content: { type: String, required: true },
     createdAt: { type: Number, required: true }
 });
