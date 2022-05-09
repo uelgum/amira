@@ -10,7 +10,7 @@ type Next = (...args: any[]) => void;
     Überprüft, ob der Nutzer angemeldet ist.
 */
 const isLoggedIn = async (socket: Socket, next: Next) => {
-    const auth = socket.handshake.auth;
+    const auth = socket.handshake.auth.token;
 
     if(!auth) {
         next(new Error("AUTH_ERROR"));
