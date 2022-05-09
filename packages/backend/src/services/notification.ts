@@ -4,6 +4,18 @@ import User from "@models/user";
 import getFirstName from "@utils/getFirstName";
 
 /**
+    Sendet einen Befehl zum Aktualisieren der Banachrichtigungen an den Nutzer.
+    Die App aktualisiert anschließend die Benachrichtigungen automatisch.
+*/
+const sendNotificationUpdateCommand = (id: string) => {
+    if(!sockets.has(id)) return;
+
+    const socket = sockets.get(id);
+
+    socket.emit("updateNotifications");
+};
+
+/**
     Schickt ein Presence-Update an alle verbundenen Kontakte.
     Echtzeit-Benachrichtung.
 */
@@ -38,5 +50,6 @@ const presenceUpdate = async (id: string, status: string) => {
 };
 
 export {
+    sendNotificationUpdateCommand,
     presenceUpdate
 };
