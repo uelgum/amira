@@ -50,6 +50,7 @@ const login = async (data: Record<string, any>) => {
     const passwordKey = generatePasswordKey(password, user.createdAt);
 
     const payload = {
+        id: user.id,
         name: getFirstName(user.firstName),
         key: passwordKey,
         ...(user.admin && { admin: true })
