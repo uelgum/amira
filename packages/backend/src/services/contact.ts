@@ -11,6 +11,10 @@ import { sendNotificationUpdateCommand } from "@services/notification";
     Sendet eine Kontakt-Anfrage an einen Nutzer.
 */
 const sendContactRequest = async (senderId: string, recipientId: string) => {
+    if(!senderId || !recipientId || senderId === recipientId) {
+        throw new AmiraError(409, "CONTACT_ERROR", "INVALID_DATA");
+    }
+
     const contactExists = await Contact.exists({
         $or: [
             { contactId1: senderId, contactId2: recipientId },
