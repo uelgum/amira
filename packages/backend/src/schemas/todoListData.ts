@@ -10,7 +10,19 @@ const todoListDataSchema = Joi.object({
         .messages({
             "any.required": "CONTENT_REQUIRED",
             "string.max": "CONTENT_MAX_LENGTH"
-        })
+        }),
+
+    // Wichtigkeit
+    important: Joi.boolean()
+        .messages({
+            "any.required": "IMPORTANT_REQUIRED",
+        }),
+
+    // Status
+    done: Joi.boolean()
+        .messages({
+            "any.required": "DONE_REQUIRED",
+        }),
 });
 
 export default todoListDataSchema;
