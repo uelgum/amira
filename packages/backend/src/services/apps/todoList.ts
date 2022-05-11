@@ -80,7 +80,36 @@ const getTasks = async (payload: Payload) => {
     return tasks;
 };
 
+/**
+    Entfernt eine Aufgabe aus der Todo-Liste.
+*/
+const deleteTask = async (payload: Payload, data: Record<string, any>) => {
+    const userId = payload.id;
+    const taskId = data.id;
+
+    if(!taskId) {
+        throw new AmiraError(400, "APP_ERROR", "INVALID_DATA");
+    }
+
+    const todoList = await TodoList.findOne({ userId });
+
+    if(!todoList) {
+        throw new AmiraError(400, "APP_ERROR", "INVALID_DATA");
+    }
+
+    const taskIndex = todoList.tasks.findIndex((task) => task.id === taskId);
+
+    if(taskIndex < 0) {
+        throw new AmiraError(400, "APP_ERROR", "INVALID_DATA");
+    }
+
+    todoList.tasks.splice(taskIndex, 1);
+
+    await todoList.save();
+};
+
 export {
     addTask,
-    getTasks
+    getTasks,
+    deleteTask
 };
