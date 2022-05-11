@@ -113,8 +113,32 @@ const withdrawContactRequest = async (senderId: string, recipientId: string) => 
     contact.delete();
 };
 
+/**
+    Entfernt einen bestehenden Kontakt.
+*/
+const deleteContact = async (userId: string, contactId: string) => {
+    if(!userId || !contactId) {
+        throw new AmiraError(400, "CONTACT_ERROR", "INVALID_DATA");
+    }
+
+    const contact = await Contact.findOne({
+        $or: [
+            { contactId1: userId, contactId2: contactId },
+            { contactId1: contactId, contactId2: userId },
+        ],
+        confirmed: true
+    });
+
+    if(!contact) {
+        throw new AmiraError(400, "CONTACT_ERROR", "CONTACT_NOT_FOUND");
+    }
+
+    contact.delete();
+};
+
 export {
     sendContactRequest,
     acceptContactRequest,
-    withdrawContactRequest
+    withdrawContactRequest,
+    deleteContact
 };
