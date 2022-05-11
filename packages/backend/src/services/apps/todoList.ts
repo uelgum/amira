@@ -12,10 +12,10 @@ import { validateTodoListData } from "@services/validation";
     Fügt eine neue Aufgabe zur Todo-Liste hinzu.
 */
 const addTask = async (payload: Payload, data: Record<string, any>) => {
-    const { error, subcode } = validateTodoListData(data);
+    const content = data.content;
 
-    if(error) {
-        throw new AmiraError(400, "APP_ERROR", subcode);
+    if(!content) {
+        throw new AmiraError(400, "APP_ERROR", "INVALID_DATA");
     }
 
     const userId = payload.id;
@@ -81,6 +81,28 @@ const getTasks = async (payload: Payload) => {
 };
 
 /**
+    Aktualisiert eine Aufgabe aus der Todo-Liste.
+*/
+const updateTask = async (payload: Payload, data: Record<string, any>) => {
+    const { error, subcode } = validateTodoListData(data);
+
+    if(!error) {
+        throw new AmiraError(400, "APP_ERROR", subcode);
+    }
+
+    const userId = payload.id;
+    const taskId = data.id;
+
+    const todoList = await TodoList.findOne({ userId });
+
+    const taskIndex = todoList.tasks.findIndex((task) => task.id === taskId);
+
+    Object.assign(todoList.tasks[taskIndex], data);
+
+    await todoList.save();
+};
+
+/**
     Entfernt eine Aufgabe aus der Todo-Liste.
 */
 const deleteTask = async (payload: Payload, data: Record<string, any>) => {
@@ -111,5 +133,6 @@ const deleteTask = async (payload: Payload, data: Record<string, any>) => {
 export {
     addTask,
     getTasks,
+    updateTask,
     deleteTask
 };
