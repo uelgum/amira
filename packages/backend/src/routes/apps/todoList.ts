@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import { sendData, sendError } from "@utils/response";
 
 // Services
 import {
@@ -7,7 +8,6 @@ import {
     updateTask,
     deleteTask
 } from "@services/apps/todoList";
-import { sendData, sendError } from "@utils/response";
 
 const router = Router();
 
