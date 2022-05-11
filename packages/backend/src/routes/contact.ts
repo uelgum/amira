@@ -3,7 +3,7 @@ import isLoggedIn from "@middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
 
 // Services
-import { acceptContactRequest, sendContactRequest, withdrawContactRequest } from "@services/contact";
+import { acceptContactRequest, deleteContact, sendContactRequest, withdrawContactRequest } from "@services/contact";
 
 const router = Router();
 
@@ -33,6 +33,16 @@ router.post("/accept-request", async (req: Request, res: Response) => {
 router.post("/withdraw-request", async (req: Request, res: Response) => {
     try {
         await withdrawContactRequest(res.locals.id, req.body.recipientId);
+        sendData(res, { success: true });
+    } catch(error) {
+        sendError(res, error);
+    }
+});
+
+// Bestehenden Kontakt entfernen
+router.post("/delete", async (req: Request, res: Response) => {
+    try {
+        await deleteContact(res.locals.id, req.body.contactId);
         sendData(res, { success: true });
     } catch(error) {
         sendError(res, error);
