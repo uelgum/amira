@@ -25,7 +25,7 @@ const verifyEmail = async (data: Record<string, any>) => {
         throw new AmiraError(400, "VERIFICATION_ERROR", "INVALID_ID");
     }
 
-    delete user.emailUnverified;
+    user.emailUnverified = undefined;
 
     verification.delete();
     await user.save();
