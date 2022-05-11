@@ -90,7 +90,31 @@ const acceptContactRequest = async (userId: string, senderId: string) => {
     sendNotificationUpdateCommand(senderId);
 };
 
+/**
+    Zieht eine verschickte Kontakt-Anfrage zurück.
+*/
+const withdrawContactRequest = async (senderId: string, recipientId: string) => {
+    if(!senderId || !senderId) {
+        throw new AmiraError(400, "CONTACT_ERROR", "INVALID_DATA");
+    }
+
+    const contact = await Contact.findOne({
+        $or: [
+            { contactId1: senderId, contactId2: recipientId },
+            { contactId1: recipientId, contactId2: senderId },
+        ],
+        confirmed: false
+    });
+
+    if(!contact) {
+        throw new AmiraError(400, "CONTACT_ERROR", "CONTACT_NOT_FOUND");
+    }
+
+    contact.delete();
+};
+
 export {
     sendContactRequest,
-    acceptContactRequest
+    acceptContactRequest,
+    withdrawContactRequest
 };
