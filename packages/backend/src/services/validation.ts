@@ -1,5 +1,6 @@
 import loginDataSchema from "@schemas/loginData";
 import registerDataSchema from "@schemas/registerData";
+import todoListDataSchema from "@schemas/todoListData";
 
 const validateLoginData = (data: Record<string, any>) => {
     const { error } = loginDataSchema.validate(data, {
@@ -26,7 +27,22 @@ const validateRegisterData = (data: Record<string, any>) => {
     };
 };
 
+/**
+    Validiert Todo-Listen-Daten.
+*/
+const validateTodoListData = (data: Record<string, any>) => {
+    const { error } = todoListDataSchema.validate(data, {
+        presence: "required"
+    });
+
+    return {
+        error: !!error,
+        subcode: error?.details[0].message || null
+    };
+};
+
 export {
     validateLoginData,
-    validateRegisterData
+    validateRegisterData,
+    validateTodoListData
 };
