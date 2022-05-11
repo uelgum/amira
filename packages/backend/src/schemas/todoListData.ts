@@ -4,6 +4,12 @@ import Joi from "joi";
     Schema für Todo-Listen-Daten.
 */
 const todoListDataSchema = Joi.object({
+    // ID
+    id: Joi.string()
+        .messages({
+            "any.required": "ID_REQUIRED"
+        }),
+
     // Inhalt
     content: Joi.string()
         .max(280)
