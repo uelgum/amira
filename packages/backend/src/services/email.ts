@@ -26,12 +26,16 @@ const sendVerificationEmail = async (user: User) => {
         `Bestätige deine E-Mail, indem du den folgenden Link anklickst: ` +
         code;
 
-    await email.sendMail({
-        to: user.email,
-        from: "Bot <bot@gumenyuk.de>",
-        subject: "Bestätige deine E-Mail",
-        text
-    });
+    try {
+        await email.sendMail({
+            to: user.email,
+            from: "Bot <bot@gumenyuk.de>",
+            subject: "Bestätige deine E-Mail",
+            text
+        });
+    } catch(error) {
+        // noop
+    }
 };
 
 export {
