@@ -7,7 +7,7 @@ type Next = () => void;
 // #endregion
 
 /**
-    Verarbeitet einen JSON Fehler aufgrund fehlerhafter Formatierung.
+    Verarbeitet einen entstandenen JSON-Fehler aufgrund fehlerhafter Formatierung.
 */
 const handleJsonError = (error: Error, _, res: Response, next: Next) => {
     if(error instanceof SyntaxError && error["body"]) {
