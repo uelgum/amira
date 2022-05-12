@@ -6,7 +6,6 @@ declare module "express" {
         name: string;
         key: string;
         admin?: boolean;
-        emailUnverified?: boolean;
     };
 
     export interface Response {
