@@ -8,6 +8,7 @@
       "@config": [ "./config" ],
       "@controller/*": [ "./controller/*" ],
       "@middleware/*": [ "./middleware/*" ],
+      "@routes/*": [ "./routes/*" ],
       "@schemas/*": [ "./schemas/*" ],
       "@structs/*": [ "./structs/*" ],
       "@utils/*": [ "./utils/*" ]
