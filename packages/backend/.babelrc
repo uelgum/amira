@@ -20,7 +20,14 @@
     [
       "module-resolver", {
         "cwd": "./src",
-        "alias": {}
+        "alias": {
+          "@config": "./config",
+          "@controller": "./controller",
+          "@middleware": "./middleware",
+          "@schemas": "./schemas",
+          "@structs": "./structs",
+          "@utils": "./utils"
+        }
       }
     ]
   ]

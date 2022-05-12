@@ -4,7 +4,14 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "paths": {},
+    "paths": {
+      "@config": [ "./config" ],
+      "@controller/*": [ "./controller/*" ],
+      "@middleware/*": [ "./middleware/*" ],
+      "@schemas/*": [ "./schemas/*" ],
+      "@structs/*": [ "./structs/*" ],
+      "@utils/*": [ "./utils/*" ]
+    },
     "esModuleInterop": true
   }
 }
