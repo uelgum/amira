@@ -1,1 +1,0 @@
-Dieses Package enthält den Code für Amira BE.
