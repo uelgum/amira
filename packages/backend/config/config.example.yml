@@ -1,2 +1,5 @@
 # Port des Servers
 port: 3000
+
+# JWT-Schlüssel
+jwtKey: ""

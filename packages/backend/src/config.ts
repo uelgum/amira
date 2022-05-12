@@ -6,6 +6,7 @@ import configSchema from "@schemas/config";
 // #region Types
 type Config = {
     port: number;
+    jwtKey: string;
 };
 // #endregion
 
