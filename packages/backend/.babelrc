@@ -26,6 +26,7 @@
           "@middleware": "./middleware",
           "@routes": "./routes",
           "@schemas": "./schemas",
+          "@services": "./services",
           "@structs": "./structs",
           "@utils": "./utils"
         }
