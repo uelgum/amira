@@ -24,6 +24,7 @@
           "@config": "./config",
           "@controller": "./controller",
           "@middleware": "./middleware",
+          "@models": "./models",
           "@routes": "./routes",
           "@schemas": "./schemas",
           "@services": "./services",
