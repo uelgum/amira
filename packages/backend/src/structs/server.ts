@@ -9,6 +9,10 @@ import config, { validateConfig } from "@config";
 // Middleware
 import handleJsonError from "@middleware/http/handleJsonError";
 
+// Router
+import apiRouter from "@routes/api";
+import errorRouter from "@routes/error";
+
 /**
     Server von Amira.
 */
@@ -43,9 +47,12 @@ class Server {
     */
     private init() {
         this.app.use(cors());
-        this.app.use(express.json());
 
+        this.app.use(express.json());
         this.app.use(handleJsonError);
+
+        this.app.use("/api", apiRouter);
+        this.app.use(errorRouter);
     }
 
     /**
