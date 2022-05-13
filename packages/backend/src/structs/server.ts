@@ -2,6 +2,7 @@ import http from "http";
 import express from "express";
 import cors from "cors";
 import { Server as SocketIO } from "socket.io";
+import mongoose from "mongoose";
 import logger from "@controller/logger";
 import getVersion from "@utils/getVersion";
 import config, { validateConfig } from "@config";
@@ -56,6 +57,24 @@ class Server {
     }
 
     /**
+        Stellt eine Verbindung zu MongoDB her.
+    */
+    private connectMongoDB() {
+        const { host, username, password, database } = config.mongodb;
+        const url = `mongodb://${host}/${database}`;
+
+        mongoose.connect(url, {
+            auth: {
+                username,
+                password
+            },
+            authSource: "admin"
+        });
+
+        logger.info("MongoDB verbunden");
+    }
+
+    /**
         Startet den Server.
     */
     public async start() {
@@ -63,6 +82,7 @@ class Server {
 
         try {
             validateConfig();
+            this.connectMongoDB();
 
             this.http.listen(config.port, () => {
                 logger.info(`Server online (Port ${config.port})`);
