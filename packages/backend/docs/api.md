@@ -94,9 +94,10 @@ Der Nutzer hat fehlende oder fehlerhafte Daten angegeben.
 }
 ```
 
-| Subcode        | Beschreibung                                      |
-|----------------|---------------------------------------------------|
-| `INVALID_DATA` | Fehlende oder fehlerhafte Daten wurden angegeben. |
+| Subcode              | Beschreibung                                            |
+|----------------------|---------------------------------------------------------|
+| `INVALID_DATA`       | Fehlende oder fehlerhafte Daten wurden angegeben.       |
+| `INVALID_LOGIN_DATA` | Fehlende oder fehlerhafte Login-Daten wurden angegeben. |
 <!-- tabs:end -->
 
 ### `POST` Registrierung
@@ -147,8 +148,8 @@ Folgendes ist möglich:
 }
 ```
 
-| Subcode        | Beschreibung                                      |
-|----------------|---------------------------------------------------|
-| `INVALID_DATA` | Fehlende oder fehlerhafte Daten wurden angegeben. |
-| `EMAIL_TAKEN`  | Die E-Mail wird bereits verwendet.                |
+| Subcode                | Beschreibung                                      |
+|------------------------|---------------------------------------------------|
+| `INVALID_DATA`         | Fehlende oder fehlerhafte Daten wurden angegeben. |
+| `EMAIL_ALREADY_EXISTS` | Die E-Mail wird bereits verwendet.                |
 <!-- tabs:end -->
