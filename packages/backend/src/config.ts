@@ -7,6 +7,12 @@ import configSchema from "@schemas/config";
 type Config = {
     port: number;
     jwtKey: string;
+    mongodb: {
+        host: string;
+        username: string;
+        password: string;
+        database: string;
+    };
     email: {
         host: string;
         username: string;

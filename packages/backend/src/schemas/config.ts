@@ -24,6 +24,41 @@ const configSchema = Joi.object({
             "string.max": "'jwtKey' darf höchstens 32 Zeichen lang sein"
         }),
 
+    // MongoDB
+    mongodb: Joi.object({
+        // Host
+        host: Joi.string()
+            .messages({
+                "any.required": "'jwtKey' muss ein String sein"
+            }),
+
+        // Username
+        username: Joi.string()
+            .max(32)
+            .messages({
+                "any.required": "'mongodb.username' muss ein String sein",
+                "string.max": "'mongodb.username' darf höchstens 32 Zeichen lang sein"
+            }),
+
+        // Passwort
+        password: Joi.string()
+            .min(8)
+            .max(32)
+            .messages({
+                "any.required": "'mongodb.password' muss ein String sein",
+                "string.min": "'mongodb.password' muss mindestens 8 Zeichen lang sein betragen",
+                "string.max": "'mongodb.password' darf höchstens 32 Zeichen lang sein"
+            }),
+
+        // Database
+        database: Joi.string()
+            .max(32)
+            .messages({
+                "any.required": "'mongodb.database' muss ein String sein",
+                "string.max": "'mongodb.database' darf höchstens 32 Zeichen lang sein"
+            }),
+    }),
+
     // E-Mail
     email: Joi.object({
         // Host
@@ -34,11 +69,9 @@ const configSchema = Joi.object({
 
         // Nutzername
         username: Joi.string()
-            .min(8)
             .max(32)
             .messages({
                 "any.required": "'email.username' muss ein String sein",
-                "string.min": "'email.username' muss mindestens 8 Zeichen lang sein betragen",
                 "string.max": "'email.username' darf höchstens 32 Zeichen lang sein"
             }),
 

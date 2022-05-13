@@ -4,6 +4,13 @@ port: 3000
 # JWT-Schlüssel
 jwtKey: ""
 
+# MongoDB
+mongodb:
+  host: ""
+  username: ""
+  password: ""
+  database: ""
+
 # E-Mail
 email:
   host: ""
