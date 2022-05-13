@@ -7,6 +7,11 @@ import configSchema from "@schemas/config";
 type Config = {
     port: number;
     jwtKey: string;
+    email: {
+        host: string;
+        username: string;
+        password: string;
+    };
 };
 // #endregion
 
