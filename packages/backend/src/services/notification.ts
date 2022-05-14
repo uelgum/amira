@@ -1,5 +1,22 @@
 import sockets from "@controller/socket";
+import Notification from "@models/notification";
 import Contact from "@models/contact";
+
+/**
+    Ruft die Benachrichtungen eines Nutzers ab.
+*/
+const fetchNotifications = async (id: string) => {
+    const notifications = await Notification.find({ recipientId: id }).lean();
+    
+    return notifications.map((n) => {
+        return {
+            id: n.id,
+            type: n.type,
+            data: n.data,
+            createdAt: n.createdAt
+        };
+    });
+};
 
 /**
     Sendet ein Update-Befehl für Benachrichtigungen an einen Nutzer.
@@ -39,6 +56,7 @@ const sendPresenceUpdate = async (id: string, status: string) => {
 };
 
 export {
+    fetchNotifications,
     sendNotificationUpdate,
     sendPresenceUpdate
 };
