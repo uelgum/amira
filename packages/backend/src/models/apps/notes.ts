@@ -23,7 +23,7 @@ const notesSchema = new Schema<Notes>({
 });
 
 /**
-    Mopdel für `Notes`.
+    Model für `Notes`.
 */
 const Notes = model<Notes>("Notes", notesSchema);
 
