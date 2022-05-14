@@ -1,5 +1,7 @@
 - [Einstieg](/)
 - [API](/api)
-    - [Schema](/api#schemas)
+    - [Schema](/api#schema)
     - [Endpunkte](/api#endpunkte)
         - [Authentifizierung](/api#authentifizierung)
+        - [Konto](/api#konto)
+        - [Kontakte](/api#kontakte)
