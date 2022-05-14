@@ -23,6 +23,7 @@
         "alias": {
           "@config": "./config",
           "@controller": "./controller",
+          "@events": "./events",
           "@middleware": "./middleware",
           "@models": "./models",
           "@routes": "./routes",
