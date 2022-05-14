@@ -1,6 +1,7 @@
 import sockets from "@controller/socket";
 import Notification from "@models/notification";
 import Contact from "@models/contact";
+import User, { getFullName } from "@models/user";
 
 /**
     Ruft die Benachrichtungen eines Nutzers ab.
@@ -40,8 +41,13 @@ const sendPresenceUpdate = async (id: string, status: string) => {
         ]
     });
 
+    if(contacts.length === 0) return;
+
+    const user = await User.findOne({ id });
+    const name = getFullName(user);
+
     for(const { contactId1, contactId2 } of contacts) {
-        // ID des Kontaktes finden
+        // Kontakt-ID des anderen Nutzers finden
         const contactId = (contactId1 === id) ? contactId2 : contactId1;
 
         if(!sockets.has(contactId)) continue;
@@ -50,6 +56,7 @@ const sendPresenceUpdate = async (id: string, status: string) => {
 
         socket.emit("presenceUpdate", {
             id,
+            name,
             status
         });
     }
