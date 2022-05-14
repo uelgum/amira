@@ -9,6 +9,7 @@ import {
     sendContactRequest,
     withdrawContactRequest,
     acceptContactRequest,
+    declineContactRequest,
     deleteContact
 } from "@services/contact";
 
@@ -43,6 +44,16 @@ router.post("/withdraw", async (req: Request, res: Response) => {
 router.post("/accept", async (req: Request, res: Response) => {
     try {
         await acceptContactRequest(res.locals, req.body);
+        sendData(res);
+    } catch(error) {
+        sendError(res, error);
+    }
+});
+
+// Kontakt-Anfrage ablehnen
+router.post("/decline", async (req: Request, res: Response) => {
+    try {
+        await declineContactRequest(res.locals, req.body);
         sendData(res);
     } catch(error) {
         sendError(res, error);
