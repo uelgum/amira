@@ -9,6 +9,10 @@ import config, { validateConfig } from "@config";
 
 // Middleware
 import handleJsonError from "@middleware/http/handleJsonError";
+import isLoggedIn from "@middleware/socket/isLoggedIn";
+
+// Events
+import handleSocketConnection from "@events/connection";
 
 // Router
 import apiRouter from "@routes/api";
@@ -19,9 +23,24 @@ import errorRouter from "@routes/error";
 */
 class Server {
     // #region Attribute
+    /**
+        Express-App.
+    */
     private app: express.Application;
+
+    /**
+        HTTP-Server.
+    */
     private http: http.Server;
+
+    /**
+        SocketIO-Server.
+    */
     private io: SocketIO;
+
+    /**
+        Version des Servers.
+    */
     public readonly version: string;
     // #endregion
 
@@ -54,6 +73,9 @@ class Server {
 
         this.app.use("/api", apiRouter);
         this.app.use(errorRouter);
+
+        this.io.use(isLoggedIn);
+        this.io.on("connection", handleSocketConnection);
     }
 
     /**
