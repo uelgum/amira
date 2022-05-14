@@ -9,13 +9,46 @@ import { generateId } from "@services/id";
 import { sendNotificationUpdate } from "@services/notification";
 
 /**
+    Ruft alle Kontakte ab.
+*/
+const fetchContacts = async (id: string) => {
+    const contacts = await Contact.find({
+        $or: [
+            { contactId1: id },
+            { contactId2: id }
+        ],
+        $where: function(this: Contact) {
+            return !this.unconfirmed;
+        }
+    }).lean();
+
+    const data = [];
+
+    for(const contact of contacts) {
+        // Kontakt-ID des anderen Nutzers finden
+        const contactId = (contact.contactId1 === id) ?
+            contact.contactId1 :
+            contact.contactId2;
+
+        const user = await User.findOne({ id: contactId }).lean();
+
+        data.push({
+            id: user.id,
+            name: getFullName(user)
+        });
+    }
+
+    return data;
+};
+
+/**
     Schickt eine Kontakt-Anfrage an einen Nutzer.
 */
 const sendContactRequest = async (payload: Payload, data: Record<string, any>) => {
     const senderId = payload.id;
     const { recipientId } = data;
 
-    if(!recipientId) {
+    if(!recipientId || senderId === recipientId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
@@ -129,7 +162,7 @@ const acceptContactRequest = async (payload: Payload, data: Record<string, any>)
 
     await contact.save();
 
-    const sender = await User.findOne({ id: senderId });
+    const recipient = await User.findOne({ id: recipientId });
 
     // Benachrichtung an Sender schicken
     const notification = new Notification({
@@ -137,8 +170,8 @@ const acceptContactRequest = async (payload: Payload, data: Record<string, any>)
         recipientId: senderId,
         type: "CONTACT_REQUEST_ACCEPTED",
         data: {
-            id: senderId,
-            name: getFullName(sender)
+            id: recipient,
+            name: getFullName(recipient)
         },
         createdAt: Date.now()
     });
@@ -149,8 +182,65 @@ const acceptContactRequest = async (payload: Payload, data: Record<string, any>)
     sendNotificationUpdate(senderId);
 };
 
+/**
+    Lehnt eine Kontakt-Anfrage ab.
+*/
+const declineContactRequest = async (payload: Payload, data: Record<string, any>) => {
+    const recipientId = payload.id;
+    const { senderId } = data;
+
+    if(!senderId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const contact = await Contact.findOne({
+        $or: [
+            { contactId1: recipientId, contactId2: senderId },
+            { contactId1: senderId, contactId2: recipientId }
+        ],
+        unconfirmed: true
+    });
+
+    if(!contact) {
+        throw new AmiraError(400, "CONTACT_ERROR", "CONTACT_NOT_FOUND");
+    }
+
+    contact.delete();
+};
+
+/**
+    Enfernt einen Kontakt.
+*/
+const deleteContact = async (payload: Payload, data: Record<string, any>) => {
+    const id = payload.id;
+    const { contactId } = data;
+
+    if(!contactId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const contact = await Contact.findOne({
+        $or: [
+            { contactId1: id, contactId2: contactId },
+            { contactId1: contactId, contactId2: id }
+        ],
+        $where: function(this: Contact) {
+            return !this.unconfirmed;
+        }
+    });
+
+    if(!contact) {
+        throw new AmiraError(400, "CONTACT_ERROR", "CONTACT_NOT_FOUND");
+    }
+
+    contact.delete();
+};
+
 export {
+    fetchContacts,
     sendContactRequest,
     withdrawContactRequest,
-    acceptContactRequest
+    declineContactRequest,
+    acceptContactRequest,
+    deleteContact
 };
