@@ -19,7 +19,7 @@ const notificationSchema = new Schema<Notification>({
     recipientId: { type: String, required: true },
     data: { type: Map, required: true },
     createdAt: { type: Number, required: true }
-});
+}, { versionKey: false });
 
 /**
     Model für `Notification`.

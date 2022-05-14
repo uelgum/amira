@@ -29,7 +29,7 @@ const userSchema = new Schema<User>({
     recoveryKey: { type: String, required: true },
     admin: { type: Boolean },
     createdAt: { type: Number, required: true }
-});
+}, { versionKey: false });
 
 /**
     Model für `User`.

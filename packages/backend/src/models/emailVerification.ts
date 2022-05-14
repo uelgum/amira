@@ -15,7 +15,7 @@ const emailVerificationSchema = new Schema<EmailVerification>({
     userId: { type: String, required: true },
     hash: { type: String, required: true },
     createdAt: { type: Number, required: true }
-});
+}, { versionKey: false });
 
 /**
     Model für `EmailVerification`.

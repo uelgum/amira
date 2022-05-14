@@ -17,7 +17,7 @@ const contactSchema = new Schema<Contact>({
     contactId1: { type: String, required: true },
     contactId2: { type: String, required: true },
     unconfirmed: { type: Boolean }
-});
+}, { versionKey: false });
 
 /**
     Model für `Contact`.
