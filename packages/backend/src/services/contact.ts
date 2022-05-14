@@ -24,11 +24,9 @@ const fetchContacts = async (id: string) => {
 
     const data = [];
 
-    for(const contact of contacts) {
+    for(const { contactId1, contactId2 } of contacts) {
         // Kontakt-ID des anderen Nutzers finden
-        const contactId = (contact.contactId1 === id) ?
-            contact.contactId1 :
-            contact.contactId2;
+        const contactId = (contactId1 === id) ? contactId2 : contactId1;
 
         const user = await User.findOne({ id: contactId }).lean();
 
