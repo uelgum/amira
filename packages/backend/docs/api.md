@@ -136,8 +136,11 @@ Das Benutzerkonto wurde erfolgreich erstellt.
 **400 Bad Request**
 <br/>
 Folgendes ist möglich:
-- Der Nutzer hat fehlende oder fehlerhafte Daten angegeben.
-- Ein Benutzerkonto mit derselben E-Mail existiert bereits.
+
+| Code           | Beschreibung                                              |
+|----------------|-----------------------------------------------------------|
+| `INVALID_DATA` | Der Nutzer hat fehlende oder fehlerhafte Daten angegeben. |
+| `AUTH_ERROR`   | Ein Fehler mit der Registrierung ist aufgetreten.         |
 
 ```json
 {
@@ -337,7 +340,7 @@ Es wurde kein gültiges Token angegeben.
 <!-- tabs:end -->
 
 ### Kontakte
-Die Endpunkte dieser Grupper werden zum Verwalten von Kontakten verwendet.
+Die Endpunkte dieser Gruppe werden zum Verwalten von Kontakten verwendet.
 
 > Alle Endpunkte dieser Gruppe benötigen Authentifizierung.
 
@@ -683,4 +686,442 @@ Es wurde kein gültiges Token angegeben.
 ```
 <!-- tabs:end -->
 
-### ...
+### Notes
+Die Endpunkte dieser Gruppe werden gehören der **Notes**-App.
+
+> Alle Endpunkte dieser Gruppe benötigen Authentifizierung.
+
+### `GET` Notizen abrufen
+```
+/api/apps/notes/fetch
+```
+
+Dieser Endpunkt ruft die Notizen eines Nutzers ab.
+
+<!-- tabs:start -->
+#### **Anfrage**
+**Header**
+
+| Name             | Typ      | Beschreibung      | Optional |
+|------------------|----------|-------------------|----------|
+| `Authentication` | `string` | Erhaltenes Token. | ❌       |
+
+#### **Antwort**
+**200 OK**
+<br/>
+Die Notizen wurden erfolgreich abgerufen.
+
+```json
+{
+    "status": "ok",
+    "success": true,
+    "data": {
+        "notes": "..."
+    }
+}
+```
+
+**400 Bad Request**
+<br/>
+Der Nutzer hat versucht, nicht existente Notizen abzurufen.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "APP_ERROR"
+    }
+}
+```
+
+Folgende Subcodes sind möglich:
+
+| Subcode           | Beschreibung                       |
+|-------------------|------------------------------------|
+| `NOTES_NOT_FOUND` | Die Notizen wurden nicht gefunden. |
+
+**401 Unauthorized**
+<br/>
+Es wurde kein gültiges Token angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "UNAUTHORIZED"
+    }
+}
+```
+<!-- tabs:end -->
+
+### `POST` Update
+```
+/api/apps/notes/update
+```
+
+Dieser Endpunkt aktualisiert die Notizen eines Nutzers.
+
+<!-- tabs:start -->
+#### **Anfrage**
+**Header**
+
+| Name             | Typ      | Beschreibung      | Optional |
+|------------------|----------|-------------------|----------|
+| `Authentication` | `string` | Erhaltenes Token. | ❌       |
+
+**Body-Parameter**
+
+| Name      | Typ      | Beschreibung                       | Optional |
+|-----------|----------|------------------------------------|----------|
+| `content` | `string` | Aktualisierte Notizen des Nutzers. | ❌       |
+
+#### **Antwort**
+**200 OK**
+<br/>
+Die Notizen wurden erfolgreich aktualisiert.
+
+```json
+{
+    "status": "ok",
+    "success": true
+}
+```
+
+**400 Bad Request**
+<br/>
+Der Nutzer hat fehlende oder fehlerhafte Daten angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "INVALID_DATA"
+    }
+}
+```
+
+**401 Unauthorized**
+<br/>
+Es wurde kein gültiges Token angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "UNAUTHORIZED"
+    }
+}
+```
+<!-- tabs:end -->
+
+### Tasks
+Die Endpunkte dieser Gruppe werden gehören der **Tasks**-App.
+
+> Alle Endpunkte dieser Gruppe benötigen Authentifizierung.
+
+### `GET` Aufgaben abrufen
+```
+/api/apps/tasks/fetch
+```
+
+Dieser Endpunkt ruft die Aufgaben eines Nutzers ab.
+
+<!-- tabs:start -->
+#### **Anfrage**
+**Header**
+
+| Name             | Typ      | Beschreibung      | Optional |
+|------------------|----------|-------------------|----------|
+| `Authentication` | `string` | Erhaltenes Token. | ❌       |
+
+#### **Antwort**
+**200 OK**
+<br/>
+Die Aufgaben wurden erfolgreich abgefragt.
+
+```json
+{
+    "status": "ok",
+    "success": true,
+    "data": {
+        "tasks": [
+            {
+                "id": "...",
+                "content": "...",
+                "done": false,
+                "createdAt": 0
+            }
+        ]
+    }
+}
+```
+
+Der Array `tasks` besteht aus Objekten, die jeweils eine Aufgabe darstellen. Jede Aufgabe enthält:
+- `id` - ID der Aufgabe.
+- `content` - Inhalt der Aufgabe.
+- `done` - Status der Aufgabe.
+- `createdAt` - Zeitpunkt der Erstellung.
+
+**400 Bad Request**
+<br/>
+Der Nutzer hat versucht, eine nicht-existrierende Task-Liste abzurufen.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "APP_ERROR"
+    }
+}
+```
+
+Folgende Subcodes sind möglich:
+
+| Subcode              | Beschreibung                         |
+|----------------------|--------------------------------------|
+| `TASKLIST_NOT_FOUND` | Die Task-Liste wurde nicht gefunden. |
+
+**401 Unauthorized**
+<br/>
+Es wurde kein gültiges Token angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "UNAUTHORIZED"
+    }
+}
+```
+<!-- tabs:end -->
+
+### `POST` Aufgabe hinzufügen
+```
+/api/apps/tasks/add
+```
+
+Dieser Endpunkt fügt eine neue Aufgabe zur Task-Liste hinzu.
+
+<!-- tabs:start -->
+#### **Anfrage**
+**Header**
+
+| Name             | Typ      | Beschreibung      | Optional |
+|------------------|----------|-------------------|----------|
+| `Authentication` | `string` | Erhaltenes Token. | ❌       |
+
+**Body-Parameter**
+
+| Name      | Typ      | Beschreibung        | Optional |
+|-----------|----------|---------------------|----------|
+| `content` | `string` | Inhalt der Aufgabe. | ❌       |
+
+#### **Antwort**
+**200 OK**
+<br/>
+Die Aufgabe wurde erfolgreich hinzugefügt.
+
+```json
+{
+    "status": "ok",
+    "success": true
+}
+```
+
+**400 Bad Request**
+<br/>
+
+Folgendes ist möglich:
+
+| Code           | Beschreibung                                              |
+|----------------|-----------------------------------------------------------|
+| `INVALID_DATA` | Der Nutzer hat fehlende oder fehlerhafte Daten angegeben. |
+| `APP_ERROR`    | Ein Fehler mit der Task-App ist aufgetreten.              |
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "INVALID_DATA"
+    }
+}
+```
+
+Folgende Subcodes sind möglich:
+
+| Subcode               | Beschreibung                                     |
+|-----------------------|--------------------------------------------------|
+| `TASKLIST_MAX_LENGTH` | Die Task-Liste hat die maximale Größe erreicht. |
+
+**401 Unauthorized**
+<br/>
+Es wurde kein gültiges Token angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "UNAUTHORIZED"
+    }
+}
+```
+<!-- tabs:end -->
+
+### `POST` Aufgabe aktualisieren
+```
+/api/apps/tasks/update
+```
+
+Dieser Endpunkt aktualisiert eine Aufgabe aus der Task-Liste.
+
+<!-- tabs:start -->
+#### **Anfrage**
+**Header**
+
+| Name             | Typ      | Beschreibung      | Optional |
+|------------------|----------|-------------------|----------|
+| `Authentication` | `string` | Erhaltenes Token. | ❌       |
+
+**Body-Parameter**
+
+| Name      | Typ       | Beschreibung        | Optional |
+|-----------|-----------|---------------------|----------|
+| `id`      | `string`  | ID der Aufgabe.     | ❌       |
+| `content` | `string`  | Inhalt der Aufgabe. | ✅       |
+| `done`    | `boolean` | Status der Aufgabe. | ✅       |
+
+#### **Antwort**
+**200 OK**
+<br/>
+Die Aufgabe wurde erfolgreich aktualisiert.
+
+```json
+{
+    "status": "ok",
+    "success": true
+}
+```
+
+**400 Bad Request**
+<br/>
+
+Folgendes ist möglich:
+
+| Code           | Beschreibung                                              |
+|----------------|-----------------------------------------------------------|
+| `INVALID_DATA` | Der Nutzer hat fehlende oder fehlerhafte Daten angegeben. |
+| `APP_ERROR`    | Ein Fehler mit der Task-App ist aufgetreten.              |
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "INVALID_DATA"
+    }
+}
+```
+
+Folgende Subcodes sind möglich:
+
+| Subcode              | Beschreibung                         |
+|----------------------|--------------------------------------|
+| `TASKLIST_NOT_FOUND` | Die Task-Liste wurde nicht gefunden. |
+
+**401 Unauthorized**
+<br/>
+Es wurde kein gültiges Token angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "UNAUTHORIZED"
+    }
+}
+```
+<!-- tabs:end -->
+
+### `POST` Aufgabe entfernen
+```
+/api/apps/tasks/delete
+```
+
+Dieser Endpunkt entfernt eine Aufgabe aus der Task-Liste.
+
+<!-- tabs:start -->
+#### **Anfrage**
+**Header**
+
+| Name             | Typ      | Beschreibung      | Optional |
+|------------------|----------|-------------------|----------|
+| `Authentication` | `string` | Erhaltenes Token. | ❌       |
+
+**Body-Parameter**
+
+| Name      | Typ       | Beschreibung        | Optional |
+|-----------|-----------|---------------------|----------|
+| `id`      | `string`  | ID der Aufgabe.     | ❌       |
+
+#### **Antwort**
+**200 OK**
+<br/>
+Die Aufgabe wurde erfolgreich entfernt.
+
+```json
+{
+    "status": "ok",
+    "success": true
+}
+```
+
+**400 Bad Request**
+<br/>
+
+Folgendes ist möglich:
+
+| Code           | Beschreibung                                              |
+|----------------|-----------------------------------------------------------|
+| `INVALID_DATA` | Der Nutzer hat fehlende oder fehlerhafte Daten angegeben. |
+| `APP_ERROR`    | Ein Fehler mit der Task-App ist aufgetreten.              |
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "INVALID_DATA"
+    }
+}
+```
+
+Folgende Subcodes sind möglich:
+
+| Subcode                    | Beschreibung                         |
+|----------------------------|--------------------------------------|
+| `TASKLIST_NOT_FOUND`       | Die Task-Liste wurde nicht gefunden. |
+| `TASKLIST_INVALID_TASK_ID` | Die Aufgaben-ID ist fehlerhaft.      |
+
+**401 Unauthorized**
+<br/>
+Es wurde kein gültiges Token angegeben.
+
+```json
+{
+    "status": "err",
+    "success": false,
+    "err": {
+        "code": "UNAUTHORIZED"
+    }
+}
+```
+<!-- tabs:end -->
