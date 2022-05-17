@@ -1,6 +1,11 @@
-import sockets from "@controller/socket";
+import sockets, { timeouts } from "@controller/socket";
 import { sendPresenceUpdate } from "@services/notification";
 import type { Socket } from "socket.io";
+
+/**
+    Zeit, nach der das Presence-Update gesendet wird.
+*/
+const PRESENCE_TIMEOUT = 1000 * 10;
 
 /**
     Handler für das `disconnect`-Event.
@@ -11,7 +16,13 @@ const onDisconnect = async (socket: Socket) => {
 
     sockets.delete(id);
 
-    sendPresenceUpdate(id, "offline");
+    // Presence-Update debouncen
+    const timeout = setTimeout(() => {
+        sendPresenceUpdate(id, "offline");
+        timeouts.delete(id);
+    }, PRESENCE_TIMEOUT);
+
+    timeouts.set(id, timeout);
 };
 
 export default onDisconnect;

@@ -1,4 +1,4 @@
-import sockets from "@controller/socket";
+import sockets, { timeouts } from "@controller/socket";
 import { sendPresenceUpdate } from "@services/notification";
 import type { Socket } from "socket.io";
 
@@ -22,6 +22,16 @@ const onConnection = async (socket: Socket) => {
     socket.on("disconnect", onDisconnect.bind(null, socket));
 
     sockets.set(id, socket);
+
+    // In Timeouts suchen
+    if(timeouts.has(id)) {
+        const timeout = timeouts.get(id);
+
+        clearTimeout(timeout);
+        timeouts.delete(id);
+        
+        return;
+    }
 
     sendPresenceUpdate(id, "online");
 };
