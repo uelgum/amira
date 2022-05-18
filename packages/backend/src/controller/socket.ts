@@ -1,21 +1,5 @@
-import type { Socket } from "socket.io";
+import SocketManager from "@structs/socketManager";
 
-// #region Types
-type Timeout = ReturnType<typeof setTimeout>;
-// #endregion
-
-/**
-    Kollektion aller verbundenen Sockets.
-*/
-const sockets = new Map<string, Socket>();
-
-/**
-    Kollektion aller Timeouts für Presence-Updates.
-*/
-const timeouts = new Map<string, Timeout>();
-
-export {
-    timeouts
-};
+const sockets = new SocketManager();
 
 export default sockets;
