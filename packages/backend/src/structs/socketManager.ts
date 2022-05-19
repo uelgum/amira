@@ -40,7 +40,7 @@ class SocketManager {
     }
 
     /**
-        Anzhal der verbundenen Sockets.
+        Anzahl der verbundenen Sockets.
     */
     public get size() {
         return this.sockets.size;
@@ -54,7 +54,7 @@ class SocketManager {
     }
 
     /**
-        Fügt einen neuen Socket zum Manage hinzu.
+        Fügt einen neuen Socket zum Manager hinzu.
     */
     public add(socket: Socket) {
         const id = socket.user.id;
