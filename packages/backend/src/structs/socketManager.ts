@@ -20,7 +20,7 @@ const PRESENCE_UPDATE_TIMEOUT = 1000 * 10;
 class SocketManager {
     // #region Attribute
     /**
-        Kollektion aller vebrundenen Sockets.
+        Kollektion aller verbundenen Sockets.
     */
     private sockets: Map<string, Socket>;
 
