@@ -12,7 +12,7 @@
   "author": "Wlad G. Gumenyuk",
   "license": "GPL-3.0",
   "dependencies": {
-    "ape-logger": "https://wlad.gumenyuk.de/packages/ape-logger.tar.gz",
+    "ape-logger": "https://gumenyuk.de/packages/ape-logger.tar.gz",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
