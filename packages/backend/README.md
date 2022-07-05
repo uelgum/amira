@@ -1,1 +1,0 @@
-Dieses Package enthält den gesamten Code für das Amira Backend.
