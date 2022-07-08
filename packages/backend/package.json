@@ -1,0 +1,29 @@
+{
+  "name": "amira-be",
+  "version": "1.0.0",
+  "description": "Backend für Amira.",
+  "main": "./build/index.js",
+  "private": true,
+  "scripts": {
+    "check-types": "tsc",
+    "clean": "rimraf ./build",
+    "build": "rimraf ./build && babel --extensions \".ts\" -d ./build ./src"
+  },
+  "author": "Wlad G. Gumenyuk",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "@uelgum/logger": "https://gumenyuk.de/packages/uelgum-logger-1.0.0.tgz",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "pg": "^8.7.3",
+    "sequelize": "^6.21.2"
+  }
+}

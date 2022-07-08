@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {},
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "strict": true
+  },
+  "include": [ "./src" ]
+}

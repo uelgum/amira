@@ -1,0 +1,16 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/typescript"
+  ],
+  "plugins": [
+    [
+      "module-resolver", {
+        "cwd": "./src",
+        "alias": {}
+      }
+    ]
+  ],
+  "comments": false,
+  "ignore": [ "./src/types" ]
+}
