@@ -3,7 +3,9 @@
     "target": "esnext",
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "paths": {},
+    "paths": {
+      "@loaders/*": [ "./loaders/*" ]
+    },
     "allowJs": true,
     "esModuleInterop": true,
     "noEmit": true,

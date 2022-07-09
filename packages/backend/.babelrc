@@ -7,7 +7,9 @@
     [
       "module-resolver", {
         "cwd": "./src",
-        "alias": {}
+        "alias": {
+          "@loaders": "./loaders"
+        }
       }
     ]
   ],
