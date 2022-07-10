@@ -10,6 +10,7 @@
         "alias": {
           "@config": "./config",
           "@loaders": "./loaders",
+          "@models": "./models",
           "@schemas": "./schemas"
         }
       }
