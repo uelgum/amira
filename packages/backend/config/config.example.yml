@@ -1,0 +1,12 @@
+# Server
+port: 3000
+
+# JWT-Key
+jwtKey: 
+
+# PostgreSQL
+psql:
+  host: 
+  username: 
+  password: 
+  db: 
