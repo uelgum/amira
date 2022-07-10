@@ -109,7 +109,7 @@ const UserModel = sequelize.define<User>(
             field: "recovery_key"
         },
         createdAt: {
-            type: DataTypes.NUMBER({ unsigned: true }),
+            type: DataTypes.INTEGER,
             allowNull: false,
             field: "created_at"
         },
