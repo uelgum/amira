@@ -8,7 +8,8 @@
       "@config": [ "./config" ],
       "@loaders/*": [ "./loaders/*" ],
       "@models/*": [ "./models/*" ],
-      "@schemas/*": [ "./schemas/*" ]
+      "@schemas/*": [ "./schemas/*" ],
+      "@services/*": [ "./services/*" ]
     },
     "allowJs": true,
     "esModuleInterop": true,
