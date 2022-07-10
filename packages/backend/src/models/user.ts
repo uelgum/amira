@@ -69,7 +69,7 @@ const UserModel = sequelize.define<User>(
     "User",
     {
         id: {
-            type: DataTypes.STRING(18),
+            type: DataTypes.STRING(20),
             primaryKey: true,
             allowNull: false,
             unique: true
