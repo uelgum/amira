@@ -8,6 +8,7 @@
       "module-resolver", {
         "cwd": "./src",
         "alias": {
+          "@config": "./config",
           "@loaders": "./loaders",
           "@schemas": "./schemas"
         }
