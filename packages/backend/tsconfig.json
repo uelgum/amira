@@ -4,7 +4,8 @@
     "moduleResolution": "node",
     "baseUrl": "./src",
     "paths": {
-      "@loaders/*": [ "./loaders/*" ]
+      "@loaders/*": [ "./loaders/*" ],
+      "@schemas/*": [ "./schemas/*" ]
     },
     "allowJs": true,
     "esModuleInterop": true,
