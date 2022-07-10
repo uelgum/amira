@@ -9,6 +9,7 @@
         "cwd": "./src",
         "alias": {
           "@config": "./config",
+          "@api": "./api",
           "@loaders": "./loaders",
           "@models": "./models",
           "@schemas": "./schemas",

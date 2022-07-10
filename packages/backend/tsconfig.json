@@ -6,6 +6,7 @@
     "baseUrl": "./src",
     "paths": {
       "@config": [ "./config" ],
+      "@api/*": [ "./api/*" ],
       "@loaders/*": [ "./loaders/*" ],
       "@models/*": [ "./models/*" ],
       "@schemas/*": [ "./schemas/*" ],
