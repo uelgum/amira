@@ -13,7 +13,8 @@
           "@loaders": "./loaders",
           "@models": "./models",
           "@schemas": "./schemas",
-          "@services": "./services"
+          "@services": "./services",
+          "@utils": "./utils"
         }
       }
     ]
