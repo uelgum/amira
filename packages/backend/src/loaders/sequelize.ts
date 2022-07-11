@@ -1,6 +1,6 @@
 import path from "path";
 import glob from "glob-promise";
-import { Sequelize, Options as SequelizeOptions } from "sequelize";
+import { Sequelize } from "sequelize";
 
 // Intern
 import logger from "@loaders/logger";
