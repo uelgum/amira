@@ -21,7 +21,7 @@ type Contact = Model & {
     /**
         Ob der Kontakt noch nicht bestätigt ist.
     */
-    unconfirmed?: boolean;
+    confirmed: boolean;
 };
 // #endregion
 
@@ -39,8 +39,9 @@ const ContactModel = sequelize.define<Contact>(
             type: DataTypes.STRING(20),
             allowNull: false
         },
-        unconfirmed: {
-            type: DataTypes.BOOLEAN
+        confirmed: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false
         }
     }
 );
