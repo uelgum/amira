@@ -54,11 +54,6 @@ type User = Model & {
         Erstelldatum des Kontos.
     */
     createdAt: number;
-
-    /**
-        Ob der Nutzer ein Admin ist.
-    */
-    admin?: boolean;
 };
 // #endregion
 
@@ -112,9 +107,6 @@ const UserModel = sequelize.define<User>(
             type: DataTypes.INTEGER,
             allowNull: false,
             field: "created_at"
-        },
-        admin: {
-            type: DataTypes.BOOLEAN
         }
     }
 );
