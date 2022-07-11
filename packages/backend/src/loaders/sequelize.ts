@@ -1,6 +1,6 @@
 import path from "path";
 import glob from "glob-promise";
-import { Sequelize } from "sequelize";
+import { Sequelize, Options as SequelizeOptions } from "sequelize";
 
 // Intern
 import logger from "@loaders/logger";
@@ -24,7 +24,11 @@ const sequelize = new Sequelize({
     password: psql.password,
     database: psql.db,
     dialect: "postgres",
-    logging: false
+    logging: false,
+    quoteIdentifiers: false,
+    define: {
+        timestamps: false
+    }
 });
 
 /**
