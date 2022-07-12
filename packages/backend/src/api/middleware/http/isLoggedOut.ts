@@ -11,6 +11,9 @@ import { Request, Response } from "express";
 type Next = () => void;
 // #endregion
 
+/**
+    Überprüft, ob der Nutzer abgemeldet ist.
+*/
 const isLoggedOut = async (req: Request, res: Response, next: Next) => {
     const header = req.headers.authorization;
 
