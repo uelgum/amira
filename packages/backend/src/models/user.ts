@@ -34,6 +34,11 @@ type User = Model & {
     email: string;
 
     /**
+        Ob die E-Mail bestätigt wurde.
+    */
+    emailConfirmed: boolean;
+
+    /**
         Passwort.
     */
     password: string;
@@ -89,22 +94,27 @@ const UserModel = sequelize.define<User>(
             allowNull: false,
             unique: true
         },
+        emailConfirmed: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            field: "email_confirmed"
+        },
         password: {
-            type: DataTypes.STRING(32),
+            type: DataTypes.STRING(128),
             allowNull: false
         },
         userKey: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.STRING(128),
             allowNull: false,
             field: "user_key"
         },
         recoveryKey: {
-            type: DataTypes.STRING(64),
+            type: DataTypes.STRING(128),
             allowNull: false,
             field: "recovery_key"
         },
         createdAt: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.BIGINT,
             allowNull: false,
             field: "created_at"
         }
