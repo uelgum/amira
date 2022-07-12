@@ -11,6 +11,7 @@
       "@models/*": [ "./models/*" ],
       "@schemas/*": [ "./schemas/*" ],
       "@services/*": [ "./services/*" ],
+      "@structs/*": [ "./structs/*" ],
       "@utils/*": [ "./utils/*" ]
     },
     "allowJs": true,
