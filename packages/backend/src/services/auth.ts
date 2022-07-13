@@ -104,7 +104,7 @@ const login = async (data: LoginData) => {
         throw new AmiraError(400, "INVALID_LOGIN");
     }
 
-    const passwordKey = derivePasswordKey(password);
+    const passwordKey = derivePasswordKey(password, user.createdAt);
 
     return generateJwt({
         id: user.id,
@@ -150,11 +150,13 @@ const register = async (data: RegisterData) => {
         throw new AmiraError(400, "MISMATCHED_PASSWORDS");
     }
 
+    const createdAt = Date.now();
+
     // Passwort-Hash (bcrypt), wird in der Datenbank gespeichert
     const passwordHash = await hashPassword(password);
 
     // Passwort-Key (PBKDF2), um zufällig generierten User-Key zu verschlüsseln
-    const passwordKey = derivePasswordKey(password);
+    const passwordKey = derivePasswordKey(password, createdAt);
     
     // User-Key wird zum Verschlüsseln persönlicher Daten genutzt, und in der
     // Datenbank gespeichert
@@ -174,7 +176,7 @@ const register = async (data: RegisterData) => {
         password: passwordHash,
         userKey,
         recoveryKey,
-        createdAt: Date.now()
+        createdAt
     });
 
     await user.save();
