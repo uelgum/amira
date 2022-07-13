@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import randomstring from "randomstring";
-import crypto, { AES, PBKDF2 } from "crypto-js";
+import crypto, { AES, SHA256 } from "crypto-js";
 
 /**
     Verschlüsselt einen String mit dem AES-Algorithmus.
@@ -35,18 +35,15 @@ const comparePassword = (password: string, encrypted: string) => {
 /**
     Leitet das Passwort mit dem PBKDF2-Algorithmus her.
 */
-const derivePasswordKey = (password: string) => {
-    const salt = crypto.lib.WordArray.random(128 / 8);
-    const passwordKey = PBKDF2(password, salt).toString();
-
-    return passwordKey;
+const derivePasswordKey = (password: string, createdAt: number) => {
+    return SHA256(password + createdAt).toString();
 };
 
 /**
     Generiert einen User-Key zum Verschlüsseln persönlicher Daten.
 */
 const generateUserKey = (passwordKey: string) => {
-    const randomKey = randomstring.generate({ length: 18 });
+    const randomKey = crypto.lib.WordArray.random(16).toString();
     const userKey = encrypt(randomKey, passwordKey);
 
     return userKey;
