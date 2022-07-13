@@ -5,6 +5,7 @@ import express from "express";
 // Intern
 import logger from "@loaders/logger";
 import { loadSequelize } from "@loaders/sequelize";
+import malformedJson from "@api/middleware/http/malformedJson";
 import routes from "@api/routes";
 import gracefulExit from "@utils/gracefulExit";
 
@@ -16,6 +17,7 @@ const server = http.createServer(app);
 
 app.use(cors({ origin: "*" })); // FIXME Nur solange in Entwicklung
 app.use(express.json());
+app.use(malformedJson);
 
 app.use("/api", routes);
 
