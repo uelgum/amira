@@ -33,6 +33,7 @@ const VerificationModel = sequelize.define<Verification>(
     {
         id: {
             type: DataTypes.STRING(20),
+            primaryKey: true,
             allowNull: false
         },
         verificationId: {
