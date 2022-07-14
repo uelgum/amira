@@ -10,3 +10,10 @@ psql:
   username: 
   password: 
   db: 
+
+# E-Mail
+email:
+  host: 
+  port: 
+  username: 
+  password: 

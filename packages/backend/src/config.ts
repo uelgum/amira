@@ -29,6 +29,16 @@ type Config = {
         password: string;
         db: string;
     };
+
+    /**
+        Anmeldedaten für den E-Mail-Server.
+    */
+    email: {
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+    };
 };
 // #endregion
 
