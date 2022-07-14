@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import randomstring from "randomstring";
-import crypto, { AES, SHA256 } from "crypto-js";
+import crypto, { AES, MD5, SHA256 } from "crypto-js";
 
 /**
     Verschlüsselt einen String mit dem AES-Algorithmus.
@@ -67,6 +67,13 @@ const generateRecoveryKey = (passwordKey: string) => {
     return [ code, key ];
 };
 
+/**
+    Generiert einen Verifizierungs-Code.
+*/
+const generateVerificationCode = (id: string, createdAt: number) => {
+    return MD5(id + createdAt);
+};
+
 export {
     encrypt,
     decrypt,
@@ -74,5 +81,6 @@ export {
     comparePassword,
     derivePasswordKey,
     generateUserKey,
-    generateRecoveryKey
+    generateRecoveryKey,
+    generateVerificationCode
 };
