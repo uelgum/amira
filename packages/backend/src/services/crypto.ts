@@ -71,7 +71,7 @@ const generateRecoveryKey = (passwordKey: string) => {
     Generiert einen Verifizierungs-Code.
 */
 const generateVerificationCode = (id: string, createdAt: number) => {
-    return MD5(id + createdAt);
+    return MD5(id + createdAt).toString();
 };
 
 export {
