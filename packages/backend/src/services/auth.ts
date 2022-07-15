@@ -107,12 +107,17 @@ const login = async (data: LoginData) => {
 
     const passwordKey = derivePasswordKey(password, user.createdAt);
 
-    return generateJwt({
+    const token = await generateJwt({
         id: user.id,
         username,
         key: passwordKey,
         // TODO Admin-Status hinzufügen
     });
+
+    return {
+        token,
+        ...(!user.emailVerified && { emailUnverified: true })
+    };
 };
 
 /**
