@@ -36,7 +36,7 @@ type User = Model & {
     /**
         Ob die E-Mail bestätigt wurde.
     */
-    emailConfirmed: boolean;
+    emailVerified: boolean;
 
     /**
         Passwort.
@@ -94,10 +94,10 @@ const UserModel = sequelize.define<User>(
             allowNull: false,
             unique: true
         },
-        emailConfirmed: {
+        emailVerified: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
-            field: "email_confirmed"
+            field: "email_verified"
         },
         password: {
             type: DataTypes.STRING(128),
