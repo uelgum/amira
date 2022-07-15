@@ -6,11 +6,11 @@ import type { Response } from "express";
 /**
     Schickt Daten an den Nutzer zurück.
 */
-const sendData = (res: Response, data: Record<string, any>) => {
+const sendData = (res: Response, data?: Record<string, any>) => {
     res.status(200);
     res.json({
         status: "ok",
-        data
+        data: (data || null)
     });
 };
 
