@@ -15,6 +15,7 @@ import {
 
 // Config
 import config from "@config";
+import { sendVerificationEmail } from "./email";
 
 // #region Types
 /**
@@ -181,7 +182,12 @@ const register = async (data: RegisterData) => {
 
     await user.save();
 
-    // TODO E-Mail senden
+    sendVerificationEmail({
+        id: user.id,
+        name: user.firstName,
+        email: user.email,
+        createdAt: user.createdAt
+    });
 
     return recoveryCode;
 };
