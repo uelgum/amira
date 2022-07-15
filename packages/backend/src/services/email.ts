@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import nodemailer from "nodemailer";
 
 // Intern
@@ -34,6 +36,11 @@ type VerificationData = {
 };
 // #endregion
 
+/**
+    Pfad zu E-Mail-Templates.
+*/
+const EMAILS_PATH = path.join(__dirname, "../../assets/email");
+
 const email = config.email;
 
 /**
@@ -67,13 +74,16 @@ const sendVerificationEmail = async (data: VerificationData) => {
 
     await verification.save();
 
-    // TODO Text hinzufügen
+    const template = fs.readFileSync(path.join(EMAILS_PATH, "verification.html"), "utf-8")
+        .replace("%NAME%", name)
+        .replace(/%LINK%/g, code);
 
     try {
         await transport.sendMail({
             from: "Amira <bot@gumenyuk.de>",
             to: email,
-            subject: "Bestätige Deine E-Mail"
+            subject: "Bestätige Deine E-Mail",
+            html: template
         });
     } catch(error) {
         // noop
