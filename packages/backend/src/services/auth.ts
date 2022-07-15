@@ -172,7 +172,7 @@ const register = async (data: RegisterData) => {
         lastName,
         username,
         email,
-        emailConfirmed: false,
+        emailVerified: false,
         password: passwordHash,
         userKey,
         recoveryKey,
