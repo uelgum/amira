@@ -18,8 +18,8 @@ router.use(isLoggedOut);
 */
 router.post("/login", async (req: Request, res: Response) => {
     try {
-        const token = await login(req.body);
-        sendData(res, { token });
+        const data = await login(req.body);
+        sendData(res, data);
     } catch(error: any) {
         sendError(res, error);
     }
