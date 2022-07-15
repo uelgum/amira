@@ -11,7 +11,7 @@ type Verification = Model & {
     /**
         ID des Nutzers.
     */
-    id: string;
+    userId: string;
 
     /**
         Bestätigung-ID.
@@ -31,10 +31,11 @@ type Verification = Model & {
 const VerificationModel = sequelize.define<Verification>(
     "Verification",
     {
-        id: {
+        userId: {
             type: DataTypes.STRING(20),
             primaryKey: true,
-            allowNull: false
+            allowNull: false,
+            field: "user_id"
         },
         verificationId: {
             type: DataTypes.STRING(64),
