@@ -34,7 +34,6 @@ router.post("/register", async (req: Request, res: Response) => {
         const recoveryCode = await register(req.body);
         sendData(res, { recoveryCode });
     } catch(error: any) {
-        console.log(error);
         sendError(res, error);
     }
 });
