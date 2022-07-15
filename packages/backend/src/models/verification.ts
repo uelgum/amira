@@ -14,7 +14,7 @@ type Verification = Model & {
     userId: string;
 
     /**
-        Bestätigung-ID.
+        Bestätigungs-ID.
     */
     verificationId: string;
 
