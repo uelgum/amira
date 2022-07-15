@@ -109,6 +109,7 @@ const login = async (data: LoginData) => {
 
     const token = await generateJwt({
         id: user.id,
+        firstName: user.firstName,
         username,
         key: passwordKey,
         // TODO Admin-Status hinzufügen
