@@ -1,5 +1,6 @@
 import loginSchema from "@schemas/login";
 import registerSchema from "@schemas/register";
+import passwordResetSchema from "@schemas/passwordReset";
 
 /**
     Validiert erhaltene Login-Daten.
@@ -17,7 +18,16 @@ const validateRegisterData = (data: Record<string, any>) => {
     return !error;
 };
 
+/**
+    Validiert erhaltene Passwort-Reset-Daten.
+*/
+const validatePasswordResetData = (data: Record<string, any>) => {
+    const { error } = passwordResetSchema.validate(data);
+    return !error;
+};
+
 export {
     validateLoginData,
-    validateRegisterData
+    validateRegisterData,
+    validatePasswordResetData
 };
