@@ -8,15 +8,15 @@ import { decrypt, derivePasswordKey, encrypt, generateRecoveryKey, hashPassword 
     Verifiziert die E-Mail eines Nutzers.
 */
 const verifyEmail = async (data: Record<string, any>) => {
-    const { verificationId } = data;
+    const { actionId } = data;
 
-    if(!verificationId) {
+    if(!actionId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
     const verification = await Email.findOne({
         where: {
-            actionId: verificationId
+            actionId
         }
     });
 
