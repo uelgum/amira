@@ -3,7 +3,8 @@ import path from "path";
 import nodemailer from "nodemailer";
 
 // Intern
-import Verification from "@models/verification";
+import Email, { EmailType } from "@models/email";
+import { generateId } from "@services/id";
 import { generateVerificationCode } from "@services/crypto";
 
 // Config
@@ -62,17 +63,19 @@ const transport = nodemailer.createTransport({
     Verschickt eine Bestätigungs-E-Mail.
 */
 const sendVerificationEmail = async (data: VerificationData) => {
-    const { id, name, email, createdAt } = data;
+    const { id, name, email: userEmail, createdAt } = data;
 
     const code = generateVerificationCode(id, createdAt);
 
-    const verification = await Verification.create({
+    const email = await Email.create({
+        id: generateId(),
+        type: EmailType.VERIFICATION,
         userId: id,
-        verificationId: code,
-        createdAt: Date.now()
+        actionId: code,
+        createdAt
     });
 
-    await verification.save();
+    await email.save();
 
     const template = fs.readFileSync(path.join(EMAILS_PATH, "verification.html"), "utf-8")
         .replace("%NAME%", name)
@@ -81,12 +84,12 @@ const sendVerificationEmail = async (data: VerificationData) => {
     try {
         await transport.sendMail({
             from: "Amira <bot@gumenyuk.de>",
-            to: email,
+            to: userEmail,
             subject: "Bestätige Deine E-Mail",
             html: template
         });
     } catch(error) {
-        // noop
+        await email.destroy();
     }
 };
 

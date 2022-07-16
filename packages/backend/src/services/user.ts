@@ -1,6 +1,6 @@
 import AmiraError from "@structs/error";
 import User from "@models/user";
-import Verification from "@models/verification";
+import Email from "@models/email";
 
 /**
     Verifiziert die E-Mail eines Nutzers.
@@ -12,9 +12,9 @@ const verifyEmail = async (data: Record<string, any>) => {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const verification = await Verification.findOne({
+    const verification = await Email.findOne({
         where: {
-            verificationId
+            actionId: verificationId
         }
     });
 
