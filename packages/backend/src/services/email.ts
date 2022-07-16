@@ -95,6 +95,57 @@ const sendVerificationEmail = async (data: VerificationData) => {
     }
 };
 
+/**
+    Verschickt eine E-Mail zum Zurücksetzen des Passworts.
+*/
+const sendPasswordResetEmail = async (data: Record<string, any>) => {
+    const { userEmail, recoveryCode, os, browser } = data;
+
+    if(!userEmail || !recoveryCode) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const user = await User.findOne({
+        where: {
+            email: userEmail
+        }
+    });
+
+    if(!user) {
+        throw new AmiraError(400, "USER_NOT_FOUND");
+    }
+
+    const code = generateActionId(user.id, user.createdAt);
+
+    const email = await Email.create({
+        id: generateId(),
+        type: EmailType.PASSWORD_RESET,
+        userId: user.id,
+        actionId: code,
+        createdAt: Date.now()
+    });
+
+    await email.save();
+
+    const template = fs.readFileSync(path.join(EMAILS_PATH, "passwordReset.html"), "utf-8")
+        .replace("%NAME%", user.firstName)
+        .replace("%OS%", os)
+        .replace("%BROWSER%", browser)
+        .replace(/%LINK%/g, code);
+
+    try {
+        await transport.sendMail({
+            from: "Amira <bot@gumenyuk.de>",
+            to: userEmail,
+            subject: "Passwort-Reset",
+            html: template
+        });
+    } catch(error) {
+        await email.destroy();
+    }
+};
+
 export {
-    sendVerificationEmail
+    sendVerificationEmail,
+    sendPasswordResetEmail
 };
