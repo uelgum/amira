@@ -3,9 +3,11 @@ import path from "path";
 import nodemailer from "nodemailer";
 
 // Intern
+import AmiraError from "@structs/error";
 import Email, { EmailType } from "@models/email";
+import User from "@models/user";
 import { generateId } from "@services/id";
-import { generateVerificationCode } from "@services/crypto";
+import { generateActionId } from "@services/crypto";
 
 // Config
 import config from "@config";
@@ -65,7 +67,7 @@ const transport = nodemailer.createTransport({
 const sendVerificationEmail = async (data: VerificationData) => {
     const { userId, firstName, email: userEmail, createdAt } = data;
 
-    const code = generateVerificationCode(userId, createdAt);
+    const code = generateActionId(userId, createdAt);
 
     const email = await Email.create({
         id: generateId(),
