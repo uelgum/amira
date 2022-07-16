@@ -18,12 +18,12 @@ type VerificationData = {
     /**
         ID des Nutzers.
     */
-    id: string;
+    userId: string;
 
     /**
         Vorname des Nutzers.
     */
-    name: string;
+    firstName: string;
 
     /**
         E-Mail des Nutzers.
@@ -63,14 +63,14 @@ const transport = nodemailer.createTransport({
     Verschickt eine Bestätigungs-E-Mail.
 */
 const sendVerificationEmail = async (data: VerificationData) => {
-    const { id, name, email: userEmail, createdAt } = data;
+    const { userId, firstName, email: userEmail, createdAt } = data;
 
-    const code = generateVerificationCode(id, createdAt);
+    const code = generateVerificationCode(userId, createdAt);
 
     const email = await Email.create({
         id: generateId(),
         type: EmailType.VERIFICATION,
-        userId: id,
+        userId,
         actionId: code,
         createdAt
     });
@@ -78,7 +78,7 @@ const sendVerificationEmail = async (data: VerificationData) => {
     await email.save();
 
     const template = fs.readFileSync(path.join(EMAILS_PATH, "verification.html"), "utf-8")
-        .replace("%NAME%", name)
+        .replace("%NAME%", firstName)
         .replace(/%LINK%/g, code);
 
     try {

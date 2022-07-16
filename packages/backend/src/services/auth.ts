@@ -189,8 +189,8 @@ const register = async (data: RegisterData) => {
     await user.save();
 
     sendVerificationEmail({
-        id: user.id,
-        name: user.firstName,
+        userId: user.id,
+        firstName: user.firstName,
         email: user.email,
         createdAt: user.createdAt
     });
