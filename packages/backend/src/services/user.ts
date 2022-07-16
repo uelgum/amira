@@ -100,6 +100,8 @@ const resetPassword = async (data: Record<string, any>) => {
     user.recoveryKey = newRecoveryKey;
     user.userKey = userKey;
 
+    await user.save();
+
     return newRecoveryCode;
 };
 
