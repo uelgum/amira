@@ -56,7 +56,7 @@ const EmailModel = sequelize.define<Email>(
             unique: true
         },
         type: {
-            type: DataTypes.INTEGER({ unsigned: true }),
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         userId: {
