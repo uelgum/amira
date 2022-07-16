@@ -68,10 +68,11 @@ const generateRecoveryKey = (passwordKey: string) => {
 };
 
 /**
-    Generiert einen Verifizierungs-Code.
+    Generiert eine zufällige Action-ID.
 */
-const generateVerificationCode = (id: string, createdAt: number) => {
-    return MD5(id + createdAt).toString();
+const generateActionId = (id: string, createdAt: number) => {
+    const random = crypto.lib.WordArray.random(16).toString();
+    return MD5(id + createdAt + random).toString();
 };
 
 export {
@@ -82,5 +83,5 @@ export {
     derivePasswordKey,
     generateUserKey,
     generateRecoveryKey,
-    generateVerificationCode
+    generateActionId
 };
