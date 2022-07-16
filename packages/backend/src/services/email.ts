@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import nodemailer from "nodemailer";
+import { Op } from "sequelize";
 
 // Intern
 import AmiraError from "@structs/error";
@@ -44,6 +45,12 @@ type VerificationData = {
 */
 const EMAILS_PATH = path.join(__dirname, "../../assets/email");
 
+/**
+    Zeit, bevor eine E-Mail erneut verschickt werden kann.
+    Stellt 5 Minuten dar.
+*/
+const EMAIL_DELAY = 1000 * 60 * 5;
+
 const email = config.email;
 
 /**
@@ -74,7 +81,7 @@ const sendVerificationEmail = async (data: VerificationData) => {
         type: EmailType.VERIFICATION,
         userId,
         actionId: code,
-        createdAt
+        createdAt: Date.now()
     });
 
     await email.save();
@@ -99,9 +106,9 @@ const sendVerificationEmail = async (data: VerificationData) => {
     Verschickt eine E-Mail zum Zurücksetzen des Passworts.
 */
 const sendPasswordResetEmail = async (data: Record<string, any>) => {
-    const { userEmail, recoveryCode, os, browser } = data;
+    const { userEmail, os, browser } = data;
 
-    if(!userEmail || !recoveryCode) {
+    if(!userEmail) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
@@ -115,6 +122,23 @@ const sendPasswordResetEmail = async (data: Record<string, any>) => {
         throw new AmiraError(400, "USER_NOT_FOUND");
     }
 
+    // Überprüfen, ob eine E-Mail bereits geschickt wurde
+    const reset = await Email.findOne({
+        where: {
+            type: EmailType.PASSWORD_RESET,
+            userId: user.id
+        }
+    });
+
+    if(reset) {
+        if(Date.now() - reset.createdAt < EMAIL_DELAY) {
+            throw new AmiraError(400, "EMAIL_SEND_DELAY");
+        }
+
+        // E-Mail löschen, falls vorhanden
+        await reset.destroy();
+    }
+
     const code = generateActionId(user.id, user.createdAt);
 
     const email = await Email.create({
@@ -126,6 +150,8 @@ const sendPasswordResetEmail = async (data: Record<string, any>) => {
     });
 
     await email.save();
+
+    // TODO OS und Plattform überprüfen
 
     const template = fs.readFileSync(path.join(EMAILS_PATH, "passwordReset.html"), "utf-8")
         .replace("%NAME%", user.firstName)
