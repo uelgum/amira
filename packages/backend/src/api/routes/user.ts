@@ -3,14 +3,13 @@ import { Request, Response, Router } from "express";
 // Intern
 import { sendData, sendError } from "@utils/response";
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
-import { verifyEmail } from "@services/user";
+import { resetPassword, verifyEmail } from "@services/user";
+import { sendPasswordResetEmail } from "@services/email";
 
 /**
     User-Router.
 */
 const router = Router();
-
-router.use(isLoggedIn);
 
 /**
     POST /api/user/verify
@@ -24,5 +23,31 @@ router.post("/verify", async (req: Request, res: Response) => {
         sendError(res, error);
     }
 });
+
+/**
+    POST /api/user/password-reset
+*/
+router.post("/password-reset", async (req: Request, res: Response) => {
+    try {
+        const recoveryCode = await resetPassword(req.body);
+        sendData(res, { recoveryCode });
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/user/password-reset/request
+*/
+router.post("/password-reset/request", async (req: Request, res: Response) => {
+    try {
+        await sendPasswordResetEmail(req.body);
+        sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+router.use(isLoggedIn);
 
 export default router;
