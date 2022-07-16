@@ -4,10 +4,12 @@ import Joi from "joi";
     Schema für Registrierungs-Daten.
 */
 const registerSchema = Joi.object({
+    // Vorname
     firstName: Joi.string()
         .min(1)
         .max(64),
 
+    // Nachname
     lastName: Joi.string()
         .min(1)
         .max(64),
