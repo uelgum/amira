@@ -10,6 +10,7 @@ const passwordResetSchema = Joi.object({
     // Action-ID
     actionId: Joi.string(),
 
+    // Recovery-Code
     recoveryCode: Joi.string()
         .length(19),
 
