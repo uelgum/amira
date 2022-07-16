@@ -62,6 +62,8 @@ const resetPassword = async (data: Record<string, any>) => {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
+    await reset.destroy();
+
     const user = await User.findOne({
         where: {
             id: reset.userId
