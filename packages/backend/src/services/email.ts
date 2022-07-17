@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
+import UAParser from "ua-parser-js";
 import nodemailer from "nodemailer";
-import { Op } from "sequelize";
 
 // Intern
 import AmiraError from "@structs/error";
@@ -12,6 +12,9 @@ import { generateActionId } from "@services/crypto";
 
 // Config
 import config from "@config";
+
+// Types
+import type { Request } from "express";
 
 // #region Types
 /**
@@ -105,8 +108,8 @@ const sendVerificationEmail = async (data: VerificationData) => {
 /**
     Verschickt eine E-Mail zum Zurücksetzen des Passworts.
 */
-const sendPasswordResetEmail = async (data: Record<string, any>) => {
-    const { userEmail, os, browser } = data;
+const sendPasswordResetEmail = async (req: Request) => {
+    const { userEmail } = req.body;
 
     if(!userEmail) {
         throw new AmiraError(400, "INVALID_DATA");
@@ -151,12 +154,17 @@ const sendPasswordResetEmail = async (data: Record<string, any>) => {
 
     await email.save();
 
-    // TODO OS und Plattform überprüfen
+    const ua = new UAParser(req.headers["user-agent"]);
+
+    const ip = req.ip;
+    const os = ua.getOS().name || "[Unbekanntes Betriebssystem]";
+    const browser = ua.getBrowser().name || "[Unbekannter Browser]";
 
     const template = fs.readFileSync(path.join(EMAILS_PATH, "passwordReset.html"), "utf-8")
         .replace("%NAME%", user.firstName)
         .replace("%OS%", os)
         .replace("%BROWSER%", browser)
+        .replace("%IP%", ip)
         .replace(/%LINK%/g, code);
 
     try {
