@@ -1,4 +1,5 @@
 import AmiraError from "@structs/error";
+import sockets from "@loaders/sockets";
 import Notification, { NotificationType } from "@models/notification";
 import { generateId } from "@services/id";
 
@@ -39,6 +40,7 @@ const deleteNotification = async (id: string) => {
 const sendContactRequestNotification = async (data: ContactNotificationData) => {
     const { recipientId, fullName } = data;
 
+    const createdAt = Date.now();
     const content = `${fullName} hat Dir eine Kontakt-Anfrage geschickt.`;
 
     const notification = await Notification.create({
@@ -46,12 +48,20 @@ const sendContactRequestNotification = async (data: ContactNotificationData) => 
         type: NotificationType.CONTACT_REQUEST,
         recipientId,
         content,
-        createdAt: Date.now()
+        createdAt
     });
 
     await notification.save();
 
-    // TODO Mit Socket verschicken, falls vorhanden
+    if(sockets.has(recipientId)) {
+        const socket = sockets.get(recipientId);
+        
+        socket.emit("notification", {
+            type: NotificationType.CONTACT_REQUEST,
+            content,
+            createdAt
+        });
+    }
 };
 
 /**
@@ -60,6 +70,7 @@ const sendContactRequestNotification = async (data: ContactNotificationData) => 
 const sendContactAcceptedNotification = async (data: ContactNotificationData) => {
     const { recipientId, fullName } = data;
 
+    const createdAt = Date.now();
     const content = `${fullName} hat Deine Kontakt-Anfrage angenommen.`;
 
     const notification = await Notification.create({
@@ -67,12 +78,20 @@ const sendContactAcceptedNotification = async (data: ContactNotificationData) =>
         type: NotificationType.CONTACT_ACCEPTED,
         recipientId,
         content,
-        createdAt: Date.now()
+        createdAt
     });
 
     await notification.save();
 
-    // TODO Mit Socket verschicken, falls vorhanden
+    if(sockets.has(recipientId)) {
+        const socket = sockets.get(recipientId);
+        
+        socket.emit("notification", {
+            type: NotificationType.CONTACT_REQUEST,
+            content,
+            createdAt
+        });
+    }
 };
 
 export {
