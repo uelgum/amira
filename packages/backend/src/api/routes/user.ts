@@ -41,7 +41,7 @@ router.post("/password-reset", async (req: Request, res: Response) => {
 */
 router.post("/password-reset/request", async (req: Request, res: Response) => {
     try {
-        await sendPasswordResetEmail(req.body);
+        await sendPasswordResetEmail(req);
         sendData(res);
     } catch(error: any) {
         sendError(res, error);
