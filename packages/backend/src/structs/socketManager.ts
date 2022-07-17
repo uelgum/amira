@@ -35,6 +35,13 @@ class SocketManager {
     }
 
     /**
+        Überprüft, ob ein Socket im Manager vorhanden ist.
+    */
+    public has(id: string) {
+        return this.sockets.has(id);
+    }
+
+    /**
         Fügt einen Socket zum Manager hinzu.
     */
     public add(socket: Socket) {
