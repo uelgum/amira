@@ -26,6 +26,7 @@ router.post("/verify", async (req: Request, res: Response) => {
 
 /**
     POST /api/user/password-reset
+    Setzt das Passwort zurück.
 */
 router.post("/password-reset", async (req: Request, res: Response) => {
     try {
@@ -38,6 +39,7 @@ router.post("/password-reset", async (req: Request, res: Response) => {
 
 /**
     POST /api/user/password-reset/request
+    Schickt eine E-Mail zum Zurücksetzen des Passworts.
 */
 router.post("/password-reset/request", async (req: Request, res: Response) => {
     try {
