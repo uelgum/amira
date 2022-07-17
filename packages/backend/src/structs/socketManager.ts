@@ -42,6 +42,17 @@ class SocketManager {
     }
 
     /**
+        Gibt einen Socket aus dem Manager zurück.
+    */
+    public get(id: string) {
+        if(!this.has(id)) {
+            throw new Error("SOCKET_NOT_FOUND");
+        }
+
+        return this.sockets.get(id)!;
+    }
+
+    /**
         Fügt einen Socket zum Manager hinzu.
     */
     public add(socket: Socket) {
