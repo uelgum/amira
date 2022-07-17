@@ -1,3 +1,6 @@
+import onDisconnect from "@api/events/disconnect";
+
+// Types
 import type { Socket } from "socket.io";
 
 /**
@@ -45,6 +48,7 @@ class SocketManager {
         }
 
         // TODO Events hinzufügen
+        socket.on("disconnect", onDisconnect.bind(null, this, socket));
 
         this.sockets.set(socketId, socket);
     }
