@@ -20,6 +20,9 @@ type ContactNotificationData = {
 };
 // #endregion
 
+/**
+    Entfernt eine Benachrichtung.
+*/
 const deleteNotification = async (id: string) => {
     const notification = await Notification.findOne({
         where: {
