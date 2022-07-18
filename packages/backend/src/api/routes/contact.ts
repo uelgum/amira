@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
 
 // Intern
-import { sendData, sendError } from "@utils/response";
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
+import { sendData, sendError } from "@utils/response";
 import {
     acceptContactRequest,
     rejectContactRequest,
