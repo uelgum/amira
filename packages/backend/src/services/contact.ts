@@ -57,6 +57,34 @@ const sendContactRequest = async (req: Request) => {
 };
 
 /**
+    Zieht eine Kontakt-Anfrage an einen Nutzer zurück.
+*/
+const withdrawContactRequest = async (req: Request) => {
+    const userId = req.user.id;
+    const { recipientId } = req.body;
+
+    if(!recipientId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const contact = await Contact.findOne({
+        where: {
+            [ Op.or ]: [
+                { id1: userId, id2: recipientId },
+                { id1: recipientId, id2: userId }
+            ],
+            confirmed: false
+        }
+    });
+
+    if(!contact) {
+        throw new AmiraError(400, "CONTACT_NOT_FOUND");
+    }
+
+    await contact.destroy();
+};
+
+/**
     Akzeptiert eine Kontakt-Anfrage eines Nutzers.
 */
 const acceptContactRequest = async (req: Request) => {
@@ -165,6 +193,7 @@ const removeContact = async (req: Request) => {
 
 export {
     sendContactRequest,
+    withdrawContactRequest,
     acceptContactRequest,
     rejectContactRequest,
     removeContact
