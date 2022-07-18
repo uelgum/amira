@@ -122,7 +122,7 @@ const sendPasswordResetEmail = async (req: Request) => {
     });
 
     if(!user) {
-        throw new AmiraError(400, "USER_NOT_FOUND");
+        throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
     // Überprüfen, ob eine E-Mail bereits geschickt wurde

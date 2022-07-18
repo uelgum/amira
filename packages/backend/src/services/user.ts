@@ -31,7 +31,7 @@ const verifyEmail = async (data: Record<string, any>) => {
     });
 
     if(!user) {
-        throw new AmiraError(400, "USER_NOT_FOUND");
+        throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
     user.emailVerified = true;

@@ -27,7 +27,7 @@ const sendContactRequest = async (req: Request) => {
     const recipientExists = await exists(User, { id: recipientId });
 
     if(!recipientExists) {
-        throw new AmiraError(400, "RECIPIENT_NOT_FOUND");
+        throw new AmiraError(404, "RECIPIENT_NOT_FOUND");
     }
 
     // TODO Blockliste von Recipient überprüfen
@@ -47,7 +47,7 @@ const sendContactRequest = async (req: Request) => {
     });
 
     if(!sender) {
-        throw new AmiraError(400, "SENDER_NOT_FOUND");
+        throw new AmiraError(404, "SENDER_NOT_FOUND");
     }
 
     sendContactRequestNotification({
@@ -78,7 +78,7 @@ const withdrawContactRequest = async (req: Request) => {
     });
 
     if(!contact) {
-        throw new AmiraError(400, "CONTACT_NOT_FOUND");
+        throw new AmiraError(404, "CONTACT_NOT_FOUND");
     }
 
     await contact.destroy();
@@ -106,14 +106,14 @@ const acceptContactRequest = async (req: Request) => {
     });
 
     if(!contact) {
-        throw new AmiraError(400, "CONTACT_NOT_FOUND");
+        throw new AmiraError(404, "CONTACT_NOT_FOUND");
     }
 
     const senderExists = await exists(User, { id: senderId });
 
     if(!senderExists) {
         await contact.destroy();
-        throw new AmiraError(400, "SENDER_NOT_FOUND");
+        throw new AmiraError(404, "SENDER_NOT_FOUND");
     }
 
     contact.confirmed = true;
@@ -157,7 +157,7 @@ const rejectContactRequest = async (req: Request) => {
     });
 
     if(!contact) {
-        throw new AmiraError(400, "CONTACT_NOT_FOUND");
+        throw new AmiraError(404, "CONTACT_NOT_FOUND");
     }
 
     await contact.destroy();
@@ -185,7 +185,7 @@ const removeContact = async (req: Request) => {
     });
 
     if(!contact) {
-        throw new AmiraError(400, "CONTACT_NOT_FOUND");
+        throw new AmiraError(404, "CONTACT_NOT_FOUND");
     }
 
     await contact.destroy();
