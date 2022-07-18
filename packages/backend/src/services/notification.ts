@@ -1,6 +1,11 @@
+import { Op } from "sequelize";
+
+// Intern
 import AmiraError from "@structs/error";
 import sockets from "@loaders/sockets";
 import Notification, { NotificationType } from "@models/notification";
+import User from "@models/user";
+import Contact from "@models/contact";
 import { generateId } from "@services/id";
 
 // #region Types
@@ -18,6 +23,11 @@ type ContactNotificationData = {
     */
     fullName: string;
 };
+
+/**
+    Presence-Status.
+*/
+type PresenceStatus = "online" | "offline";
 // #endregion
 
 /**
@@ -97,8 +107,49 @@ const sendContactAcceptedNotification = async (data: ContactNotificationData) =>
     }
 };
 
+/**
+    Schickt ein Presence-Update an alle verbundenen Kontakte in Echtzeit.
+*/
+const sendPresenceUpdate = async (userId: string, status: PresenceStatus) => {
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    });
+
+    if(!user) return;
+
+    const contacts = await Contact.findAll({
+        where: {
+            [ Op.or ]: [
+                { id1: userId },
+                { id2: userId }
+            ],
+            confirmed: true
+        }
+    });
+
+    if(contacts.length === 0) return;
+
+    for(const contact of contacts) {
+        // ID des anderen Nutzers finden
+        const contactId = (userId === contact.id1) ? contact.id2 : contact.id1;
+
+        if(!sockets.has(contactId)) continue;
+
+        const socket = sockets.get(contactId);
+
+        socket.emit("presenceUpdate", {
+            id: userId,
+            status,
+            fullName: `${user.firstName} ${user.lastName}`
+        });
+    }
+};
+
 export {
     deleteNotification,
     sendContactRequestNotification,
-    sendContactAcceptedNotification
+    sendContactAcceptedNotification,
+    sendPresenceUpdate
 };
