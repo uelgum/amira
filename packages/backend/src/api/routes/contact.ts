@@ -7,7 +7,8 @@ import {
     acceptContactRequest,
     rejectContactRequest,
     removeContact,
-    sendContactRequest
+    sendContactRequest,
+    withdrawContactRequest
 } from "@services/contact";
 
 /**
@@ -24,6 +25,19 @@ router.use(isLoggedIn);
 router.post("/request", async (req: Request, res: Response) => {
     try {
         await sendContactRequest(req);
+        sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/contact/withdraw
+    Zieht eine Kontakt-Anfrage an einen Nutzer zurück.
+*/
+router.post("/withdraw", async (req: Request, res: Response) => {
+    try {
+        await withdrawContactRequest(req);
         sendData(res);
     } catch(error: any) {
         sendError(res, error);
