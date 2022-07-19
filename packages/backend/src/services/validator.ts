@@ -1,6 +1,7 @@
 import loginSchema from "@schemas/login";
 import registerSchema from "@schemas/register";
 import passwordResetSchema from "@schemas/passwordReset";
+import taskSchema from "@schemas/apps/task";
 
 /**
     Validiert erhaltene Login-Daten.
@@ -26,8 +27,14 @@ const validatePasswordResetData = (data: Record<string, any>) => {
     return !error;
 };
 
+const validateTaskData = (data: Record<string, any>) => {
+    const { error } = taskSchema.validate(data);
+    return !error;
+};
+
 export {
     validateLoginData,
     validateRegisterData,
-    validatePasswordResetData
+    validatePasswordResetData,
+    validateTaskData
 };
