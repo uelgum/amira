@@ -148,13 +148,19 @@ const updateTask = async (req: Request) => {
     const userId = req.user.id;
     const passwordKey = req.user.key;
 
+    const { taskId } = req.params;
+
+    if(!taskId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
     const isValid = validateTaskData(req.body);
 
     if(!isValid) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const { taskId, content, done } = req.body;
+    const { content, done } = req.body;
 
     const user = await User.findOne({
         where: {
