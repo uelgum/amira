@@ -15,9 +15,9 @@ const router = Router();
     POST /api/user/verify
     Verifiziert die E-Mail-Adresse eines Nutzers.
 */
-router.post("/verify", async (req: Request, res: Response) => {
+router.post("/verify/:actionId", async (req: Request, res: Response) => {
     try {
-        await verifyEmail(req.body);
+        await verifyEmail(req.params);
         sendData(res);
     } catch(error: any) {
         sendError(res, error);
