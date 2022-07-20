@@ -57,7 +57,7 @@ const getTask = async (req: Request) => {
     const userId = req.user.id;
     const passwordKey = req.user.key;
 
-    const { taskId } = req.body;
+    const { taskId } = req.params;
 
     if(!taskId) {
         throw new AmiraError(400, "INVALID_DATA");
