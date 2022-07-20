@@ -200,7 +200,7 @@ const updateTask = async (req: Request) => {
 */
 const deleteTask = async (req: Request) => {
     const userId = req.user.id;
-    const { taskId } = req.body;
+    const { taskId } = req.params;
 
     if(!taskId) {
         throw new AmiraError(400, "INVALID_DATA");
