@@ -48,6 +48,8 @@ const createTask = async (req: Request) => {
     });
 
     await task.save();
+
+    return task.id;
 };
 
 /**
