@@ -9,6 +9,11 @@ import { validateTaskData } from "@services/validator";
 import type { Request } from "express";
 
 /**
+    Maximale Anzahl der Tasks.
+*/
+const MAX_TASKS = 10;
+
+/**
     Erstellt einen neuen Task.
 */
 const createTask = async (req: Request) => {
@@ -29,6 +34,16 @@ const createTask = async (req: Request) => {
 
     if(!user) {
         throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    const taskCount = await Task.count({
+        where: {
+            userId
+        }
+    });
+
+    if(taskCount === MAX_TASKS) {
+        throw new AmiraError(400, "TASK_LIMIT_EXCEEDED");
     }
 
     const userKey = decrypt(user.userKey, passwordKey);
