@@ -4,11 +4,14 @@ import Email from "@models/email";
 import { validatePasswordResetData } from "@services/validator";
 import { decrypt, derivePasswordKey, encrypt, generateRecoveryKey, hashPassword } from "@services/crypto";
 
+// Types
+import type { Request } from "express";
+
 /**
     Verifiziert die E-Mail eines Nutzers.
 */
-const verifyEmail = async (data: Record<string, any>) => {
-    const { actionId } = data;
+const verifyEmail = async (req: Request) => {
+    const { actionId } = req.body;
 
     if(!actionId) {
         throw new AmiraError(400, "INVALID_DATA");
@@ -43,14 +46,14 @@ const verifyEmail = async (data: Record<string, any>) => {
 /**
     Setzt das Passwort zurück.
 */
-const resetPassword = async (data: Record<string, any>) => {
-    const isValid = validatePasswordResetData(data);
+const resetPassword = async (req: Request) => {
+    const isValid = validatePasswordResetData(req.body);
 
     if(!isValid) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const { actionId, recoveryCode, newPassword, newPasswordConfirm } = data;
+    const { actionId, recoveryCode, newPassword, newPasswordConfirm } = req.body;
 
     const reset = await Email.findOne({
         where: {
