@@ -142,8 +142,7 @@ const getAllTasks = async (req: Request) => {
     const tasks = await Task.findAll({
         where: {
             userId
-        },
-        raw: true
+        }
     });
 
     const decryptedTasks = tasks.map((task) => {
