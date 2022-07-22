@@ -17,7 +17,7 @@ const router = Router();
 */
 router.post("/verify/:actionId", async (req: Request, res: Response) => {
     try {
-        await verifyEmail(req.params);
+        await verifyEmail(req);
         sendData(res);
     } catch(error: any) {
         sendError(res, error);
@@ -30,7 +30,7 @@ router.post("/verify/:actionId", async (req: Request, res: Response) => {
 */
 router.post("/password-reset", async (req: Request, res: Response) => {
     try {
-        const recoveryCode = await resetPassword(req.body);
+        const recoveryCode = await resetPassword(req);
         sendData(res, { recoveryCode });
     } catch(error: any) {
         sendError(res, error);
