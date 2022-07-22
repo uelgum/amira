@@ -5,6 +5,7 @@ import AmiraError from "@structs/error";
 import User from "@models/user";
 import { validateLoginData, validateRegisterData } from "@services/validator";
 import { generateId } from "@services/id";
+import { sendVerificationEmail } from "@services/email";
 import {
     comparePassword,
     derivePasswordKey,
@@ -15,7 +16,6 @@ import {
 
 // Config
 import config from "@config";
-import { sendVerificationEmail } from "./email";
 
 // #region Types
 /**
