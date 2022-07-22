@@ -2,7 +2,13 @@ import AmiraError from "@structs/error";
 import User from "@models/user";
 import Email from "@models/email";
 import { validatePasswordResetData } from "@services/validator";
-import { decrypt, derivePasswordKey, encrypt, generateRecoveryKey, hashPassword } from "@services/crypto";
+import {
+    encrypt,
+    decrypt,
+    hashPassword,
+    derivePasswordKey,
+    generateRecoveryKey
+} from "@services/crypto";
 
 // Types
 import type { Request } from "express";
