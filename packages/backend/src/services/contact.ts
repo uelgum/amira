@@ -3,6 +3,7 @@ import { Op } from "sequelize";
 // Intern
 import AmiraError from "@structs/error";
 import Contact from "@models/contact";
+import Block from "@models/block";
 import User from "@models/user";
 import exists from "@utils/exists";
 import {
@@ -30,7 +31,17 @@ const sendContactRequest = async (req: Request) => {
         throw new AmiraError(404, "RECIPIENT_NOT_FOUND");
     }
 
-    // TODO Blockliste von Recipient überprüfen
+    // Blockliste überprüfen
+    const isBlocked = await exists(Block, {
+        [ Op.or ]: [
+            { userId: recipientId, blockedUserId: userId },
+            { userId, blockedUserId: recipientId }
+        ]
+    });
+
+    if(isBlocked) {
+        throw new AmiraError(404, "USER_BLOCKED");
+    }
 
     const contact = await Contact.create({
         id1: userId,
