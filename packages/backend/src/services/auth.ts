@@ -20,58 +20,6 @@ import config from "@config";
 // Types
 import type { Request } from "express";
 
-// #region Types
-/**
-    Erhaltene Login-Daten.
-*/
-type LoginData = {
-    /**
-        Nutzername.
-    */
-    username: string;
-
-    /**
-        Passwort.
-    */
-    password: string;
-};
-
-/**
-    Erhaltene Registrierungs-Daten.
-*/
-type RegisterData = {
-    /**
-        Vorname.
-    */
-    firstName: string;
-
-    /**
-        Nachname.
-    */
-    lastName: string;
-
-    /**
-        Nutzername.
-    */
-    username: string;
-
-    /**
-        E-Mail.
-    */
-    email: string;
-    
-    /**
-        Passwort.
-    */
-    password: string;
-
-    /**
-        Bestätigung des Passworts.
-    */
-    passwordConfirm: string;
-};
-// #endregion
-
 /**
     Generiert ein JWT.
 */
