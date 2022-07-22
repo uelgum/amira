@@ -18,7 +18,7 @@ router.use(isLoggedOut);
 */
 router.post("/login", async (req: Request, res: Response) => {
     try {
-        const data = await login(req.body);
+        const data = await login(req);
         sendData(res, data);
     } catch(error: any) {
         sendError(res, error);
@@ -31,7 +31,7 @@ router.post("/login", async (req: Request, res: Response) => {
 */
 router.post("/register", async (req: Request, res: Response) => {
     try {
-        const recoveryCode = await register(req.body);
+        const recoveryCode = await register(req);
         sendData(res, { recoveryCode });
     } catch(error: any) {
         sendError(res, error);
