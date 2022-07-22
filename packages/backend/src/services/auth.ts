@@ -17,6 +17,9 @@ import {
 // Config
 import config from "@config";
 
+// Types
+import type { Request } from "express";
+
 // #region Types
 /**
     Erhaltene Login-Daten.
@@ -80,14 +83,14 @@ const generateJwt = async (payload: Record<string, any>) => {
 /**
     Meldet einen Nutzer an.
 */
-const login = async (data: LoginData) => {
-    const isValid = validateLoginData(data);
+const login = async (req: Request) => {
+    const isValid = validateLoginData(req.body);
 
     if(!isValid) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const { username, password } = data;
+    const { username, password } = req.body;
 
     const user = await User.findOne({
         where: {
@@ -124,14 +127,21 @@ const login = async (data: LoginData) => {
 /**
     Erstellt ein neues Konto.
 */
-const register = async (data: RegisterData) => {
-    const isValid = validateRegisterData(data);
+const register = async (req: Request) => {
+    const isValid = validateRegisterData(req.body);
 
     if(!isValid) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const { firstName, lastName, username, email, password, passwordConfirm } = data;
+    const {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+        passwordConfirm
+    } = req.body;
 
     const usernameCount = await User.count({
         where: {
