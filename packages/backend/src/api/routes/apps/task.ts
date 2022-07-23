@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 
 // Intern
 import { sendData, sendError } from "@utils/response";
-import { createTask, deleteTask, getAllTasks, getTask, updateTask } from "@services/apps/task";
+import { createTask, deleteAllTasks, deleteTask, getAllTasks, getTask, updateTask } from "@services/apps/task";
 
 /**
     Router für die Task-App.
@@ -68,6 +68,19 @@ router.post("/update/:taskId", async (req: Request, res: Response) => {
 router.post("/delete/:taskId", async (req: Request, res: Response) => {
     try {
         await deleteTask(req);
+        sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/app/task/delete-all
+    Entfernt einen Task eines Nutzers.
+*/
+router.post("/delete-all", async (req: Request, res: Response) => {
+    try {
+        await deleteAllTasks(req);
         sendData(res);
     } catch(error: any) {
         sendError(res, error);
