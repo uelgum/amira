@@ -14,6 +14,11 @@ import {
 import type { Request } from "express";
 
 /**
+    Maximales Alter einer Verifizierung.
+*/
+const MAX_VERIFICATION_AGE = 1000 * 60 * 60 * 24;
+
+/**
     Verifiziert die E-Mail eines Nutzers.
 */
 const verifyEmail = async (req: Request) => {
@@ -31,6 +36,12 @@ const verifyEmail = async (req: Request) => {
 
     if(!verification) {
         throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    // Gültigkeit der Action-ID überprüfen
+    if(Date.now() - verification.createdAt >= MAX_VERIFICATION_AGE) {
+        await verification.destroy();
+        throw new AmiraError(400, "ACTION_ID_EXPIRED");
     }
 
     const user = await User.findOne({
