@@ -236,10 +236,24 @@ const deleteTask = async (req: Request) => {
     await task.destroy();
 };
 
+/**
+    Entfernt alle Tasks eines Nutzers.
+*/
+const deleteAllTasks = async (req: Request) => {
+    const userId = req.user.id;
+
+    await Task.destroy({
+        where: {
+            userId
+        }
+    });
+};
+
 export {
     createTask,
     getTask,
     getAllTasks,
     updateTask,
-    deleteTask
+    deleteTask,
+    deleteAllTasks
 };
