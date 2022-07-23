@@ -3,7 +3,7 @@ import { Request, Response, Router } from "express";
 // Intern
 import { sendData, sendError } from "@utils/response";
 import {
-    createTask,
+    addTask,
     deleteAllTasks,
     deleteTask,
     getAllTasks,
@@ -48,7 +48,7 @@ router.get("/get/:taskId", async (req: Request, res: Response) => {
 */
 router.post("/add", async (req: Request, res: Response) => {
     try {
-        const taskId = await createTask(req);
+        const taskId = await addTask(req);
         sendData(res, { taskId });
     } catch(error: any) {
         sendError(res, error);

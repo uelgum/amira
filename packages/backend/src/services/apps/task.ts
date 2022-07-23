@@ -16,7 +16,7 @@ const MAX_TASKS = 10;
 /**
     Erstellt einen neuen Task.
 */
-const createTask = async (req: Request) => {
+const addTask = async (req: Request) => {
     const userId = req.user.id;
     const passwordKey = req.user.key;
 
@@ -250,7 +250,7 @@ const deleteAllTasks = async (req: Request) => {
 };
 
 export {
-    createTask,
+    addTask,
     getTask,
     getAllTasks,
     updateTask,
