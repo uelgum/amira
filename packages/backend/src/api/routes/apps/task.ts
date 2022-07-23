@@ -2,7 +2,14 @@ import { Request, Response, Router } from "express";
 
 // Intern
 import { sendData, sendError } from "@utils/response";
-import { createTask, deleteAllTasks, deleteTask, getAllTasks, getTask, updateTask } from "@services/apps/task";
+import {
+    createTask,
+    deleteAllTasks,
+    deleteTask,
+    getAllTasks,
+    getTask,
+    updateTask
+} from "@services/apps/task";
 
 /**
     Router für die Task-App.
