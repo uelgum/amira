@@ -1,5 +1,6 @@
 import path from "path";
 import glob from "glob-promise";
+import pg from "pg";
 import { Sequelize } from "sequelize";
 
 // Intern
@@ -14,6 +15,9 @@ import config from "@config";
 const MODELS_PATH = path.join(__dirname, "../models/*.js");
 
 const psql = config.psql;
+
+// BigInt wird dadurch als Zahl zurückgegeben
+pg.defaults.parseInt8 = true;
 
 /**
     Sequelize.
