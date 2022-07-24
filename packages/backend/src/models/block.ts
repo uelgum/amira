@@ -7,7 +7,7 @@ import sequelize from "@loaders/sequelize";
 /**
     Block-Model in der Datenbank.
 */
-type BlockModel = Model & {
+type Block = Model & {
     /**
         ID des Blocks.
     */
@@ -33,7 +33,7 @@ type BlockModel = Model & {
 /**
     Block-Model in der Datenbank.
 */
-const BlockModel = sequelize.define<BlockModel>(
+const BlockModel = sequelize.define<Block>(
     "Block",
     {
         id: {
