@@ -134,7 +134,7 @@ const sendPasswordResetEmail = async (req: Request) => {
     });
 
     if(reset) {
-        if(Date.now() - reset.createdAt < EMAIL_DELAY) {
+        if(Date.now() - reset.createdAt <= EMAIL_DELAY) {
             throw new AmiraError(400, "EMAIL_SEND_DELAY");
         }
 
