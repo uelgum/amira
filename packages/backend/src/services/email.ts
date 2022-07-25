@@ -89,7 +89,9 @@ const sendVerificationEmail = async (data: VerificationData) => {
 
     await email.save();
 
-    const template = fs.readFileSync(path.join(EMAILS_PATH, "verification.html"), "utf-8")
+    const templatePath = path.join(EMAILS_PATH, "verification.html");
+
+    const template = fs.readFileSync(templatePath, "utf-8")
         .replace("%NAME%", firstName)
         .replace(/%LINK%/g, code);
 
@@ -160,7 +162,9 @@ const sendPasswordResetEmail = async (req: Request) => {
     const os = ua.getOS().name || "[Unbekanntes Betriebssystem]";
     const browser = ua.getBrowser().name || "[Unbekannter Browser]";
 
-    const template = fs.readFileSync(path.join(EMAILS_PATH, "passwordReset.html"), "utf-8")
+    const templatePath = path.join(EMAILS_PATH, "passwordReset.html")
+
+    const template = fs.readFileSync(templatePath, "utf-8")
         .replace("%NAME%", user.firstName)
         .replace("%OS%", os)
         .replace("%BROWSER%", browser)
