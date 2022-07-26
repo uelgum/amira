@@ -3,7 +3,7 @@ import { Request, Response, Router } from "express";
 // Intern
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
-import { resetPassword, verifyEmail } from "@services/user";
+import { blockUser, resetPassword, unblockUser, verifyEmail } from "@services/user";
 import { sendPasswordResetEmail } from "@services/email";
 
 /**
@@ -51,5 +51,31 @@ router.post("/password-reset/request", async (req: Request, res: Response) => {
 });
 
 router.use(isLoggedIn);
+
+/**
+    POST /api/user/block/:blockedUserId
+    Blockiert einen anderen Nutzer.
+*/
+router.post("/block/:blockedUserId", async (req: Request, res: Response) => {
+    try {
+        await blockUser(req);
+        sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/user/unblock/:blockedUserId
+    Entblockt einen anderen Nutzer.
+*/
+router.post("/unblock/:blockedUserId", async (req: Request, res: Response) => {
+    try {
+        await unblockUser(req);
+        sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
 
 export default router;
