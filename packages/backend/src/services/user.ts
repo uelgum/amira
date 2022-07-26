@@ -1,6 +1,8 @@
 import AmiraError from "@structs/error";
 import User from "@models/user";
 import Email from "@models/email";
+import Block from "@models/block";
+import { generateId } from "@services/id";
 import { validatePasswordResetData } from "@services/validator";
 import {
     encrypt,
@@ -9,6 +11,7 @@ import {
     derivePasswordKey,
     generateRecoveryKey
 } from "@services/crypto";
+import exists from "@utils/exists";
 
 // Types
 import type { Request } from "express";
@@ -125,7 +128,67 @@ const resetPassword = async (req: Request) => {
     return newRecoveryCode;
 };
 
+/**
+    Blockiert einen anderen Nutzer.
+*/
+const blockUser = async (req: Request) => {
+    const userId = req.user.id;
+    const { blockedUserId } = req.params;
+
+    if(!blockedUserId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const blockExists = await exists(Block, {
+        id: userId,
+        blockedUserId
+    });
+
+    if(blockExists) {
+        throw new AmiraError(400, "USER_ALREADY_BLOCKED");
+    }
+
+    const block = await Block.create({
+        id: generateId(),
+        userId,
+        blockedUserId,
+        createdAt: Date.now()
+    });
+
+    await block.save();
+};
+
+/**
+    Entblockt einen anderen Nutzer.
+*/
+const unblockUser = async (req: Request) => {
+    const userId = req.user.id;
+    const { blockedUserId } = req.params;
+
+    if(!blockedUserId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const blockExists = await exists(Block, {
+        id: userId,
+        blockedUserId
+    });
+
+    if(!blockExists) {
+        throw new AmiraError(404, "BLOCK_NOT_FOUND");
+    }
+
+    await Block.destroy({
+        where: {
+            id: userId,
+            blockedUserId
+        }
+    });
+};
+
 export {
     verifyEmail,
-    resetPassword
+    resetPassword,
+    blockUser,
+    unblockUser
 };
