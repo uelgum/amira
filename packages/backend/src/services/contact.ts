@@ -5,11 +5,11 @@ import AmiraError from "@structs/error";
 import Contact from "@models/contact";
 import Block from "@models/block";
 import User from "@models/user";
-import exists from "@utils/exists";
 import {
     sendContactAcceptedNotification,
     sendContactRequestNotification
 } from "@services/notification";
+import exists from "@utils/exists";
 
 // Types
 import type { Request } from "express";
