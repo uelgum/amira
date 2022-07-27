@@ -1,3 +1,6 @@
+import { sendPresenceUpdate } from "@services/notification";
+
+// Types
 import type { Socket } from "socket.io";
 import type SocketManager from "@structs/socketManager";
 
@@ -11,8 +14,10 @@ const DEBOUNCE_DURATION = 1000 * 10;
     Wird ausgeführt, sobald ein Socket die Verbindung trennt.
 */
 const onDisconnect = (socketManager: SocketManager, socket: Socket) => {
+    const socketId = socket.user.id;
+
     const handler = () => {
-        // TODO Presence Update
+        sendPresenceUpdate(socketId, "offline");
         socketManager.remove(socket);
     };
 
