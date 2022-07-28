@@ -1,4 +1,4 @@
-import { sendPresenceUpdate } from "@services/notification";
+import { PresenceStatus, sendPresenceUpdate } from "@services/notification";
 
 // Types
 import type { Socket } from "socket.io";
@@ -18,7 +18,7 @@ const onConnect = (socketManager: SocketManager, socket: Socket) => {
 
     socketManager.add(socket);
 
-    sendPresenceUpdate(socketId, "online");
+    sendPresenceUpdate(socketId, PresenceStatus.ONLINE);
 };
 
 export default onConnect;

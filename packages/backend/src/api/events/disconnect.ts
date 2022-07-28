@@ -1,4 +1,4 @@
-import { sendPresenceUpdate } from "@services/notification";
+import { PresenceStatus, sendPresenceUpdate } from "@services/notification";
 
 // Types
 import type { Socket } from "socket.io";
@@ -17,7 +17,7 @@ const onDisconnect = (socketManager: SocketManager, socket: Socket) => {
     const socketId = socket.user.id;
 
     const handler = () => {
-        sendPresenceUpdate(socketId, "offline");
+        sendPresenceUpdate(socketId, PresenceStatus.OFFLINE);
         socketManager.remove(socket);
     };
 
