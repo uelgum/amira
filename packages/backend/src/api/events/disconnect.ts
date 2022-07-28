@@ -5,7 +5,7 @@ import type { Socket } from "socket.io";
 import type SocketManager from "@structs/socketManager";
 
 /**
-    Länge eines Debounces.
+    Länge eines Debounces. Entspricht 10 Sekunden.
 */
 const DEBOUNCE_DURATION = 1000 * 10;
 
