@@ -27,7 +27,12 @@ type ContactNotificationData = {
 /**
     Presence-Status.
 */
-type PresenceStatus = "online" | "offline";
+enum PresenceStatus {
+    ONLINE,
+    DND,
+    AWAY,
+    OFFLINE
+};
 // #endregion
 
 /**
@@ -148,6 +153,7 @@ const sendPresenceUpdate = async (userId: string, status: PresenceStatus) => {
 };
 
 export {
+    PresenceStatus,
     deleteNotification,
     sendContactRequestNotification,
     sendContactAcceptedNotification,
