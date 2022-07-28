@@ -59,4 +59,5 @@ const BlockModel = sequelize.define<Block>(
         }
     }
 );
+
 export default BlockModel;
