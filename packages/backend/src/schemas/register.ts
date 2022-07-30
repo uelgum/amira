@@ -38,12 +38,6 @@ const registerSchema = Joi.object({
         .min(8)
         .max(32)
         .regex(PASSWORD_REGEX),
-
-    // Bestätigung des Passworts
-    passwordConfirm: Joi.string()
-        .min(8)
-        .max(32)
-        .regex(PASSWORD_REGEX),
     
     // Public-Key (OpenPGP)
     publicKey: Joi.string()
