@@ -4,10 +4,15 @@ import Joi from "joi";
     Schema für Login-Daten.
 */
 const loginSchema = Joi.object({
-    // Nutzername
-    username: Joi.string()
-        .min(1)
-        .max(16),
+    // Nutzername oder E-Mail
+    usernameOrEmail: [
+        Joi.string()
+            .min(1)
+            .max(16),
+
+        Joi.string()
+            .email()
+    ],
 
     // Passwort
     password: Joi.string()
