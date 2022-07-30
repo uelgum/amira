@@ -118,16 +118,6 @@ const UserModel = sequelize.define<User>(
             type: DataTypes.STRING(128),
             allowNull: false
         },
-        // userKey: {
-        //     type: DataTypes.STRING(128),
-        //     allowNull: false,
-        //     field: "user_key"
-        // },
-        // recoveryKey: {
-        //     type: DataTypes.STRING(128),
-        //     allowNull: false,
-        //     field: "recovery_key"
-        // },
         keys: {
             type: DataTypes.JSONB,
             allowNull: false
