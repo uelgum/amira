@@ -120,14 +120,14 @@ const register = async (req: Request) => {
     // Passwort-Hash (bcrypt), wird in der Datenbank gespeichert
     const passwordHash = await hashPassword(password);
 
-    // Passwort-Key (SHA-256), um damit den zufällig generierten User-Key zu verschlüsseln
+    // Passwort-Key (PBKDF2), um damit den zufällig generierten User-Key zu verschlüsseln
     const passwordKey = derivePasswordKey(password, createdAt);
     
     // User-Key wird zum Verschlüsseln persönlicher Daten genutzt, und in der
     // Datenbank gespeichert
     const userKey = generateUserKey(passwordKey);
 
-    // Password-Key mit zufällig generiertem Recovery-Code verschlüsselt, um
+    // Passwort-Key mit zufällig generiertem Recovery-Code verschlüsselt, um
     // verlorene Passwörter wiederherzustellen
     const [ recoveryCode, recoveryKey ] = generateRecoveryKey(passwordKey);
 
