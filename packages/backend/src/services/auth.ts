@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import jwt from "jwt-promisify";
 
 // Intern
@@ -38,11 +39,14 @@ const login = async (req: Request) => {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const { username, password } = req.body;
+    const { usernameOrEmail, password } = req.body;
 
     const user = await User.findOne({
         where: {
-            username: username
+            [ Op.or ]: [
+                { username: usernameOrEmail },
+                { email: usernameOrEmail }
+            ]
         }
     });
 
@@ -61,7 +65,7 @@ const login = async (req: Request) => {
     const token = await generateJwt({
         id: user.id,
         firstName: user.firstName,
-        username,
+        username: user.username,
         key: passwordKey,
         // TODO Admin-Status hinzufügen
     });
