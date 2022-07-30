@@ -5,6 +5,28 @@ import sequelize from "@loaders/sequelize";
 
 // #region Types
 /**
+    Schlüssel des Nutzers.
+*/
+type Keys = {
+    /**
+        Verschlüsselter User-Key, der zum Verschlüsseln und Entschlüsseln
+        von Nutzerdaten verwendet wird.
+    */
+    userKey: string;
+
+    /**
+        Verschlüsselter Passwort-Key, der im Falle eines verlorenen Passworts
+        zum Zurücksetzen des Passworts verwendet werden kann.
+    */
+    recoveryKey: string;
+
+    /**
+        Public-Key des Nutzers (OpenPGP).
+    */
+    publicKey: string;
+};
+
+/**
     User-Model in der Datenbank.
 */
 type User = Model & {
@@ -44,16 +66,9 @@ type User = Model & {
     password: string;
 
     /**
-        Verschlüsselter User-Key, der zum Verschlüsseln und Entschlüsseln
-        von Nutzerdaten verwendet wird.
+        Schlüssel des Nutzers.
     */
-    userKey: string;
-
-    /**
-        Verschlüsselter Passwort-Key, der im Falle eines verlorenen Passworts
-        zum Zurücksetzen des Passworts verwendet werden kann.
-    */
-    recoveryKey: string;
+    keys: Keys;
 
     /**
         Erstelldatum des Kontos.
@@ -103,15 +118,19 @@ const UserModel = sequelize.define<User>(
             type: DataTypes.STRING(128),
             allowNull: false
         },
-        userKey: {
-            type: DataTypes.STRING(128),
-            allowNull: false,
-            field: "user_key"
-        },
-        recoveryKey: {
-            type: DataTypes.STRING(128),
-            allowNull: false,
-            field: "recovery_key"
+        // userKey: {
+        //     type: DataTypes.STRING(128),
+        //     allowNull: false,
+        //     field: "user_key"
+        // },
+        // recoveryKey: {
+        //     type: DataTypes.STRING(128),
+        //     allowNull: false,
+        //     field: "recovery_key"
+        // },
+        keys: {
+            type: DataTypes.JSONB,
+            allowNull: false
         },
         createdAt: {
             type: DataTypes.BIGINT,
