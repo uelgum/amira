@@ -92,7 +92,6 @@ const register = async (req: Request) => {
         username,
         email,
         password,
-        passwordConfirm,
         publicKey
     } = req.body;
 
@@ -114,10 +113,6 @@ const register = async (req: Request) => {
 
     if(emailCount > 0) {
         throw new AmiraError(400, "EMAIL_TAKEN");
-    }
-
-    if(password !== passwordConfirm) {
-        throw new AmiraError(400, "MISMATCHED_PASSWORDS");
     }
 
     const createdAt = Date.now();
