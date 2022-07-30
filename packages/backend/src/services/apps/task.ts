@@ -46,7 +46,7 @@ const addTask = async (req: Request) => {
         throw new AmiraError(400, "TASK_LIMIT_EXCEEDED");
     }
 
-    const userKey = decrypt(user.userKey, passwordKey);
+    const userKey = decrypt(user.keys.userKey, passwordKey);
 
     if(userKey.length === 0) {
         throw new AmiraError(400, "INVALID_USER_KEY");
@@ -90,7 +90,7 @@ const getTask = async (req: Request) => {
         throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
-    const userKey = decrypt(user.userKey, passwordKey);
+    const userKey = decrypt(user.keys.userKey, passwordKey);
 
     if(userKey.length === 0) {
         throw new AmiraError(400, "INVALID_USER_KEY");
@@ -133,7 +133,7 @@ const getAllTasks = async (req: Request) => {
         throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
-    const userKey = decrypt(user.userKey, passwordKey);
+    const userKey = decrypt(user.keys.userKey, passwordKey);
 
     if(userKey.length === 0) {
         throw new AmiraError(400, "INVALID_USER_KEY");
@@ -188,7 +188,7 @@ const updateTask = async (req: Request) => {
         throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
-    const userKey = decrypt(user.userKey, passwordKey);
+    const userKey = decrypt(user.keys.userKey, passwordKey);
 
     if(userKey.length === 0) {
         throw new AmiraError(400, "INVALID_USER_KEY");
