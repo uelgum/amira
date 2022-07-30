@@ -101,7 +101,7 @@ const resetPassword = async (req: Request) => {
         throw new AmiraError(400, "MISMATCHED_PASSWORDS");
     }
 
-    const oldPasswordKey = decrypt(user.recoveryKey, recoveryCode);
+    const oldPasswordKey = decrypt(user.keys.recoveryKey, recoveryCode);
 
     if(oldPasswordKey.length === 0) {
         throw new AmiraError(400, "INVALID_RECOVERY_CODE");
@@ -115,13 +115,13 @@ const resetPassword = async (req: Request) => {
 
     // User-Key mit altem Passwort-Key entschlüsseln und mit neuem Passwort-Key verschlüsseln
     const userKey = encrypt(
-        decrypt(user.userKey, oldPasswordKey),
+        decrypt(user.keys.userKey, oldPasswordKey),
         newPasswordKey
     );
 
     user.password = newPasswordHash;
-    user.recoveryKey = newRecoveryKey;
-    user.userKey = userKey;
+    user.keys.recoveryKey = newRecoveryKey;
+    user.keys.userKey = userKey;
 
     await user.save();
 
