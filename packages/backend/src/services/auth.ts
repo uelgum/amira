@@ -67,7 +67,7 @@ const login = async (req: Request) => {
         firstName: user.firstName,
         username: user.username,
         key: passwordKey,
-        // TODO Admin-Status hinzufügen
+        admin: user.admin
     });
 
     return {
@@ -144,6 +144,7 @@ const register = async (req: Request) => {
             recoveryKey,
             publicKey
         },
+        admin: false,
         createdAt
     });
 
