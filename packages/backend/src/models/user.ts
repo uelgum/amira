@@ -71,6 +71,11 @@ type User = Model & {
     keys: Keys;
 
     /**
+        Ob der Nutzer ein Admin ist.
+    */
+    admin: boolean;
+
+    /**
         Erstelldatum des Kontos.
     */
     createdAt: number;
@@ -120,6 +125,10 @@ const UserModel = sequelize.define<User>(
         },
         keys: {
             type: DataTypes.JSONB,
+            allowNull: false
+        },
+        admin: {
+            type: DataTypes.BOOLEAN,
             allowNull: false
         },
         createdAt: {
