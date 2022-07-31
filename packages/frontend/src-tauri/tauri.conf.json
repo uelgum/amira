@@ -55,11 +55,11 @@
     },
     "windows": [
       {
-        "fullscreen": false,
-        "minHeight": 600,
-        "resizable": true,
         "title": "Amira",
         "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
         "decorations": false
       }
     ]
