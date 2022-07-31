@@ -59,7 +59,8 @@
         "minHeight": 600,
         "resizable": true,
         "title": "Amira",
-        "minWidth": 800
+        "minWidth": 800,
+        "decorations": false
       }
     ]
   }
