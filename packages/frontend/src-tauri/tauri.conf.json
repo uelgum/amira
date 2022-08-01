@@ -12,7 +12,19 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "fs": {
+        "writeFile": true,
+        "readFile": true,
+        "scope": [
+          "$DATA/Amira/*"
+        ]
+      },
+      "path": {
+        "all": true
+      },
+      "window": {
+        "all": true
+      }
     },
     "bundle": {
       "active": true,
