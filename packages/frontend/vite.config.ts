@@ -16,6 +16,7 @@ export default defineConfig({
     resolve: {
         alias: [
             { find: "@components", replacement: path.join(__dirname, "src/components") },
+            { find: "@stores", replacement: path.join(__dirname, "src/stores") },
             { find: "@utils", replacement: path.join(__dirname, "src/utils") },
             { find: "@views", replacement: path.join(__dirname, "src/views") }
         ]
