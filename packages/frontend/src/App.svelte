@@ -1,7 +1,12 @@
 <script lang="ts">
-    let name = "Welt";
+    // Komponente
+    import TitleBar from "@components/TitleBar.svelte";
+
+    const isTauri = !!window.__TAURI_METADATA__;
 </script>
 
 <main>
-    <h1>Hallo {name}!</h1>
+    {#if isTauri}
+        <TitleBar/>
+    {/if}
 </main>
