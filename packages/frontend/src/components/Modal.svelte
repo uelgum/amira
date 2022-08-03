@@ -33,6 +33,7 @@
         display: flex;
         position: absolute;
         background: $BLACK;
+        max-width: 50vw;
         left: 50%;
         padding: 0.75em;
         border: 1px solid $GRAY;
