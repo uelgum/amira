@@ -9,7 +9,7 @@ import getAppPath from "@utils/appPath";
 /**
     Private Key des Nutzers.
 */
-const privateKey = writable(null);
+const privateKeyStore = writable(null);
 
 /**
     Lädt den Private Key aus dem App-Ordner.
@@ -29,10 +29,10 @@ const loadPrivateKey = async (passphrase: string) => {
         passphrase
     });
 
-    privateKey.set(key);
+    privateKeyStore.set(key);
 };
 
 export {
-    privateKey,
+    privateKeyStore,
     loadPrivateKey
 };
