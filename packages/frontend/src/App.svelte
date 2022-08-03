@@ -1,8 +1,19 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+
+    // Intern
+    import envStore from "@stores/env";
+
     // Komponente
     import TitleBar from "@components/TitleBar.svelte";
 
-    const isTauri = !!window.__TAURI_METADATA__;
+    let isTauri: boolean;
+
+    onMount(() => {
+        envStore.subscribe((env) => {
+            isTauri = (env === "tauri");
+        });
+    });
 </script>
 
 <main>
