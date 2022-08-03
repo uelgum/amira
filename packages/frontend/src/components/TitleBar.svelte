@@ -28,15 +28,15 @@
 
     <div class="titlebar-controls">
         <button on:click={minimize}>
-            <img src={minimizeIcon} alt="minimize-icon"/>
+            <img src={minimizeIcon} alt="minimize-icon" draggable="false"/>
         </button>
         
         <button on:click={toggleMaximize}>
-            <img src={maximizeIcon} alt="maximize-icon"/>
+            <img src={maximizeIcon} alt="maximize-icon" draggable="false"/>
         </button>
 
         <button class="titlebar-controls-close" on:click={close}>
-            <img src={closeIcon} alt="close-icon"/>
+            <img src={closeIcon} alt="close-icon" draggable="false"/>
         </button>
     </div>
 </div>
