@@ -17,7 +17,7 @@
     </span>
 
     <img
-        class={`modal-close-icon`}
+        class="modal-close-icon"
         src={closeIcon}
         alt="close-icon"
         draggable="false"
