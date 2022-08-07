@@ -52,14 +52,14 @@ const sendRequest = async <T>(method: Method, endpoint: string, data?: Record<st
 /**
     Schickt eine `GET`-Anfrage an die API.
 */
-const get = async <T>(endpoint: string) => {
+const get = async <T = any>(endpoint: string) => {
     return sendRequest<T>("GET", endpoint);
 };
 
 /**
     Schickt eine `POST`-Anfrage an die API.
 */
-const post = async <T>(endpoint: string, data: Record<string, any>) => {
+const post = async <T = any>(endpoint: string, data: Record<string, any>) => {
     return sendRequest<T>("POST", endpoint, data);
 };
 
