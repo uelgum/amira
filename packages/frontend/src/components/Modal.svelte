@@ -4,14 +4,10 @@
 
     export let type: "error" | "warning" | "success";
 
-    let showFadeOut = false;
-
-    const fadeOutModal = () => {
-        showFadeOut = true;
-    };
+    const className = `modal ${type}`;
 </script>
 
-<div class={`modal ${type} ${showFadeOut ? "fade-out" : null}`}>
+<div class={className}>
     <span class="modal-message">
         <slot/>
     </span>
@@ -22,7 +18,6 @@
         alt="close-icon"
         draggable="false"
         on:click
-        on:click={fadeOutModal}
     />
 </div>
 
@@ -42,13 +37,7 @@
         justify-content: space-between;
         align-items: center;
         gap: 0.75em;
-        opacity: 1;
-        transition: opacity 0.25s ease-in-out;
         user-select: none;
-
-        &.fade-out {
-            opacity: 0;
-        }
 
         &.error {
             background: $RED;
