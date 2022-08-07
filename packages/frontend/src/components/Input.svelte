@@ -2,14 +2,22 @@
     export let id;
     export let type: "text" | "password" = "text";
     export let placeholder = "";
+    export let value = "";
+
+    const handleInput = (event: Event) => {
+        const input = event.target as HTMLInputElement;
+        value = input.value;
+    };
 </script>
 
 <input
     id={id}
     class="input"
     type={type}
-    spellcheck="false"
+    value={value}
     placeholder={placeholder}
+    spellcheck="false"
+    on:input={handleInput}
 />
 
 <style lang="scss">
