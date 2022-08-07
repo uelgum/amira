@@ -19,6 +19,9 @@
           "$DATA/Amira/*"
         ]
       },
+      "http": {
+        "all": true
+      },
       "path": {
         "all": true
       },
@@ -68,8 +71,8 @@
     "windows": [
       {
         "title": "Amira",
-        "minWidth": 800,
-        "minHeight": 600,
+        "minWidth": 1000,
+        "minHeight": 650,
         "resizable": true,
         "transparent": true,
         "fullscreen": false,
