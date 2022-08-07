@@ -54,7 +54,7 @@
 
     .titlebar-title {
         padding: 0.25em;
-        padding-left: 0.5em;
+        padding-left: 0.75em;
         font-size: 0.75em;
     }
 
