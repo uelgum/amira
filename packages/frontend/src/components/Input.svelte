@@ -18,6 +18,7 @@
     .input {
         background: $BLACK;
         color: $WHITE_090;
+        width: 100%;
         padding: 1em;
         border: 1px solid $GRAY;
         border-radius: 0.5em;
