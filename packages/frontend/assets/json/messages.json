@@ -1,0 +1,6 @@
+{
+    "INVALID_DATA": "Es wurden fehlerhafte oder fehlende Daten angegeben.",
+    "INVALID_LOGIN": "Ungültige Anmeldedaten.",
+    "USERNAME_TAKEN": "Der Nutzername wird bereits verwendet.",
+    "EMAIL_TAKEN": "Die E-Mail-Adresse wird bereits verwendet."
+}
