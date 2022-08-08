@@ -3,6 +3,7 @@ import { fetch, Body } from "@tauri-apps/api/http";
 
 // Intern
 import { TOKEN_KEY } from "@utils/constants";
+import config from "../config";
 
 // Types
 import type { FetchOptions, HttpVerb } from "@tauri-apps/api/http";
@@ -13,6 +14,11 @@ import type { FetchOptions, HttpVerb } from "@tauri-apps/api/http";
 */
 type Method = Extract<HttpVerb, "GET" | "POST">;
 // #endregion
+
+/**
+    Base-URL der API.
+*/
+const BASE_URL = config.apiBaseUrl;
 
 /**
     Schickt eine HTTP-Anfrage an die API.
@@ -36,7 +42,7 @@ const sendRequest = async <T>(method: Method, endpoint: string, data?: Record<st
         options.headers["Authorization"] = token;
     }
 
-    const response = await fetch<T>(endpoint, options);
+    const response = await fetch<T>(BASE_URL + endpoint, options);
 
     // Bei ungültigen oder fehlenden Tokens zum Login weiterleiten
     if(response.status === 401) {
