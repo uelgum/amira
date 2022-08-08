@@ -31,5 +31,6 @@
         border: 1px solid $GRAY;
         border-radius: 0.5em;
         outline: 0px;
+        font-family: "Inter", sans-serif;
     }
 </style>
