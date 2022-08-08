@@ -30,6 +30,7 @@
         background: $BLACK;
         max-width: 50vw;
         left: 50%;
+        margin-top: 1em;
         padding: 0.75em;
         border: 1px solid $GRAY;
         border-radius: 0.25em;
