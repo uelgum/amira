@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { fade } from "svelte/transition";
+
     // Icons
     import closeIcon from "../../assets/svg/close.svg";
 
@@ -7,7 +9,7 @@
     const className = `modal ${type}`;
 </script>
 
-<div class={className}>
+<div class={className} in:fade out:fade>
     <span class="modal-message">
         <slot/>
     </span>
