@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let id = "";
+    export let id: string;
 </script>
 
 <div id={id} class="card">
