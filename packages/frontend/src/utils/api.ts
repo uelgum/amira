@@ -13,6 +13,17 @@ import type { FetchOptions, HttpVerb } from "@tauri-apps/api/http";
     Verfügbare HTTP-Methoden.
 */
 type Method = Extract<HttpVerb, "GET" | "POST">;
+
+/**
+    Antwort der Amira API.
+*/
+type Response<T = Record<string, any>> = {
+    status: "ok" | "err";
+    data?: T;
+    err?: {
+        code: string;
+    };
+};
 // #endregion
 
 /**
@@ -42,7 +53,7 @@ const sendRequest = async <T>(method: Method, endpoint: string, data?: Record<st
         options.headers["Authorization"] = token;
     }
 
-    const response = await fetch<T>(BASE_URL + endpoint, options);
+    const response = await fetch<Response<T>>(BASE_URL + endpoint, options);
 
     // Bei ungültigen oder fehlenden Tokens zum Login weiterleiten
     if(response.status === 401) {
