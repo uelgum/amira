@@ -1,28 +1,39 @@
 <script lang="ts">
-    export let id;
-    export let type: "text" | "password" = "text";
-    export let placeholder = "";
+    // #region Types
+    type InputType = "text" | "password";
+    // #endregion
+
+    export let id: string;
+    export let label: string;
+    export let type: InputType = "text";
     export let value = "";
 
     const handleInput = (event: Event) => {
-        const input = event.target as HTMLInputElement;
-        value = input.value;
+        const target = event.target as HTMLInputElement;
+        value = target.value;
     };
 </script>
 
+<label class="label" for={id}>{label}</label>
 <input
     id={id}
     class="input"
+    spellcheck="false"
     type={type}
     value={value}
-    placeholder={placeholder}
-    spellcheck="false"
     on:input={handleInput}
 />
 
 <style lang="scss">
     @import "../scss/variables";
-    
+
+    .label {
+        display: flex;
+        color: $WHITE_070;
+        padding-bottom: 0.25em;
+        user-select: none;
+    }
+
     .input {
         background: $BLACK;
         color: $WHITE_090;
@@ -32,5 +43,7 @@
         border-radius: 0.5em;
         outline: 0px;
         font-family: "Inter", sans-serif;
+        font-size: 1em;
+        letter-spacing: 0.025em;
     }
 </style>
