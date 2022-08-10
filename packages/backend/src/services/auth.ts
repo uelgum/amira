@@ -155,7 +155,10 @@ const register = async (req: Request) => {
         createdAt: user.createdAt
     });
 
-    return recoveryCode;
+    return {
+        id: user.id,
+        recoveryCode
+    };
 };
 
 export {
