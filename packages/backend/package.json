@@ -1,5 +1,5 @@
 {
-  "name": "amira-be",
+  "name": "@amira/be",
   "version": "1.0.0",
   "description": "Backend für Amira.",
   "main": "./build/index.js",
