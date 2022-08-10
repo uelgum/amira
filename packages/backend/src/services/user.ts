@@ -186,9 +186,66 @@ const unblockUser = async (req: Request) => {
     });
 };
 
+/**
+    Fügt den Public Key eines Nutzers hinzu.
+*/
+const addPublicKey = async (req: Request) => {
+    const { userId } = req.params;
+    const { publicKey } = req.body;
+
+    if(!userId || !publicKey) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    });
+
+    if(!user) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    user.keys = {
+        ...user.keys,
+        publicKey
+    };
+
+    await user.save();
+};
+
+/**
+    Ruft den Public Key eines Nutzers ab.
+*/
+const getPublicKey = async (req: Request) => {
+    const { userId } = req.params;
+
+    if(!userId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    });
+
+    if(!user) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    return {
+        id: user.id,
+        publicKey: user.keys.publicKey
+    };
+};
+
 export {
     verifyEmail,
     resetPassword,
     blockUser,
-    unblockUser
+    unblockUser,
+    addPublicKey,
+    getPublicKey
 };
