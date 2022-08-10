@@ -91,8 +91,7 @@ const register = async (req: Request) => {
         lastName,
         username,
         email,
-        password,
-        publicKey
+        password
     } = req.body;
 
     const usernameCount = await User.count({
@@ -141,8 +140,7 @@ const register = async (req: Request) => {
         password: passwordHash,
         keys: {
             userKey,
-            recoveryKey,
-            publicKey
+            recoveryKey
         },
         admin: false,
         createdAt
