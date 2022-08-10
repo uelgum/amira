@@ -2,5 +2,9 @@
     "INVALID_DATA": "Es wurden fehlerhafte oder fehlende Daten angegeben.",
     "INVALID_LOGIN": "Ungültige Anmeldedaten.",
     "USERNAME_TAKEN": "Der Nutzername wird bereits verwendet.",
-    "EMAIL_TAKEN": "Die E-Mail-Adresse wird bereits verwendet."
+    "EMAIL_TAKEN": "Die E-Mail-Adresse wird bereits verwendet.",
+    "BAD_FIRST_OR_LAST_NAME": "Vor- und Nachnamen dürfen nicht 64 Zeichen überschreiten.",
+    "BAD_USERNAME": "Nutzernamen dürfen nicht 16 Zeichen überschreiten.",
+    "BAD_EMAIL": "Gebe eine gültige E-Mail an.",
+    "BAD_PASSWORD": "Das Passwort muss 8 bis 32 Zeichen lang sein, Klein- und Großbuchstaben, Zahlen und Sonderzeichen enthalten."
 }
