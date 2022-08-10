@@ -4,7 +4,6 @@
     // #endregion
 
     export let id: string;
-    export let label: string;
     export let type: InputType = "text";
     export let value = "";
 
@@ -14,7 +13,6 @@
     };
 </script>
 
-<label class="label" for={id}>{label}</label>
 <input
     id={id}
     class="input"
@@ -26,13 +24,6 @@
 
 <style lang="scss">
     @import "../scss/variables";
-
-    .label {
-        display: flex;
-        color: $WHITE_070;
-        padding-bottom: 0.25em;
-        user-select: none;
-    }
 
     .input {
         background: $BLACK;
