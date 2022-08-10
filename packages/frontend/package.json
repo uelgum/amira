@@ -18,6 +18,7 @@
     "jwt-decode": "^3.1.2",
     "openpgp": "^5.3.1",
     "sass": "^1.52.1",
+    "socket.io-client": "^4.5.1",
     "svelte": "^3.48.0",
     "svelte-preprocess": "^4.10.6",
     "svelte-routing": "^1.6.0",
