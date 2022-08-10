@@ -10,12 +10,8 @@
     @import "../scss/variables";
 
     .link {
-        color: $PURPLE_080;
+        color: $PURPLE;
         font-weight: 600;
         text-decoration: none;
-
-        &:hover {
-            color: $PURPLE;
-        }
     }
 </style>
