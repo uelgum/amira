@@ -3,7 +3,7 @@ import { Request, Response, Router } from "express";
 // Intern
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
-import { blockUser, resetPassword, unblockUser, verifyEmail } from "@services/user";
+import { addPublicKey, blockUser, getPublicKey, resetPassword, unblockUser, verifyEmail } from "@services/user";
 import { sendPasswordResetEmail } from "@services/email";
 
 /**
@@ -72,6 +72,32 @@ router.post("/block/:blockedUserId", async (req: Request, res: Response) => {
 router.post("/unblock/:blockedUserId", async (req: Request, res: Response) => {
     try {
         await unblockUser(req);
+        sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    GET /api/user/pubkey/:userId
+    Ruft den Public Key eines Nutzers ab.
+*/
+router.get("/pubkey/:userId", async (req: Request, res: Response) => {
+    try {
+        const data = await getPublicKey(req);
+        sendData(res, data);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/user/pubkey/:userId
+    Fügt den Public Key eines Nutzers hinzu.
+*/
+router.post("/pubkey/:userId", async (req: Request, res: Response) => {
+    try {
+        await addPublicKey(req);
         sendData(res);
     } catch(error: any) {
         sendError(res, error);
