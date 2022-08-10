@@ -1,10 +1,16 @@
+<script lang="ts" context="module">
+    // #region Types
+    export type ModalType = "error" | "warning" | "success";
+    // #endregion
+</script>
+
 <script lang="ts">
     import { fade } from "svelte/transition";
 
     // Icons
     import closeIcon from "../../assets/svg/close.svg";
 
-    export let type: "error" | "warning" | "success";
+    export let type: ModalType;
 
     const className = `modal ${type}`;
 </script>
@@ -30,7 +36,7 @@
         display: flex;
         position: absolute;
         background: $BLACK;
-        max-width: 50vw;
+        max-width: 40em;
         left: 50%;
         padding: 0.75em;
         border: 1px solid $GRAY;
