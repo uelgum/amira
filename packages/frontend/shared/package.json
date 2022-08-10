@@ -1,0 +1,20 @@
+{
+  "name": "@amira/shared",
+  "version": "1.0.0",
+  "description": "Shared Components für Amira FE.",
+  "svelte": "./src/index.ts",
+  "main": "./src/index.ts",
+  "private": true,
+  "scripts": {},
+  "author": "Wlad G. Gumenyuk",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.1",
+    "@tsconfig/svelte": "^3.0.0",
+    "sass": "^1.54.4",
+    "svelte": "^3.49.0",
+    "svelte-preprocess": "^4.10.7",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.5"
+  }
+}
