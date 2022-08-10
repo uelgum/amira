@@ -13,5 +13,10 @@
         color: $PURPLE;
         font-weight: 600;
         text-decoration: none;
+
+        &:hover, &:active, &:focus {
+            outline: none;
+            text-decoration: underline;         
+        }
     }
 </style>
