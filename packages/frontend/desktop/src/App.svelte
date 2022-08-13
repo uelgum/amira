@@ -1,9 +1,11 @@
 <script lang="ts">
-    
+    import TitleBar from "@components/TitleBar";
 </script>
 
-<main>
+<TitleBar/>
 
+<main>
+    
 </main>
 
 <style lang="scss">
