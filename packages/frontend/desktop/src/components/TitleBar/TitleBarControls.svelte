@@ -1,12 +1,26 @@
 <script lang="ts">
     import { appWindow } from "@tauri-apps/api/window";
     
+    // Alle Elemente mit abgerundeten Ecken
+    const roundedElements = [
+        document.documentElement,
+        document.body,
+        document.getElementById("root")
+    ];
+
     const minimize = () => {
         appWindow.minimize();
     };
 
-    const toggleMaximize = () => {
-        appWindow.toggleMaximize();
+    const toggleMaximize = async () => {
+        await appWindow.toggleMaximize();
+
+        const isMaximized = await appWindow.isMaximized();
+
+        // Abgerundete Ecken verstecken, sobald Fenster maximiert wird
+        for(const element of roundedElements) {
+            element.style.borderRadius = (isMaximized) ? "0em" : "0.5em";
+        }
     };
 
     const close = () => {
