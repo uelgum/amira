@@ -1,6 +1,10 @@
 @use "@amira/shared/scss/colors" as *;
 @use "@amira/shared/scss/fonts" as *;
 
+::selection {
+    background: $blue;
+}
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
