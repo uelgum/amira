@@ -6,7 +6,8 @@
             "@components/*": [ "./components/*" ],
             "@internal/*": [ "./internal/*" ],
             "@views/*": [ "./views/*" ]
-        }
+        },
+        "resolveJsonModule": true
     },
     "include": [
         "./src/**/*"
