@@ -1,5 +1,6 @@
 @use "@amira/shared/scss/colors" as *;
 @use "@amira/shared/scss/fonts" as *;
+@use "@amira/shared/css/flexboxgrid.min.css" as *;
 
 ::selection {
     background: $blue;
