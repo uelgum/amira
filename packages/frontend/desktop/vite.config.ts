@@ -16,6 +16,7 @@ export default defineConfig({
     resolve: {
         alias: [
             { find: "@components", replacement: path.join(__dirname, "src/components") },
+            { find: "@internal", replacement: path.join(__dirname, "src/internal") },
             { find: "@views", replacement: path.join(__dirname, "src/views") }
         ]
     }
