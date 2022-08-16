@@ -8,7 +8,7 @@
     .card-title {
         display: block;
         color: $white;
-        margin-bottom: 2em;
+        margin-bottom: 1em;
         font-weight: 600;
         user-select: none;
     }
