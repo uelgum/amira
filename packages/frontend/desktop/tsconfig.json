@@ -5,6 +5,7 @@
         "paths": {
             "@components/*": [ "./components/*" ],
             "@internal/*": [ "./internal/*" ],
+            "@stores/*": [ "./stores/*" ],
             "@views/*": [ "./views/*" ]
         },
         "resolveJsonModule": true
