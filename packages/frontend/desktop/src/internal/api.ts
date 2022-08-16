@@ -1,6 +1,7 @@
 import { fetch, Body } from "@tauri-apps/api/http";
 
-// Config
+// Intern
+import { TOKEN_KEY } from "@internal/constants";
 import config from "@internal/config";
 
 // Types
@@ -31,6 +32,12 @@ const sendRequest = async <T>(method: Method, url: string, data?: Record<string,
 
     if(method === "POST") {
         options.body = Body.json(data || {});
+    }
+
+    const token = window.localStorage.getItem(TOKEN_KEY);
+
+    if(token) {
+        options.headers["Authorization"] = token;
     }
 
     const response = await fetch<Response<T>>(url, options);
