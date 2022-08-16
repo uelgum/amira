@@ -7,6 +7,7 @@
     
     .input-error {
         color: $red;
+        max-width: fit-content;
         font-size: 0.85em;
         font-weight: 600;
         user-select: none;
