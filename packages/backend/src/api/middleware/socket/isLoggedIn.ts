@@ -29,7 +29,7 @@ const isLoggedIn = async (socket: Socket, next: Next) => {
             return;
         }
 
-        socket.data = await jwt.verify(token, config.jwtKey);
+        socket.user = await jwt.verify(token, config.jwtKey);
     } catch(error) {
         next(new Error("AUTH_ERROR"));
         return;
