@@ -156,7 +156,7 @@ const register = async (req: Request) => {
     });
 
     return {
-        id: user.id,
+        userId: user.id,
         recoveryCode
     };
 };
