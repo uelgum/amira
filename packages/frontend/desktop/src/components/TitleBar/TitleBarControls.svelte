@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { appWindow } from "@tauri-apps/api/window";
     
     // Alle Elemente mit abgerundeten Ecken
@@ -12,20 +13,24 @@
         appWindow.minimize();
     };
 
-    const toggleMaximize = async () => {
-        await appWindow.toggleMaximize();
-
-        const isMaximized = await appWindow.isMaximized();
-
-        // Abgerundete Ecken verstecken, sobald Fenster maximiert wird
-        for(const element of roundedElements) {
-            element.style.borderRadius = (isMaximized) ? "0em" : "0.5em";
-        }
+    const toggleMaximize = () => {
+        appWindow.toggleMaximize();
     };
 
     const close = () => {
         appWindow.close();
     };
+
+    onMount(() => {
+        appWindow.onResized(async () => {
+            const isMaximized = await appWindow.isMaximized();
+
+            // Abgerundete Ecken verstecken, sobald Fenster maximiert wird
+            for(const element of roundedElements) {
+                element.style.borderRadius = (isMaximized) ? "0em" : "0.5em";
+            }
+        });
+    });
 </script>
 
 <div class="titlebar-controls">
