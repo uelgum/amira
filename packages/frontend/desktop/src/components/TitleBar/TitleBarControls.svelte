@@ -9,14 +9,23 @@
         document.getElementById("root")
     ];
 
+    /**
+        Minimiert das Fenster.
+    */
     const minimize = () => {
         appWindow.minimize();
     };
 
+    /**
+        Schaltet die Maximierung des Fensters um.
+    */
     const toggleMaximize = () => {
         appWindow.toggleMaximize();
     };
 
+    /**
+        Schließt das Fenster.
+    */
     const close = () => {
         appWindow.close();
     };
