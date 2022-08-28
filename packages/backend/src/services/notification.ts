@@ -152,10 +152,47 @@ const sendPresenceUpdate = async (userId: string, status: PresenceStatus) => {
     }
 };
 
+/**
+    Schickt eine Mail-Benachrichtung an den Nutzer.
+*/
+const sendMailNotification = async (recipientId: string, fullName: string) => {
+    const user = await User.findOne({
+        where: {
+            id: recipientId
+        }
+    });
+
+    if(!user) return;
+
+    const createdAt = Date.now();
+    const content = `${fullName} hat dir eine Nachricht geschickt.`;
+
+    const notification = await Notification.create({
+        id: generateId(),
+        type: NotificationType.NEW_MAIL,
+        recipientId,
+        content,
+        createdAt
+    });
+
+    await notification.save();
+
+    if(!sockets.has(recipientId)) return;
+
+    const socket = sockets.get(recipientId);
+
+    socket.emit("notification", {
+        type: NotificationType.NEW_MAIL,
+        content,
+        createdAt
+    });
+};
+
 export {
     PresenceStatus,
     deleteNotification,
     sendContactRequestNotification,
     sendContactAcceptedNotification,
-    sendPresenceUpdate
+    sendPresenceUpdate,
+    sendMailNotification
 };
