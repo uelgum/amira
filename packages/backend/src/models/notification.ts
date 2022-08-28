@@ -9,7 +9,8 @@ import sequelize from "@loaders/sequelize";
 */
 enum NotificationType {
     CONTACT_REQUEST,
-    CONTACT_ACCEPTED
+    CONTACT_ACCEPTED,
+    NEW_MAIL
 };
 
 /**
