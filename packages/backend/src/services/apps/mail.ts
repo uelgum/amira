@@ -9,6 +9,38 @@ import { sendMailNotification } from "@services/notification";
 import type { Request } from "express";
 
 /**
+    Ruft alle Mails eines Nutzers ab.
+*/
+const getAllMails = async (req: Request) => {
+    const userId = req.user.id;
+
+    const userExists = await exists(User, {
+        id: userId
+    });
+
+    if(!userExists) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    const rawMails = await Mail.findAll({
+        where: {
+            recipientId: userId
+        }
+    });
+
+    const mails = rawMails.map((mail) => {
+        return {
+            id: mail.id,
+            senderId: mail.senderId,
+            content: mail.content,
+            createdAt: mail.createdAt
+        };
+    });
+
+    return mails;
+};
+
+/**
     Verschickt eine Mail an einen Nutzer.
 */
 const sendMail = async (req: Request) => {
@@ -56,5 +88,6 @@ const sendMail = async (req: Request) => {
 };
 
 export {
+    getAllMails,
     sendMail
 };
