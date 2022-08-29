@@ -53,9 +53,7 @@ const sendMail = async (req: Request) => {
     const senderId = req.user.id;
 
     const recipientExists = await exists(User, {
-        where: {
-            id: recipientId
-        }
+        id: recipientId
     });
 
     if(!recipientExists) {
