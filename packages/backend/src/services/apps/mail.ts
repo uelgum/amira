@@ -32,6 +32,7 @@ const getAllMails = async (req: Request) => {
         return {
             id: mail.id,
             senderId: mail.senderId,
+            subject: mail.subject,
             content: mail.content,
             createdAt: mail.createdAt
         };
@@ -83,6 +84,7 @@ const getMail = async (req: Request) => {
         id: mail.id,
         senderId: mail.senderId,
         sender: `${sender.firstName} ${sender.lastName}`,
+        subject: mail.subject,
         content: mail.content,
         createdAt: mail.createdAt
     };
@@ -92,9 +94,9 @@ const getMail = async (req: Request) => {
     Verschickt eine Mail an einen Nutzer.
 */
 const sendMail = async (req: Request) => {
-    const { recipientId, content } = req.body;
+    const { recipientId, subject, content } = req.body;
 
-    if(!recipientId || !content) {
+    if(!recipientId || !subject || !content) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
@@ -112,6 +114,7 @@ const sendMail = async (req: Request) => {
         id: generateId(),
         senderId,
         recipientId,
+        subject,
         content,
         createdAt: Date.now()
     });
