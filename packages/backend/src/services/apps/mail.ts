@@ -41,6 +41,54 @@ const getAllMails = async (req: Request) => {
 };
 
 /**
+    Ruft eine bestimmte Mail eines Nutzers ab.
+*/
+const getMail = async (req: Request) => {
+    const userId = req.user.id;
+    const { mailId } = req.params;
+
+    if(!mailId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    } 
+
+    const userExists = await exists(User, {
+        id: userId
+    });
+
+    if(!userExists) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    const mail = await Mail.findOne({
+        where: {
+            id: mailId
+        }
+    });
+
+    if(!mail) {
+        throw new AmiraError(404, "MAIL_NOT_FOUND");
+    }
+
+    const sender = await User.findOne({
+        where: {
+            id: mail.senderId
+        }
+    });
+
+    if(!sender) {
+        throw new AmiraError(404, "SENDER_NOT_FOUND");
+    }
+
+    return {
+        id: mail.id,
+        senderId: mail.senderId,
+        sender: `${sender.firstName} ${sender.lastName}`,
+        content: mail.content,
+        createdAt: mail.createdAt
+    };
+};
+
+/**
     Verschickt eine Mail an einen Nutzer.
 */
 const sendMail = async (req: Request) => {
@@ -87,5 +135,6 @@ const sendMail = async (req: Request) => {
 
 export {
     getAllMails,
+    getMail,
     sendMail
 };
