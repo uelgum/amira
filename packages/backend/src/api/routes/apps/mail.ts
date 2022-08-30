@@ -4,6 +4,7 @@ import { Request, Response, Router } from "express";
 import { sendData, sendError } from "@utils/response";
 import {
     getAllMails,
+    getMail,
     sendMail
 } from "@services/apps/mail";
 
@@ -20,6 +21,19 @@ router.get("/get", async (req: Request, res: Response) => {
     try {
         const mails = await getAllMails(req);
         sendData(res, { mails });
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    GET /api/app/mail/get/:mailId
+    Ruft eine bestimmte Mail eines Nutzers ab.
+*/
+router.get("/get/:mailId", async (req: Request, res: Response) => {
+    try {
+        const mail = await getMail(req);
+        sendData(res, { mail });
     } catch(error: any) {
         sendError(res, error);
     }
