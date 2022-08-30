@@ -24,6 +24,11 @@ type Mail = Model & {
     recipientId: string;
 
     /**
+        Betreff der Mail.
+    */
+    subject: string;
+
+    /**
         Inhalt der Mail.
     */
     content: string;
