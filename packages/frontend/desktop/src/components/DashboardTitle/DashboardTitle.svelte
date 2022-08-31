@@ -6,7 +6,7 @@
     @use "@amira/shared/scss/colors" as *;
 
     .dashboard-title {
-        padding-bottom: 0.25em;
+        padding-bottom: 0.35em;
         font-size: 1.25em;
         font-weight: 400;
         user-select: none;
