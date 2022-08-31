@@ -14,7 +14,7 @@
     // Types
     import type { FadeParams } from "svelte/transition";
 
-    export let type: ModalType = "success";
+    export let type: ModalType;
 
     const dispatch = createEventDispatcher();
 
