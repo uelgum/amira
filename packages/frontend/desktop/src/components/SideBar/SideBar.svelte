@@ -59,7 +59,7 @@
     .sidebar {
         position: relative;
         background: $black-light;
-        width: 15%;
+        width: 20%;
         max-width: 10em;
         padding: 0.5em;
         border-right: 1px solid $black-lightest;
