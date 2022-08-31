@@ -11,7 +11,7 @@ import type { PresenceStatusType } from "@amira/shared/components/PresenceStatus
     Presence-Status des Nutzers.
 */
 const presence = writable<PresenceStatusType>(
-    window.localStorage.getItem(PRESENCE_KEY) || "online"
+    window.localStorage.getItem(PRESENCE_KEY) as PresenceStatusType || "online"
 );
 
 /**
