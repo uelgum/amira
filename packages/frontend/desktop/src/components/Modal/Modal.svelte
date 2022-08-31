@@ -1,3 +1,9 @@
+<script context="module" lang="ts">
+    // #region Types
+    export type ModalType = "info" | "success" | "warning" | "error";
+    // #endregion
+</script>
+
 <script lang="ts">
     import { createEventDispatcher } from "svelte";
     import { fade } from "svelte/transition";
@@ -7,10 +13,6 @@
 
     // Types
     import type { FadeParams } from "svelte/transition";
-
-    // #region Types
-    type ModalType = "success" | "warning" | "error";
-    // #endregion
 
     export let type: ModalType = "success";
 
