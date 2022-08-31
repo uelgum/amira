@@ -29,13 +29,4 @@
     });
 </script>
 
-<span class="greeting">{greeting}</span>
-
-<style lang="scss">
-    @use "@amira/shared/scss/colors" as *;
-
-    .greeting {
-        color: $white-lighter;
-        user-select: none;
-    }
-</style>
+{greeting}
