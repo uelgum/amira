@@ -64,6 +64,11 @@
             user-select: none;
         }
 
+        &.modal-info {
+            background: transparentize($blue, 0.5);
+            border-color: $blue;
+        }
+
         &.modal-success {
             background: transparentize($green, 0.5);
             border-color: $green;
