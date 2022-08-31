@@ -4,6 +4,7 @@
     // Icons
     import homeIcon from "@amira/shared/svg/home.svg";
     import mailIcon from "@amira/shared/svg/mail.svg";
+    import settingsIcon from "@amira/shared/svg/settings.svg";
 
     /**
         Überprüft, ob ein Link aktiv ist.
@@ -36,6 +37,19 @@
         />
         <span class="sidebar-item-label">Nachrichten</span>
         <span class="sidebar-item-tooltip">Nachrichten</span>
+    </a>
+
+    <span class="sidebar-seperator"/>
+
+    <!-- Einstellungen -->
+    <a class="sidebar-item" class:active={isActive("/settings")} href="/settings">
+        <img
+            src={settingsIcon}
+            draggable="false"
+            alt="settings-icon"
+        />
+        <span class="sidebar-item-label">Einstellungen</span>
+        <span class="sidebar-item-tooltip">Einstellungen</span>
     </a>
 </div>
 
