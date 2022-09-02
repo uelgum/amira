@@ -136,8 +136,46 @@ const sendMail = async (req: Request) => {
     await sendMailNotification(recipientId, fullName);
 };
 
+/**
+    Entfernt eine Mail eines Nutzers.
+*/
+const deleteMail = async (req: Request) => {
+    const { mailId } = req.params;
+
+    if(!mailId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const userId = req.user.id;
+
+    const userExists = await exists(User, {
+        id: userId
+    });
+
+    if(!userExists) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    const mail = await Mail.findOne({
+        where: {
+            id: mailId
+        }
+    });
+
+    if(!mail) {
+        throw new AmiraError(404, "MAIL_NOT_FOUND");
+    }
+
+    await mail.destroy();
+
+    return {
+        id: mail.id
+    };
+};
+
 export {
     getAllMails,
     getMail,
-    sendMail
+    sendMail,
+    deleteMail
 };
