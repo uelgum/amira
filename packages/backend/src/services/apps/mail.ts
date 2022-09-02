@@ -166,6 +166,10 @@ const deleteMail = async (req: Request) => {
         throw new AmiraError(404, "MAIL_NOT_FOUND");
     }
 
+    if(mail.recipientId !== userId) {
+        throw new AmiraError(403, "FORBIDDEN");
+    }
+
     await mail.destroy();
 
     return {
