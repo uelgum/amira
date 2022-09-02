@@ -3,6 +3,7 @@ import { Request, Response, Router } from "express";
 // Intern
 import { sendData, sendError } from "@utils/response";
 import {
+    deleteMail,
     getAllMails,
     getMail,
     sendMail
@@ -47,6 +48,19 @@ router.post("/send", async (req: Request, res: Response) => {
     try {
         await sendMail(req);
         sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/app/mail/delete/:mailId
+    Entfernt eine Mail eines Nutzers.
+*/
+router.post("/delete/:mailId", async (req: Request, res: Response) => {
+    try {
+        const id = await deleteMail(req);
+        sendData(res, { id });
     } catch(error: any) {
         sendError(res, error);
     }
