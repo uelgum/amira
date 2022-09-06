@@ -9,7 +9,7 @@ const DATE_INTERVAL = 1000 * 10;
 /**
     Readable Store für das aktuelle Datum und die Uhrzeit.
 */
-const date = readable(new Date(), (set) => {
+const date = readable<Date>(new Date(), (set) => {
     const interval = setInterval(() => {
         set(new Date());
     }, DATE_INTERVAL);
