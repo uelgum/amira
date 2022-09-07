@@ -12,7 +12,19 @@
   },
   "tauri": {
     "allowlist": {
-      "all": true
+      "all": true,
+      "fs": {
+        "all": true,
+        "scope": [
+          "$DATA/Amira/*"
+        ]
+      },
+      "http": {
+        "all": true,
+        "scope": [
+          "http://192.168.188.73:3000/api/*"
+        ]
+      }
     },
     "bundle": {
       "active": true,
@@ -22,7 +34,9 @@
         "depends": []
       },
       "externalBin": [],
-      "icon": [],
+      "icon": [
+        "icons/icon.ico"
+      ],
       "identifier": "de.gumenyuk.amira",
       "shortDescription": "Amira ist eine Plattform für erhöhte Produktivität und Effizienz.",
       "longDescription": "Amira ist eine Plattform für erhöhte Produktivität und Effizienz.",
