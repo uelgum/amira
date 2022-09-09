@@ -40,7 +40,7 @@ const sendContactRequest = async (req: Request) => {
     });
 
     if(isBlocked) {
-        throw new AmiraError(400, "USER_BLOCKED");
+        throw new AmiraError(403, "USER_BLOCKED");
     }
 
     const contact = await Contact.create({
