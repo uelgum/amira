@@ -1,6 +1,10 @@
+import { Op } from "sequelize";
+
+// Intern
 import AmiraError from "@structs/error";
 import User from "@models/user";
 import Mail from "@models/apps/mail";
+import Block from "@models/block";
 import exists from "@utils/exists";
 import { generateId } from "@services/id";
 import { sendMailNotification } from "@services/notification";
@@ -118,6 +122,17 @@ const sendMail = async (req: Request) => {
 
     if(!sender) {
         throw new AmiraError(404, "SENDER_NOT_FOUND");
+    }
+
+    const isBlocked = await exists(Block, {
+        [ Op.or ]: [
+            { userId: recipientId, blockedUserId: senderId },
+            { userId: senderId, blockedUserId: recipientId }
+        ]
+    });
+
+    if(isBlocked) {
+        throw new AmiraError(403, "USER_BLOCKED");
     }
 
     const mail = await Mail.create({
