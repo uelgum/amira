@@ -13,7 +13,22 @@
     const toggleStatusSelector = () => {
         showStatusSelector = !showStatusSelector;
     };
+
+    /**
+        Schließt den Status-Selektor bei einem Klick außerhalb
+        des Selektors.
+    */
+    const handleOutsideClick = (event: Event) => {
+        const target = event.target as HTMLElement;
+        const isOutside = !target.className.includes("current-user");
+
+        if(showStatusSelector && isOutside) {
+            showStatusSelector = false;
+        }
+    };
 </script>
+
+<svelte:body on:click={handleOutsideClick}/>
 
 <div class="current-user" on:click={toggleStatusSelector}>
     <span class="username">{$token.decoded.firstName}</span>
