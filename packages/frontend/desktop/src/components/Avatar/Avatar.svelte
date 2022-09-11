@@ -23,6 +23,7 @@
         width: var(--width);
         height: var(--height);
         border-radius: 50%;
+        pointer-events: none;
 
         .presence-status-container {
             position: absolute;
