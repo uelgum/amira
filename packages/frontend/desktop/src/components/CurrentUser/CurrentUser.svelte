@@ -42,6 +42,7 @@
             color: $white-lighter;
             font-size: 0.85em;
             user-select: none;
+            pointer-events: none;
         }
 
         &:hover {
