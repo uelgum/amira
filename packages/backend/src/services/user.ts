@@ -169,21 +169,18 @@ const unblockUser = async (req: Request) => {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const blockExists = await exists(Block, {
-        id: userId,
-        blockedUserId
-    });
-
-    if(!blockExists) {
-        throw new AmiraError(404, "BLOCK_NOT_FOUND");
-    }
-
-    await Block.destroy({
+    const block = await Block.findOne({
         where: {
             id: userId,
             blockedUserId
         }
     });
+
+    if(!block) {
+        throw new AmiraError(404, "BLOCK_NOT_FOUND");
+    }
+
+    await block.destroy();
 };
 
 /**
