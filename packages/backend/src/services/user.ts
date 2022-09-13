@@ -17,7 +17,7 @@ import exists from "@utils/exists";
 import type { Request } from "express";
 
 /**
-    Maximales Alter einer Verifizierung.
+    Maximales Alter einer Verifizierung. Entspricht `24h`.
 */
 const MAX_VERIFICATION_AGE = 1000 * 60 * 60 * 24;
 
