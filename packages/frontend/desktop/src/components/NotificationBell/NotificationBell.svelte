@@ -19,7 +19,10 @@
     */
     const handleOutsideClick = (event: Event) => {
         const target = event.target as HTMLElement;
-        const isOutside = !target.className.includes("notification-bell");
+
+        const isOutside =
+            !target.className.includes("notification-bell") &&
+            !target.closest(".notification-container");
 
         if(showNotificationContainer && isOutside) {
             showNotificationContainer = false;
