@@ -27,7 +27,7 @@
     };
 </script>
 
-<svelte:body on:click={handleOutsideClick}/>
+<!-- <svelte:body on:click={handleOutsideClick}/> -->
 
 <div class="notification-bell" on:click={toggleNotificationContainer}>
     <img
@@ -47,7 +47,6 @@
     @use "@amira/shared/scss/colors" as *;
 
     .notification-bell {
-        position: relative;
         padding: 0.5em;
         border-radius: 0.5em;
         transition: all 0.25s;
