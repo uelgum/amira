@@ -32,7 +32,7 @@
         border: 1px solid $black-lightest;
         border-radius: 0.25em;
         flex-direction: column;
-        gap: 0.5em;
+        gap: 0.75em;
         overflow-y: auto;
 
         .description {
