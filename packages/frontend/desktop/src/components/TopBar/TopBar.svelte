@@ -1,11 +1,19 @@
 <script lang="ts">
     import CurrentUser from "@components/CurrentUser";
+    import NotificationBell from "@components/NotificationBell";
     import SideBarToggle from "@components/SideBarToggle";
 </script>
 
 <div class="topbar">
     <SideBarToggle/>
-    <CurrentUser/>
+    <div>
+        <div>
+            <NotificationBell/>
+        </div>
+        <div>
+            <CurrentUser/>
+        </div>
+    </div>
 </div>
 
 <style lang="scss">
@@ -24,5 +32,15 @@
         justify-content: space-between;
         align-items: center;
         user-select: none;
+
+        & > div {
+            display: flex;
+            align-items: center;
+            gap: 0.5em;
+
+            & > div {
+                position: relative;
+            }
+        }
     }
 </style>
