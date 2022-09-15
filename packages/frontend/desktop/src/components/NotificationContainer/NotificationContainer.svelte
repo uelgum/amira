@@ -3,6 +3,9 @@
 </script>
 
 <div class="notification-container">
+    <span class="description">
+        Benachrichtigungen
+    </span>
     <Notification>
         Das ist ein Test
     </Notification>
@@ -31,5 +34,13 @@
         flex-direction: column;
         gap: 0.5em;
         overflow-y: auto;
+
+        .description {
+            display: block;
+            color: $white-lighter;
+            padding-bottom: 0.5em;
+            font-size: 0.85em;
+            user-select: none;
+        }
     }
 </style>
