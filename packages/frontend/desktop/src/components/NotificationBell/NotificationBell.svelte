@@ -71,7 +71,7 @@
         width: 0.5em;
         height: 0.5em;
         right: 0.25em;
-        bottom: 0.35em;
+        top: 0.25em;
         border-radius: 50%;
     }
 </style>
