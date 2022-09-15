@@ -73,5 +73,6 @@
         right: 0.25em;
         top: 0.25em;
         border-radius: 50%;
+        pointer-events: none;
     }
 </style>
