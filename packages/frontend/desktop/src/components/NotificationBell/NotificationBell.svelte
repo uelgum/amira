@@ -30,7 +30,7 @@
     };
 </script>
 
-<!-- <svelte:body on:click={handleOutsideClick}/> -->
+<svelte:body on:click={handleOutsideClick}/>
 
 <div class="notification-bell" on:click={toggleNotificationContainer}>
     <img
