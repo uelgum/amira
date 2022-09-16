@@ -3,9 +3,7 @@
 </script>
 
 <div class="notification-container">
-    <span class="description">
-        Benachrichtigungen
-    </span>
+    <span class="description">Benachrichtigungen</span>
     <Notification>
         Das ist ein Test
     </Notification>
