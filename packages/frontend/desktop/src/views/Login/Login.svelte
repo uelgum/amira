@@ -5,6 +5,7 @@
     // Intern
     import token from "@stores/token";
     import { loadPrivateKey } from "@internal/keys";
+    import config from "@internal/config";
 
     // Komponente
     import Tab from "@amira/shared/components/Tab";
@@ -52,7 +53,7 @@
     };
 
     onMount(() => {
-        if($token) {
+        if($token && config.env === "production") {
             navigate("/dashboard");
             return;
         }
