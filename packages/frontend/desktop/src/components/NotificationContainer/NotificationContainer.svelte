@@ -1,5 +1,6 @@
 <script lang="ts">
     import Notification from "@components/Notification";
+    import Link from "@amira/shared/components/Link";
 </script>
 
 <div class="notification-container">
@@ -10,6 +11,8 @@
     <Notification>
         Das ist auch ein Test
     </Notification>
+    <div class="seperator"/>
+    <Link to="/notifications">Alle ansehen</Link>
 </div>
 
 <style lang="scss">
@@ -39,6 +42,17 @@
             padding-bottom: 0.5em;
             font-size: 0.85em;
             user-select: none;
+        }
+
+        .seperator {
+            background: $black-lightest;
+            width: 100%;
+            height: 1px;
+        }
+
+        & > :global(.link) {
+            font-size: 0.85em;
+            text-align: center;
         }
     }
 </style>
