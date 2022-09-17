@@ -12,6 +12,8 @@
     <Notification>
         Das ist auch ein Test
     </Notification>
+    <!-- TODO Konditionell anzeigen -->
+    <!-- <span class="empty">Du bist auf dem neusten Stand!</span> -->
     <div class="seperator"/>
     <Link to="/notifications">Alle ansehen</Link>
 </div>
@@ -41,6 +43,13 @@
             padding: 0em 0em 0.5em 0.5em;
             font-size: 0.85em;
             user-select: none;
+        }
+
+        .empty {
+            color: $white-light;
+            padding: 1.5em 0em 1.5em 0em;
+            font-size: 0.85em;
+            text-align: center;
         }
 
         .seperator {
