@@ -56,6 +56,7 @@
             background: $black-lightest;
             width: 100%;
             height: 1px;
+            margin: 0.5em 0em 0.5em 0em;
         }
 
         & > :global(.link) {
