@@ -9,6 +9,7 @@
     
     .notification {
         background: $black-light;
+        color: $white-light;
         padding: 0.5em;
         border-radius: 0.25em;
         font-size: 0.85em;
