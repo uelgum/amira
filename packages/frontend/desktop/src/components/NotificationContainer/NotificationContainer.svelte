@@ -5,6 +5,7 @@
 
 <div class="notification-container">
     <span class="description">Benachrichtigungen</span>
+    <div class="seperator"/>
     <Notification>
         Das ist ein Test
     </Notification>
