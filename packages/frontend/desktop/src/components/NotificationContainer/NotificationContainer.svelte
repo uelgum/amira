@@ -29,7 +29,6 @@
         max-height: 25em;
         top: 3.5em;
         right: 0em;
-        margin-right: auto;
         padding: 1em;
         border: 1px solid $black-lightest;
         border-radius: 0.25em;
