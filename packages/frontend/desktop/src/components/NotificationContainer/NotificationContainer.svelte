@@ -46,7 +46,7 @@
         }
 
         .empty {
-            color: $white-light;
+            color: $white-lighter;
             padding: 1.5em 0em 1.5em 0em;
             font-size: 0.85em;
             text-align: center;
