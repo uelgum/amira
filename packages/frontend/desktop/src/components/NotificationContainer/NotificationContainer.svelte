@@ -33,13 +33,12 @@
         border: 1px solid $black-lightest;
         border-radius: 0.25em;
         flex-direction: column;
-        gap: 0.75em;
         overflow-y: auto;
 
         .description {
             display: block;
             color: $white-lighter;
-            padding-bottom: 0.5em;
+            padding: 0em 0em 0.5em 0.5em;
             font-size: 0.85em;
             user-select: none;
         }
@@ -48,6 +47,7 @@
             background: $black-lightest;
             width: 100%;
             height: 1px;
+            margin: 0.5em 0em 0.5em 0em;
         }
 
         & > :global(.link) {
