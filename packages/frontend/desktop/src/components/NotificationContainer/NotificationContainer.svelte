@@ -47,10 +47,10 @@
             background: $black-lightest;
             width: 100%;
             height: 1px;
-            margin: 0.5em 0em 0.5em 0em;
         }
 
         & > :global(.link) {
+            margin-top: 0.5em;
             font-size: 0.85em;
             text-align: center;
         }
