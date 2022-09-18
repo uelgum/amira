@@ -223,7 +223,7 @@
         <!-- Knöpfe -->
         <Col xs={6} sm={6} md={6} lg={6}>
             <div class="register-cta">
-                <Button on:click={handleSubmit}>
+                <Button fullWidth on:click={handleSubmit}>
                     Konto erstellen
                 </Button>
 
