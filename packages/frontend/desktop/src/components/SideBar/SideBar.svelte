@@ -1,4 +1,7 @@
 <script lang="ts">
+    import Seperator from "@amira/shared/components/Seperator";
+
+    // Intern
     import minimized from "@stores/sideBar";
 
     // Icons
@@ -26,7 +29,7 @@
         <span class="sidebar-item-tooltip">Dashboard</span>
     </a>
 
-    <span class="sidebar-seperator"/>
+    <Seperator/>
 
     <!-- Mails -->
     <a class="sidebar-item" class:active={isActive("/mails")} href="/mails">
@@ -39,7 +42,7 @@
         <span class="sidebar-item-tooltip">Nachrichten</span>
     </a>
 
-    <span class="sidebar-seperator"/>
+    <Seperator/>
 
     <!-- Einstellungen -->
     <a class="sidebar-item" class:active={isActive("/settings")} href="/settings">
@@ -102,10 +105,6 @@
         text-decoration: none;
         transition: all 0.25s;
 
-        &:not(:last-of-type) {
-            margin-bottom: 0.5em;
-        }
-
         &:hover {
             background: $black-lighter;
         }
@@ -121,12 +120,5 @@
         &.active:first-of-type {
             background: $blue;
         }
-    }
-
-    .sidebar-seperator {
-        display: block;
-        width: 100%;
-        margin-bottom: 0.5em;
-        border-bottom: 1px solid $black-lightest;
     }
 </style>
