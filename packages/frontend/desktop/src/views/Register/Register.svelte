@@ -1,8 +1,11 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { navigate } from "svelte-routing";
 
     // Intern
+    import token from "@stores/token";
     import api from "@internal/api";
+    import config from "@internal/config";
     import { generateKeyPair } from "@internal/keys";
 
     // Komponente
@@ -59,6 +62,13 @@
             }
         });
     };
+
+    onMount(() => {
+        if($token && config.env === "production") {
+            navigate("/dashboard");
+            return;
+        }
+    });
 </script>
 
 
