@@ -18,6 +18,7 @@
         height: 0.85em;
         border: 1px solid $black-lighter;
         border-radius: 50%;
+        transition: background 0.5s ease-in-out;
 
         &.online {
             background: $green;
