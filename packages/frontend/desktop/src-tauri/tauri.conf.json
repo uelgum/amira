@@ -24,6 +24,16 @@
         "scope": [
           "http://192.168.188.73:3000/api/*"
         ]
+      },
+      "shell": {
+        "execute": true,
+        "scope": [
+          {
+            "name": "explorer",
+            "cmd": "explorer",
+            "args": true
+          }
+        ]
       }
     },
     "bundle": {
