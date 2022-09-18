@@ -123,7 +123,7 @@
         <!-- Knöpfe -->
         <Col>
             <div class="login-cta">
-                <Button on:click={handleSubmit}>
+                <Button fullWidth on:click={handleSubmit}>
                     Anmelden
                 </Button>
 
