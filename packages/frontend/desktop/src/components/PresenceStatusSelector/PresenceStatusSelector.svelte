@@ -3,6 +3,7 @@
 
     // Komponente
     import PresenceStatus from "@amira/shared/components/PresenceStatus";
+    import Seperator from "@amira/shared/components/Seperator";
 
     // Types
     import type { PresenceStatusType } from "@amira/shared/components/PresenceStatus";
@@ -17,6 +18,9 @@
 
 <div class="status-selector">
     <span class="description">Wähle deinen Status aus.</span>
+
+    <Seperator/>
+
     <ul class="status-selector-list" on:click>
         <!-- Online -->
         <li on:click={() => setPresence("online")}>
