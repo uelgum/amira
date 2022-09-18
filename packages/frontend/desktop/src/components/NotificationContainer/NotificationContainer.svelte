@@ -1,20 +1,26 @@
 <script lang="ts">
     import Notification from "@components/Notification";
+    import Seperator from "@amira/shared/components/Seperator";
     import Link from "@amira/shared/components/Link";
 </script>
 
 <div class="notification-container">
     <span class="description">Benachrichtigungen</span>
-    <div class="seperator"/>
+
+    <Seperator/>
+    
     <Notification>
         Das ist ein Test
     </Notification>
     <Notification>
         Das ist auch ein Test
     </Notification>
+    
     <!-- TODO Konditionell anzeigen -->
     <!-- <span class="empty">Du bist auf dem neusten Stand!</span> -->
-    <div class="seperator"/>
+
+    <Seperator/>
+    
     <Link to="/notifications">Alle ansehen</Link>
 </div>
 
@@ -50,13 +56,6 @@
             padding: 1.5em 0em 1.5em 0em;
             font-size: 0.85em;
             text-align: center;
-        }
-
-        .seperator {
-            background: $black-lightest;
-            width: 100%;
-            height: 1px;
-            margin: 0.5em 0em 0.5em 0em;
         }
 
         & > :global(.link) {
