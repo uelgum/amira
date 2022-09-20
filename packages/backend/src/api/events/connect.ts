@@ -11,6 +11,7 @@ import type SocketManager from "@structs/socketManager";
 const onConnect = (socketManager: SocketManager, socket: Socket) => {
     const socketId = socket.user.id;
 
+    // Vorhandene Verbindung beibehalten, anstatt eine neue herzustellen
     if(socketManager.debounces.has(socketId)) {
         socketManager.debounces.delete(socketId);
         return;
