@@ -17,6 +17,7 @@ const DEBOUNCE_DURATION = 1000 * 10;
 const onDisconnect = (socketManager: SocketManager, socket: Socket) => {
     const socketId = socket.user.id;
 
+    // Handler, der nach 10 Sekunden ausgeführt wird
     const handler = () => {
         sendPresenceUpdate(socketId, PresenceStatus.OFFLINE);
         socketManager.remove(socket);
