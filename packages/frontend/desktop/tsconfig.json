@@ -3,6 +3,7 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "paths": {
+            "@apps/*": [ "./apps/*" ],
             "@components/*": [ "./components/*" ],
             "@internal/*": [ "./internal/*" ],
             "@stores/*": [ "./stores/*" ],
