@@ -10,7 +10,7 @@ import { getNotes, updateNotes } from "@services/apps/notes";
 const router = Router();
 
 /**
-    GET /api/app/mail/get
+    GET /api/app/notes/get
     Ruft die Notizen eines Nutzers ab.
 */
 router.get("/get", async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ router.get("/get", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/app/mail/update
+    POST /api/app/notes/update
     Aktualisiert die Notizen eines Nutzers.
 */
 router.get("/update", async (req: Request, res: Response) => {
