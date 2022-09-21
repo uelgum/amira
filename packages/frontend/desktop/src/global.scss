@@ -10,6 +10,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: $black-lighter $black;
+}
+
+*::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+*::-webkit-scrollbar-track {
+    background: $black-lighter;
+    border: 1px solid $black-lightest;
+    border-top: none;
+    border-bottom: none;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: $black;
+    border-radius: 0.25em;
 }
 
 html, body, #root {
