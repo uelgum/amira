@@ -41,10 +41,10 @@ const getNotes = async (req: Request) => {
         throw new AmiraError(400, "INVALID_USER_KEY");
     }
 
-    const decryptedContent = decrypt(notes.content, userKey);
+    const content = decrypt(notes.content, userKey);
 
     return {
-        decryptedContent
+        content
     };
 };
 
