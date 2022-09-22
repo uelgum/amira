@@ -6,9 +6,11 @@
     @use "@amira/shared/scss/colors" as *;
 
     .small-title {
+        display: block;
         color: $white-lightest;
-        margin-bottom: 0.85em;
+        font-size: 0.85em;
         font-weight: 600;
         text-transform: uppercase;
+        user-select: none;
     }
 </style>
