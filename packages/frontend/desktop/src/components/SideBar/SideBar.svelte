@@ -8,6 +8,7 @@
     // Icons
     import homeIcon from "@amira/shared/svg/home.svg";
     import mailIcon from "@amira/shared/svg/mail.svg";
+    import usersIcon from "@amira/shared/svg/users.svg";
     import settingsIcon from "@amira/shared/svg/settings.svg";
     import devIcon from "@amira/shared/svg/sliders.svg";
 
@@ -32,6 +33,17 @@
     </a>
 
     <Seperator/>
+
+    <!-- Kontakte -->
+    <a class="sidebar-item" class:active={isActive("/contacts")} href="/contacts">
+        <img
+            src={usersIcon}
+            draggable="false"
+            alt="users-icon"
+        />
+        <span class="sidebar-item-label">Kontakte</span>
+        <span class="sidebar-item-tooltip">Kontakte</span>
+    </a>
 
     <!-- Mails -->
     <a class="sidebar-item" class:active={isActive("/mails")} href="/mails">
