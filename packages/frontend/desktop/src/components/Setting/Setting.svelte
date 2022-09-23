@@ -31,13 +31,13 @@
         width: 100%;
         user-select: none;
         justify-content: space-between;
-        gap: 5em;
     }
 
     .setting-meta {
         display: flex;
         flex-direction: column;
         gap: 0.5em;
+        max-width: 85%;
     }
 
     .setting-switch {
