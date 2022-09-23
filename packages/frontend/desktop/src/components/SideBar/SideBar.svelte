@@ -118,7 +118,7 @@
         font-size: 0.85em;
         user-select: none;
         text-decoration: none;
-        transition: all 0.25s;
+        transition: background 0.25s;
 
         &:hover {
             background: $black-lighter;
