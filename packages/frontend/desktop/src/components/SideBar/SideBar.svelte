@@ -3,11 +3,13 @@
 
     // Intern
     import minimized from "@stores/sideBar";
+    import devMode from "@stores/devMode";
 
     // Icons
     import homeIcon from "@amira/shared/svg/home.svg";
     import mailIcon from "@amira/shared/svg/mail.svg";
     import settingsIcon from "@amira/shared/svg/settings.svg";
+    import devIcon from "@amira/shared/svg/sliders.svg";
 
     /**
         Überprüft, ob ein Link aktiv ist.
@@ -54,6 +56,19 @@
         <span class="sidebar-item-label">Einstellungen</span>
         <span class="sidebar-item-tooltip">Einstellungen</span>
     </a>
+
+    <!-- Entwickler-Modus -->
+    {#if $devMode}
+        <a class="sidebar-item" class:active={isActive("/dev")} href="/dev">
+            <img
+                src={devIcon}
+                draggable="false"
+                alt="debug-icon"
+            />
+            <span class="sidebar-item-label">Entwickler</span>
+            <span class="sidebar-item-tooltip">Entwickler</span>
+        </a>
+    {/if}
 </div>
 
 <style lang="scss">
@@ -111,6 +126,10 @@
 
         &:hover:first-of-type {
             background: $blue;
+        }
+
+        &:not(:last-of-type) {
+            margin-bottom: 0.5em;
         }
 
         &.active {
