@@ -14,12 +14,6 @@ export default defineConfig({
         assetsDir: "public"
     },
     resolve: {
-        alias: [
-            { find: "@apps", replacement: path.join(__dirname, "src/apps") },
-            { find: "@components", replacement: path.join(__dirname, "src/components") },
-            { find: "@internal", replacement: path.join(__dirname, "src/internal") },
-            { find: "@stores", replacement: path.join(__dirname, "src/stores") },
-            { find: "@views", replacement: path.join(__dirname, "src/views") }
-        ]
+        alias: []
     }
 });
