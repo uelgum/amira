@@ -11,7 +11,7 @@
     padding: 0;
     box-sizing: border-box;
     scrollbar-width: thin;
-    scrollbar-color: $black-lighter $black;
+    scrollbar-color: darken($black-light, 10) $black-lighter;
 }
 
 *::-webkit-scrollbar {
@@ -26,8 +26,8 @@
 }
 
 *::-webkit-scrollbar-thumb {
-    background: $black;
-    border-radius: 0.25em;
+    background: darken($black-light, 10);
+    border-radius: 0.15em;
 }
 
 html, body, #root {
