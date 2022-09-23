@@ -76,5 +76,9 @@
             left: calc(100% - 3px);
             transform: translate(-100%, -50%);
         }
+
+        &:active + .slider::before {
+            width: 1.5em;
+        }
     }
 </style>
