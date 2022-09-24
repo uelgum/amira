@@ -1,0 +1,33 @@
+@use "@amira/shared/scss/colors" as *;
+@use "@amira/shared/scss/fonts" as *;
+
+::selection {
+    background: transparentize($blue, 0.25);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+html, body {
+    color: $white;
+    width: 100%;
+    height: 100%;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0.10em;
+    overflow: hidden;
+}
+
+#root {
+    display: flex;
+    position: relative;
+    background: $black-light;
+    width: 100%;
+    height: 100%; // FIXME evtl. besser: min-height: 100%;
+    border-radius: 0.5em;
+    flex-direction: column;
+}
