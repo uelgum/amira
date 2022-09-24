@@ -1,0 +1,39 @@
+<script lang="ts">
+    import { onMount } from "svelte";
+    import { Router, Route } from "svelte-routing";
+    
+    // Intern
+    import socket from "@internal/socket";
+    import token from "@stores/token";
+    import config from "@internal/config";
+
+    // Layouts
+    import Base from "@layouts/Base";
+
+    // Views
+    import Dashboard from "@views/Dashboard";
+    import Connecting from "@views/Connecting";
+    import Login from "@views/Login";
+
+    /**
+        On-Mount.
+    */
+    onMount(() => {
+        if(!socket.connected && $token.raw && config.socket) {
+            socket.auth = { token: $token.raw };
+            socket.connect();
+        }
+
+        return () => {
+            socket.disconnect();
+        };
+    });
+</script>
+
+<Base>
+    <Router>
+        <Route path="/connecting" component={Connecting}/>
+        <Route path="/dashboard" component={Dashboard}/>
+        <Route path="/login" component={Login}/>
+    </Router>
+</Base>
