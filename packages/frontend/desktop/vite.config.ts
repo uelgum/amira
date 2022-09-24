@@ -14,6 +14,14 @@ export default defineConfig({
         assetsDir: "public"
     },
     resolve: {
-        alias: []
+        alias: [
+            { find: "@atoms", replacement: path.join(__dirname, "src/components/atoms") },
+            { find: "@molecules", replacement: path.join(__dirname, "src/components/molecules") },
+            { find: "@organisms", replacement: path.join(__dirname, "src/components/organisms") },
+            { find: "@internal", replacement: path.join(__dirname, "src/internal") },
+            { find: "@layouts", replacement: path.join(__dirname, "src/layouts") },
+            { find: "@stores", replacement: path.join(__dirname, "src/stores") },
+            { find: "@views", replacement: path.join(__dirname, "src/views") }
+        ]
     }
 });

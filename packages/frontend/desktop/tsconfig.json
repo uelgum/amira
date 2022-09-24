@@ -2,7 +2,15 @@
     "extends": "@tsconfig/svelte/tsconfig.json",
     "compilerOptions": {
         "baseUrl": "./src",
-        "paths": {},
+        "paths": {
+            "@atoms/*": [ "./components/atoms/*" ],
+            "@molecules/*": [ "./components/molecules/*" ],
+            "@organisms/*": [ "./components/organisms/*" ],
+            "@internal/*": [ "./internal/*" ],
+            "@layouts/*": [ "./layouts/*" ],
+            "@stores/*": [ "./stores/*" ],
+            "@views/*": [ "./views/*" ]
+        },
         "resolveJsonModule": true
     },
     "include": [
