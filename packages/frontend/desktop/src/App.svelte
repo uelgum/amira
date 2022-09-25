@@ -14,6 +14,7 @@
     import Start from "@views/Start";
     import Dashboard from "@views/Dashboard";
     import Connecting from "@views/Connecting";
+    import LockScreen from "@views/LockScreen";
     import Login from "@views/Login";
 
     /**
@@ -36,6 +37,7 @@
         <Route path="/" component={Start}/>
         <Route path="/connecting" component={Connecting}/>
         <Route path="/dashboard" component={Dashboard}/>
+        <Route path="/lock" component={LockScreen}/>
         <Route path="/login" component={Login}/>
     </Router>
 </Base>
