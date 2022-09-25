@@ -4,7 +4,7 @@ import configProd from "@amira/shared/config/config.prod.json";
 /**
     Konfiguration.
 */
-const config = (window.location.hostname === "localhost") ?
+const config = (window.location.host === "localhost:5173") ?
     configDev :
     configProd;
 
