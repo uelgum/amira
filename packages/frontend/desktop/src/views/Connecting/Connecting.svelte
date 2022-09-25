@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { blur } from "svelte/transition";
     import { navigate } from "svelte-routing";
 
     // Layouts
@@ -30,23 +31,27 @@
     });
 </script>
 
-<!-- <div id="connecting" in:blur>
-    <Loader/>
-    <span>Stelle Verbindung her...</span>
-</div> -->
-
 <Center>
-    <Loader/>
-    <span>Stelle Verbindung her...</span>
+    <div id="connecting" in:blur>
+        <Loader/>
+        <span>Stelle Verbindung her...</span>
+    </div>
 </Center>
 
 <style lang="scss">
     @use "@amira/shared/scss/colors" as *;
 
-    span {
-        color: $white-lighter;
-        animation: loader-text-pulsate 2s ease-out infinite;
-        user-select: none;
+    #connecting {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 1em;
+
+        span {
+            color: $white-lighter;
+            animation: loader-text-pulsate 2s ease-out infinite;
+            user-select: none;
+        }
     }
 
     @keyframes loader-text-pulsate {
