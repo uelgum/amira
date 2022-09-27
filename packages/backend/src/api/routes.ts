@@ -8,6 +8,7 @@ import { sendError } from "@utils/response";
 import authRoutes from "@api/routes/auth";
 import userRoutes from "@api/routes/user";
 import contactRoutes from "@api/routes/contact";
+import noticationRoutes from "@api/routes/notification";
 import appRouter from "@api/routes/apps";
 
 /**
@@ -18,6 +19,7 @@ const router = Router();
 router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
 router.use("/contact", contactRoutes);
+router.use("/notification", noticationRoutes);
 router.use("/app", appRouter);
 
 router.use((_, res: Response) => {
