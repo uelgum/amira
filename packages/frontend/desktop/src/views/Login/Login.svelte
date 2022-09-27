@@ -21,7 +21,8 @@
 
     const flyIn: FlyParams = {
         x: -window.innerWidth,
-        duration: 500
+        duration: 500,
+        delay: 500
     };
 
     /**
