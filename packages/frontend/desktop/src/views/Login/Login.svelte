@@ -12,7 +12,7 @@
 
     // Komponente
     import Card from "@atoms/Card";
-    import SmallTitle from "@atoms/SmallTitle";
+    import CardTitle from "@atoms/CardTitle";
     import LoginForm from "@organisms/LoginForm";
 
     // Types
@@ -53,9 +53,7 @@
 <Center>
     <div id="login" in:fly={flyIn}>
         <Card>
-            <div id="login-title">
-                <SmallTitle>Willkommen zurück!</SmallTitle>
-            </div>
+            <CardTitle>Willkommen zurück!</CardTitle>
             <LoginForm on:success={handleSuccess}/>
         </Card>
     </div>
