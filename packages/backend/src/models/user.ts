@@ -147,7 +147,6 @@ const UserModel = sequelize.define<User>(
         },
         lastLoginAt: {
             type: DataTypes.BIGINT,
-            allowNull: false,
             field: "last_login_at"
         },
         createdAt: {
