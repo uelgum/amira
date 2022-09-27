@@ -81,6 +81,11 @@ type User = Model & {
     admin: boolean;
 
     /**
+        Zeitpunkt des letzten Logins.
+    */
+    lastLoginAt: number;
+
+    /**
         Erstelldatum des Kontos.
     */
     createdAt: number;
@@ -139,6 +144,11 @@ const UserModel = sequelize.define<User>(
         admin: {
             type: DataTypes.BOOLEAN,
             allowNull: false
+        },
+        lastLoginAt: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            field: "last_login_at"
         },
         createdAt: {
             type: DataTypes.BIGINT,
