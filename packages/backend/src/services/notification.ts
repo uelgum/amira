@@ -9,6 +9,9 @@ import Contact from "@models/contact";
 import { generateId } from "@services/id";
 import exists from "@utils/exists";
 
+// Types
+import type { Request } from "express";
+
 // #region Types
 /**
     Daten für Benachrichtungen für Kontakt-Anfragen.
@@ -71,7 +74,13 @@ const getNotifications = async (userId: string) => {
 /**
     Entfernt eine Benachrichtung.
 */
-const deleteNotification = async (id: string) => {
+const deleteNotification = async (req: Request) => {
+    const { id } = req.params;
+
+    if(!id) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
     const notification = await Notification.findOne({
         where: {
             id
