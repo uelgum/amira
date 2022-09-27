@@ -16,6 +16,7 @@
     import Connecting from "@views/Connecting";
     import LockScreen from "@views/LockScreen";
     import Login from "@views/Login";
+    import Register from "@views/Register";
 
     /**
         On-Mount.
@@ -39,5 +40,6 @@
         <Route path="/dashboard" component={Dashboard}/>
         <Route path="/lock" component={LockScreen}/>
         <Route path="/login" component={Login}/>
+        <Route path="/register" component={Register}/>
     </Router>
 </Base>
