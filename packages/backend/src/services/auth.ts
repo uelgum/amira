@@ -70,6 +70,9 @@ const login = async (req: Request) => {
         admin: user.admin
     });
 
+    user.lastLoginAt = Date.now();
+    await user.save();
+
     return {
         token,
         ...(!user.emailVerified && { emailUnverified: true })
