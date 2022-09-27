@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { fly } from "svelte/transition";
     import { navigate } from "svelte-routing";
 
     // Intern
@@ -12,6 +13,15 @@
     import CardTitle from "@atoms/CardTitle";
     import LockScreenForm from "@organisms/LockScreenForm";
 
+    // Types
+    import type { FlyParams } from "svelte/transition";
+
+    const flyIn: FlyParams = {
+        x: -window.innerWidth,
+        duration: 500,
+        delay: 500
+    };
+
     /**
         Wird ausgeführt, sobald die Entsperrung erfolgreich ist.
     */
@@ -21,8 +31,10 @@
 </script>
 
 <Center>
-    <Card>
-        <CardTitle>Hallo, {$token.data.firstName}!</CardTitle>
-        <LockScreenForm on:success={handleSuccess}/>
-    </Card>
+    <div id="lock-screen" in:fly={flyIn}>
+        <Card>
+            <CardTitle>Hallo, {$token.data.firstName}!</CardTitle>
+            <LockScreenForm on:success={handleSuccess}/>
+        </Card>
+    </div>
 </Center>
