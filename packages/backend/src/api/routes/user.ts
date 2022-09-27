@@ -3,8 +3,15 @@ import { Request, Response, Router } from "express";
 // Intern
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
-import { addPublicKey, blockUser, getPublicKey, resetPassword, unblockUser, verifyEmail } from "@services/user";
 import { sendPasswordResetEmail } from "@services/email";
+import {
+    addPublicKey,
+    getPublicKey,
+    blockUser,
+    unblockUser,
+    resetPassword, 
+    verifyEmail
+} from "@services/user";
 
 /**
     User-Router.
