@@ -7,6 +7,7 @@ import Notification, { NotificationType } from "@models/notification";
 import User from "@models/user";
 import Contact from "@models/contact";
 import { generateId } from "@services/id";
+import exists from "@utils/exists";
 
 // #region Types
 /**
@@ -34,6 +35,38 @@ enum PresenceStatus {
     OFFLINE
 };
 // #endregion
+
+/**
+    Ruft alle Benachrichtigungen eines Nutzers ab.
+*/
+const getNotifications = async (userId: string) => {
+    const userExists = await exists(User, {
+        id: userId
+    });
+
+    if(!userExists) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    const rawNotifications = await Notification.findAll({
+        where: {
+            recipientId: userId
+        }
+    });
+
+    const notifications = rawNotifications.map((notification) => {
+        return {
+            id: notification.id,
+            type: notification.type,
+            content: notification.content,
+            createdAt: notification.createdAt
+        };
+    });
+
+    return {
+        notifications
+    };
+};
 
 /**
     Entfernt eine Benachrichtung.
@@ -190,6 +223,7 @@ const sendMailNotification = async (recipientId: string, fullName: string) => {
 
 export {
     PresenceStatus,
+    getNotifications,
     deleteNotification,
     sendContactRequestNotification,
     sendContactAcceptedNotification,
