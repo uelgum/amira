@@ -9,7 +9,7 @@
 
     // Komponente
     import Card from "@atoms/Card";
-    import SmallTitle from "@atoms/SmallTitle";
+    import CardTitle from "@atoms/CardTitle";
     import LockScreenForm from "@organisms/LockScreenForm";
 
     /**
@@ -22,17 +22,7 @@
 
 <Center>
     <Card>
-        <div id="lock-screen-title">
-            <SmallTitle>Hallo, {$token.data.firstName}!</SmallTitle>
-        </div>
+        <CardTitle>Hallo, {$token.data.firstName}!</CardTitle>
         <LockScreenForm on:success={handleSuccess}/>
     </Card>
 </Center>
-
-<style lang="scss">
-    #lock-screen-title {
-        text-align: center;
-        margin-bottom: 2em;
-        user-select: none;
-    }
-</style>
