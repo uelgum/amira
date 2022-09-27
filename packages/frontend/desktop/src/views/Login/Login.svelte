@@ -58,11 +58,3 @@
         </Card>
     </div>
 </Center>
-
-<style lang="scss">
-    #login-title {
-        text-align: center;
-        margin-bottom: 2em;
-        user-select: none;
-    }
-</style>
