@@ -38,7 +38,7 @@
         <Route path="/" component={Start}/>
         <Route path="/connecting" component={Connecting}/>
         <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/lock" component={LockScreen}/>
+        <Route path="/lockscreen" component={LockScreen}/>
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
     </Router>
