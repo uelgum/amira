@@ -4,15 +4,22 @@
 
     // Intern
     import token from "@stores/token";
+    import lock from "@stores/lock";
 
     /**
         On-Mount.
     */
     onMount(() => {
+        if($lock) {
+            navigate("/lockscreen");
+            return;
+        }
+
         if($token.raw) {
             navigate("/dashboard");
-        } else {
-            navigate("/login");
+            return;
         }
+
+        navigate("/login");
     });
 </script>
