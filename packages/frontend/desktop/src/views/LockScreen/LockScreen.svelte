@@ -1,9 +1,11 @@
 <script lang="ts">
+    import { onMount } from "svelte";
     import { fly } from "svelte/transition";
     import { navigate } from "svelte-routing";
 
     // Intern
     import token from "@stores/token";
+    import lock from "@stores/lock";
 
     // Layouts
     import Center from "@layouts/Center";
@@ -26,8 +28,21 @@
         Wird ausgeführt, sobald die Entsperrung erfolgreich ist.
     */
     const handleSuccess = () => {
+        lock.reset();
         navigate("/dashboard");
     };
+
+    /**
+        On-Mount.
+    */
+    onMount(() => {
+        if(!$token.raw) {
+            navigate("/login");
+            return;
+        }
+
+        $lock = true;
+    });
 </script>
 
 <Center>
