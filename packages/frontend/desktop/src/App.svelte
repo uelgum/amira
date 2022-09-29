@@ -1,10 +1,11 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Router, Route } from "svelte-routing";
+    import { Router, Route, navigate } from "svelte-routing";
     
     // Intern
     import socket from "@internal/socket";
     import token from "@stores/token";
+    import lock from "@stores/lock";
     import config from "@internal/config";
 
     // Layouts
@@ -25,6 +26,11 @@
         if(!socket.connected && $token.raw && config.socket) {
             socket.auth = { token: $token.raw };
             socket.connect();
+        }
+
+        if($lock) {
+            navigate("/lockscreen");
+            return;
         }
 
         return () => {
