@@ -5,6 +5,8 @@
     // Intern
     import socket from "@internal/socket";
     import token from "@stores/token";
+    import privateKey from "@stores/privateKey";
+    import { readPrivateKey } from "@internal/keys";
     import lock from "@stores/lock";
     import config from "@internal/config";
 
@@ -22,7 +24,7 @@
     /**
         On-Mount.
     */
-    onMount(() => {
+    onMount(async () => {
         if(!socket.connected && $token.raw && config.socket) {
             socket.auth = { token: $token.raw };
             socket.connect();
@@ -32,6 +34,8 @@
             navigate("/lockscreen");
             return;
         }
+
+        if(!$privateKey) $privateKey = await readPrivateKey();
 
         return () => {
             socket.disconnect();
