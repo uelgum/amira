@@ -12,7 +12,7 @@ import config from "@config";
 /**
     Glob-Pfad zu allen Models.
 */
-const MODELS_PATH = path.join(__dirname, "../models/*.js");
+const MODELS_PATH = path.join(__dirname, "../models/**/*.js");
 
 const psql = config.psql;
 
