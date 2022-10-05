@@ -31,6 +31,7 @@
   "dependencies": {
     "@uelgum/logger": "https://gumenyuk.de/packages/uelgum-logger-1.0.0.tgz",
     "bcrypt": "^5.0.1",
+    "bree": "^9.1.2",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "express": "^4.18.1",
