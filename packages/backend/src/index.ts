@@ -4,6 +4,7 @@ import express from "express";
 import { Server as SocketIO, Socket } from "socket.io";
 
 // Intern
+import bree from "@loaders/bree";
 import logger from "@loaders/logger";
 import sockets from "@loaders/sockets";
 import { loadSequelize } from "@loaders/sequelize";
@@ -51,6 +52,9 @@ const start = async () => {
 
         // Loader ausführen
         await loadSequelize();
+
+        // Job-Scheduler starten
+        await bree.start();
     } catch(error) {
         logger.error(error);
         process.exit(1);
