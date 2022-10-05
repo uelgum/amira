@@ -38,8 +38,8 @@ type DailiesTask = Model & {
 /**
     Dailies-Model für Tasks in der Datenbank.
 */
-const DailiesTaskModel = sequelize.define<DailiesTask>(
-    "DailiesTask",
+const DailiesModel = sequelize.define<DailiesTask>(
+    "Dailies",
     {
         id: {
             type: DataTypes.STRING(20),
@@ -68,4 +68,4 @@ const DailiesTaskModel = sequelize.define<DailiesTask>(
     }
 );
 
-export default DailiesTaskModel;
+export default DailiesModel;
