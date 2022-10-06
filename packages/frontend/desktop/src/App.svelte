@@ -1,13 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Router, Route, navigate } from "svelte-routing";
+    import { Router, Route } from "svelte-routing";
     
     // Intern
     import socket from "@internal/socket";
     import token from "@stores/token";
     import privateKey from "@stores/privateKey";
     import { readPrivateKey } from "@internal/keys";
-    import lock from "@stores/lock";
     import config from "@internal/config";
 
     // Layouts
@@ -17,7 +16,6 @@
     import Start from "@views/Start";
     import Dashboard from "@views/Dashboard";
     import Connecting from "@views/Connecting";
-    import LockScreen from "@views/LockScreen";
     import Login from "@views/Login";
     import Register from "@views/Register";
 
@@ -30,12 +28,9 @@
             socket.connect();
         }
 
-        if($lock) {
-            navigate("/lockscreen");
-            return;
+        if(!$privateKey) {
+            $privateKey = await readPrivateKey();
         }
-
-        if(!$privateKey) $privateKey = await readPrivateKey();
 
         return () => {
             socket.disconnect();
@@ -48,7 +43,6 @@
         <Route path="/" component={Start}/>
         <Route path="/connecting" component={Connecting}/>
         <Route path="/dashboard" component={Dashboard}/>
-        <Route path="/lockscreen" component={LockScreen}/>
         <Route path="/login" component={Login}/>
         <Route path="/register" component={Register}/>
     </Router>
