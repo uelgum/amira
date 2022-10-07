@@ -75,7 +75,20 @@
         });
 
         if(response.status === "err") {
-            // TODO Fehler anzeigen
+            switch(response.err.code) {
+                case "USERNAME_TAKEN": {
+                    errors.username = "Der Nutzername ist vergeben.";
+                    username = "";
+                    break;
+                }
+
+                case "EMAIL_TAKEN": {
+                    errors.email = "Die E-Mail ist vergeben.";
+                    email = "";
+                    break;
+                }
+            }
+            
             return;
         }
 
