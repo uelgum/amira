@@ -43,7 +43,7 @@
     });
 </script>
 
-<div id="title-bar-controls">
+<div id="title-bar__controls">
     <!-- Minimize -->
     <TitleBarButton on:click={minimize}>
         <TitleBarButtonIcon type="minimize"/>
@@ -61,7 +61,7 @@
 </div>
 
 <style lang="scss">
-    #title-bar-controls {
+    #title-bar__controls {
         display: flex;
     }
 </style>
