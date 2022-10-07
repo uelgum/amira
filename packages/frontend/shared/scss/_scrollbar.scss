@@ -1,0 +1,22 @@
+@use "./colors" as *;
+
+// Firefox
+:root {
+    scrollbar-width: thin;
+    scrollbar-color: $black;
+    scrollbar-track-color: $black-even-lighter;
+}
+
+// Chrome, Edge, Safari
+*::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+*::-webkit-scrollbar-track {
+    background: $black;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: $black-even-lighter;
+    border-radius: 0.5em;
+}
