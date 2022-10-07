@@ -15,22 +15,16 @@
 
 <style lang="scss">
     #dashboard {
-        position: relative;
-        width: 100%;
         height: 100%;
     }
 
     #dashboard-container {
         display: flex;
-        height: calc(100% - 49px);  // Magic Number: Minus Höhe der Top-Bar
+        height: calc(100% - 2.75em);
     }
 
     #dashboard-content {
         position: relative;
-        display: flex;
-        width: 100%;
-        font-size: 1em;
-        overflow: hidden auto;
         padding: 1em;
     }
 </style>
