@@ -54,7 +54,8 @@
         });
 
         if(response.status === "err") {
-            // TODO Fehler anzeigen
+            errors.usernameOrEmail = "Ungültige Anmeldedaten.";
+            password = "";
             return;
         }
 
