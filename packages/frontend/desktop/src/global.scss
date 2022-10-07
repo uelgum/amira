@@ -1,5 +1,6 @@
 @use "@amira/shared/scss/colors" as *;
 @use "@amira/shared/scss/fonts" as *;
+@use "@amira/shared/scss/scrollbar" as *;
 
 ::selection {
     background: transparentize($blue, 0.25);
