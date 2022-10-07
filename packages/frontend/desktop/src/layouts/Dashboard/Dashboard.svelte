@@ -26,5 +26,6 @@
     #dashboard-content {
         position: relative;
         padding: 1em;
+        overflow: hidden auto;
     }
 </style>
