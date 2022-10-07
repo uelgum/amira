@@ -82,6 +82,7 @@
         user-select: none;
         visibility: hidden;
         transition: 0.25s ease-in-out;
+        z-index: 1;
         pointer-events: none;
     }
 </style>
