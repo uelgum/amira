@@ -37,10 +37,10 @@
 <div class="copy-field">
     <ValueField>
         {value}
-        <button class="copy-field-button" on:click={copyValue}>
+        <button class="copy-field__button" on:click={copyValue}>
             <img
                 src={icon}
-                alt="copy-field-icon"
+                alt="icon"
             />
         </button>
     </ValueField>
@@ -49,7 +49,7 @@
 <style lang="scss">
     @use "@amira/shared/scss/colors" as *;
 
-    .copy-field-button {
+    .copy-field__button {
         display: flex;
         background: $black-light;
         color: $white-light;
@@ -64,7 +64,7 @@
         cursor: pointer;
 
         img {
-            width: 1.5em;
+            width: 1.25em;
         }
     }
 </style>
