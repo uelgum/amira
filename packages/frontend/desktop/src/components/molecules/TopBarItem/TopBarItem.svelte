@@ -1,11 +1,11 @@
-<div class="top-bar-item" on:click>
+<div class="top-bar__item" on:click>
     <slot/>
 </div>
 
 <style lang="scss">
     @use "@amira/shared/scss/colors" as *;
 
-    .top-bar-item {
+    .top-bar__item {
         padding: 0.5em;
         border-radius: 0.25em;
         transition: background 0.25s ease;
