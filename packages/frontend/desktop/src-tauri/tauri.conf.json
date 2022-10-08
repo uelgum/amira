@@ -7,7 +7,7 @@
     "distDir": "../build"
   },
   "package": {
-    "productName": "amira-desktop",
+    "productName": "Amira",
     "version": "1.0.0"
   },
   "tauri": {
