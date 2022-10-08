@@ -9,7 +9,7 @@
     import homeIcon from "@amira/shared/svg/home.svg";
 </script>
 
-<div id="side-bar" class:extended={$sideBarExpanded}>
+<div id="side-bar" class:expanded={$sideBarExpanded}>
     <SideBarItem icon={homeIcon} to="/dashboard">
         Dashboard
     </SideBarItem>
@@ -36,7 +36,7 @@
         gap: 0.5em;
         transition: width 0.25s ease;
 
-        &.extended {
+        &.expanded {
             width: 10em;
         }
     }
