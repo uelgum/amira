@@ -13,9 +13,9 @@ const sideBarExpanded = writable(
 /**
     Aktualisiert den Wert im Store.
 */
-const set = (isMinimized: boolean) => {
-    window.localStorage.setItem(SIDE_BAR_EXPANDED_KEY, `${isMinimized}`);
-    sideBarExpanded.set(isMinimized);
+const set = (isExpanded: boolean) => {
+    window.localStorage.setItem(SIDE_BAR_EXPANDED_KEY, `${isExpanded}`);
+    sideBarExpanded.set(isExpanded);
 };
 
 export default {
