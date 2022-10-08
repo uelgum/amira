@@ -42,12 +42,8 @@ const readPrivateKey = async () => {
 
     const content = await readTextFile(filePath);
 
-    const armoredKey = await openpgp.readPrivateKey({
+    const privateKey = await openpgp.readPrivateKey({
         armoredKey: content
-    });
-
-    const privateKey = await openpgp.decryptKey({
-        privateKey: armoredKey
     });
 
     return privateKey;
