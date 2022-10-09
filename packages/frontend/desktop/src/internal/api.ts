@@ -33,7 +33,8 @@ class API {
         const url = config.apiBaseUrl + endpoint;
         
         const options: FetchOptions = {
-            method
+            method,
+            headers: {}
         };
 
         if(method === "POST" && data) {
