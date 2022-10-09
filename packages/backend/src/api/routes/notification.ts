@@ -25,10 +25,10 @@ router.get("/get", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/notification/delete/:id
-    Ruft alle Benachrichtigungen ab.
+    POST /api/notification/delete/:notificationId
+    Entfernt eine Benachrichtung.
 */
-router.get("/get", async (req: Request, res: Response) => {
+router.post("/delete/:notificationId", async (req: Request, res: Response) => {
     try {
         await deleteNotification(req);
         sendData(res);
