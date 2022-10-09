@@ -1,6 +1,8 @@
+import { get } from "svelte/store";
 import { fetch, Body } from "@tauri-apps/api/http";
 
 // Intern
+import tokenStore from "@stores/token";
 import config from "@internal/config";
 
 // Types
@@ -36,6 +38,12 @@ class API {
 
         if(method === "POST" && data) {
             options.body = Body.json(data);
+        }
+
+        const token = get(tokenStore);
+
+        if(token) {
+            options.headers["Authorization"] = token.raw;
         }
 
         const response = await fetch<Response<T>>(url, options);
