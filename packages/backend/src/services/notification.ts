@@ -75,15 +75,15 @@ const getNotifications = async (userId: string) => {
     Entfernt eine Benachrichtung.
 */
 const deleteNotification = async (req: Request) => {
-    const { id } = req.params;
+    const { notificationId } = req.params;
 
-    if(!id) {
+    if(!notificationId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
     const notification = await Notification.findOne({
         where: {
-            id
+            id: notificationId
         } 
     });
 
