@@ -22,6 +22,7 @@
         outline: none;
         justify-content: center;
         align-items: center;
+        user-select: none;
         cursor: pointer;
 
         &:hover {
