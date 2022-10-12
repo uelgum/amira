@@ -20,8 +20,8 @@
         background: $red;
         width: 6px;
         height: 6px;
-        right: 0.25em;
-        bottom: 0.35em;
+        right: 15%;
+        bottom: 15%;
         border-radius: 50%;
         pointer-events: none;
     }
