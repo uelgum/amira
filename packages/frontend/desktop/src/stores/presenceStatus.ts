@@ -24,6 +24,12 @@ const set = (status: PresenceStatus) => {
     if(socket.connected) {
         socket.emit("presenceUpdate", { status });
     }
+
+    presenceStatus.set(status);
+};
+
+export type {
+    PresenceStatus
 };
 
 export default {
