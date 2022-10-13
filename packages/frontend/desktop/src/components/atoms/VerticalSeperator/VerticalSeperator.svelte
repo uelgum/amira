@@ -7,5 +7,6 @@
         display: block;
         height: 1.5em;
         border-right: 1px solid $black-lightest;
+        pointer-events: none;
     }
 </style>
