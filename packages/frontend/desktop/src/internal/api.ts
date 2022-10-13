@@ -43,7 +43,7 @@ class API {
 
         const token = get(tokenStore);
 
-        if(token) {
+        if(token.raw) {
             options.headers["Authorization"] = token.raw;
         }
 
