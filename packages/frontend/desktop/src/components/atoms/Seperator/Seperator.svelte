@@ -6,5 +6,6 @@
     .seperator {
         width: 100%;
         border-bottom: 1px solid $black-lightest;
+        pointer-events: none;
     }
 </style>
