@@ -1,6 +1,22 @@
 <script lang="ts">
+    import { onMount } from "svelte";
+    import { navigate } from "svelte-routing";
+
+    // Komponente
     import TopBar from "@organisms/TopBar";
     import SideBar from "@organisms/SideBar";
+
+    // Intern
+    import token from "@stores/token";
+
+    /**
+        On-Mount.
+    */
+    onMount(() => {
+        if(!$token.raw) {
+            navigate("/login");
+        }
+    });
 </script>
 
 <div id="dashboard">
