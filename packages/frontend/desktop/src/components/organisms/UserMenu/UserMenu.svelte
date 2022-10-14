@@ -74,7 +74,7 @@
             </div>
         </MenuItem>
 
-        <MenuItem>
+        <MenuItem on:click={() => setStatus("offline")}>
             <div class="user-menu__presence">
                 <PresenceStatus type="offline"/>
                 Offline
