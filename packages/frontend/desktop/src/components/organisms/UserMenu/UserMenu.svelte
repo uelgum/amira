@@ -41,6 +41,17 @@
     const setStatus = (status: PresenceStatusType) => {
         $presenceStatus = status;
     };
+
+    /**
+        Öffnet die Einstellungen.
+    */
+    const openSettings = () => {
+        navigate("/settings", {
+            state: {
+                origin: window.location.pathname
+            } 
+        });
+    };
 </script>
 
 <div id="user-menu">
@@ -96,7 +107,7 @@
             Profil
         </MenuItem>
 
-        <MenuItem icon={settingsIcon} on:click={() => navigate("/settings")}>
+        <MenuItem icon={settingsIcon} on:click={openSettings}>
             Einstellungen
         </MenuItem>
 
