@@ -7,6 +7,7 @@
 
     // Icons
     import homeIcon from "@amira/shared/svg/home.svg";
+    import usersIcon from "@amira/shared/svg/users.svg"
 </script>
 
 <div id="side-bar" class:expanded={$sideBarExpanded}>
@@ -16,8 +17,8 @@
 
     <Seperator/>
 
-    <SideBarItem icon={homeIcon} to="/">
-        Test
+    <SideBarItem icon={usersIcon} to="/contacts">
+        Kontakte
     </SideBarItem>
 </div>
 
