@@ -4,9 +4,10 @@
     
     // Intern
     import socket from "@internal/socket";
-    import token from "@stores/token";
-    import privateKey from "@stores/privateKey";
+    import settings from "@internal/settings";
     import { readPrivateKey } from "@internal/keys";
+    import privateKey from "@stores/privateKey";
+    import token from "@stores/token";
     import config from "@internal/config";
 
     // Layouts
@@ -26,6 +27,10 @@
         if(!socket.connected && $token.raw && config.socket) {
             socket.auth = { token: $token.raw };
             socket.connect();
+        }
+
+        if(!settings.isInit) {
+            await settings.init();
         }
 
         if(!$privateKey) {
