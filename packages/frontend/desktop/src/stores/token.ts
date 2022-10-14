@@ -9,6 +9,7 @@ type TokenStore = {
     raw: string;
     data: {
         iat: number;
+        id: string;
         firstName: string;
         username: string;
         key: string;
