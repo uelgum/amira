@@ -61,10 +61,8 @@
     } 
 
     .side-bar__item.special {
-        background: $blue;
-
-        &:hover {
-            background: darken($blue, 5);
+        &.active, &:hover {
+            background: $blue;
         }
     } 
 
