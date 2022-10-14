@@ -6,6 +6,7 @@
     @use "@amira/shared/scss/colors" as *;
 
     .button {
+        display: flex;
         background: $blue;
         color: $white-light;
         padding: 0.75em;
@@ -15,6 +16,7 @@
         font-family: "Inter", sans-serif;
         font-size: 1em;
         letter-spacing: 0.1em;
+        gap: 0.75em;
         cursor: pointer;
         transition: background 0.1s ease-in;
 
