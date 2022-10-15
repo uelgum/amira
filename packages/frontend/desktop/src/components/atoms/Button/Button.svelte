@@ -16,6 +16,7 @@
         font-family: "Inter", sans-serif;
         font-size: 1em;
         letter-spacing: 0.1em;
+        justify-content: center;
         gap: 0.75em;
         cursor: pointer;
         transition: background 0.1s ease-in;
