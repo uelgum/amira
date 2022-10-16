@@ -66,11 +66,6 @@ type User = Model & {
     password: string;
 
     /**
-        ID des Avatars.
-    */
-    avatarId: string;
-
-    /**
         Schlüssel des Nutzers.
     */
     keys: Keys;
@@ -132,10 +127,6 @@ const UserModel = sequelize.define<User>(
         password: {
             type: DataTypes.STRING(128),
             allowNull: false
-        },
-        avatarId: {
-            type: DataTypes.STRING(32),
-            field: "avatar_id"
         },
         keys: {
             type: DataTypes.JSONB,
