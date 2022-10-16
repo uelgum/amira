@@ -1,3 +1,4 @@
+import path from "path";
 import http from "http";
 import cors from "cors";
 import express from "express";
@@ -39,6 +40,7 @@ app.use(express.json());
 app.use(malformedJson);
 app.use(fileUpload());
 
+app.use("/media", express.static(path.join(__dirname, "../uploads")));
 app.use("/api", routes);
 
 /**
