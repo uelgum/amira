@@ -1,6 +1,7 @@
 import http from "http";
 import cors from "cors";
 import express from "express";
+import fileUpload from "express-fileupload";
 import { Server as SocketIO, Socket } from "socket.io";
 
 // Intern
@@ -36,6 +37,7 @@ io.on("connection", (socket: Socket) => {
 app.use(cors({ origin: "*" })); // FIXME Nur solange in Entwicklung
 app.use(express.json());
 app.use(malformedJson);
+app.use(fileUpload());
 
 app.use("/api", routes);
 
