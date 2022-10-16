@@ -42,7 +42,10 @@
     #dashboard-content {
         position: relative;
         width: 100%;
-        padding: 1em;
+        max-width: 1920px;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 2em;
         overflow: hidden auto;
     }
 </style>
