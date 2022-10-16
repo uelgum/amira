@@ -1,3 +1,8 @@
+import fs from "fs";
+import path from "path";
+import sharp from "sharp";
+
+// Intern
 import AmiraError from "@structs/error";
 import User from "@models/user";
 import Email from "@models/email";
@@ -15,6 +20,17 @@ import exists from "@utils/exists";
 
 // Types
 import type { Request } from "express";
+import type { UploadedFile } from "express-fileupload";
+
+/**
+    Pfad zum Avatar-Ordner.
+*/
+const AVATAR_PATH = path.join(__dirname, "../../uploads");
+
+/**
+    Größenlimit für Avatare. Entspricht `1MB`.
+*/
+const AVATAR_SIZE_LIMIT = 1000000;
 
 /**
     Maximales Alter einer Verifizierung. Entspricht `24h`.
@@ -238,11 +254,61 @@ const getPublicKey = async (req: Request) => {
     };
 };
 
+/**
+    Speichert den Avatar eines Nutzers auf dem Server.
+*/
+const uploadAvatar = async (req: Request) => {
+    if(!req.files) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const avatar = req.files.avatar as UploadedFile;
+
+    if(!avatar) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    if(![ "image/png", "image/jpeg" ].includes(avatar.mimetype)) {
+        throw new AmiraError(400, "INVALID_FILE_EXTENSION");
+    }
+
+    if(avatar.size > AVATAR_SIZE_LIMIT) {
+        throw new AmiraError(400, "FILE_SIZE_LIMIT_EXCEEDED");
+    }
+
+    const shapedAvatar = await sharp(avatar.data)
+        .resize({
+            width: 512,
+            height: 512
+        })
+        .jpeg()
+        .toBuffer();
+
+    const avatarName = `avatar-${req.user.id}`;
+    const avatarPath = path.join(AVATAR_PATH, avatarName + ".jpg");
+
+    await new Promise<void>((resolve, reject) => {
+        fs.writeFile(avatarPath, shapedAvatar, (error) => {
+            if(error) {
+                reject();
+                return;
+            }
+            
+            resolve();
+        });
+    });
+
+    return {
+        id: avatarName
+    };
+};
+
 export {
     verifyEmail,
     resetPassword,
     blockUser,
     unblockUser,
     addPublicKey,
-    getPublicKey
+    getPublicKey,
+    uploadAvatar
 };
