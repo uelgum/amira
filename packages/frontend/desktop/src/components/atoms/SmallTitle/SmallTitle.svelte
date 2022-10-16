@@ -9,5 +9,7 @@
         color: $white-light;
         font-size: 0.85em;
         font-weight: 600;
+        text-transform: uppercase;
+        user-select: none;
     }
 </style>
