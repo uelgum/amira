@@ -71,6 +71,14 @@ router.post("/pubkey/:userId", async (req: Request, res: Response) => {
     }
 });
 
+/**
+    GET /api/user/avatar/:userId
+    Lädt den Avatar eines Nutzers auf den Server hoch.
+*/
+router.get("/avatar/:userId", (req: Request, res: Response) => {
+    res.redirect(`/media/avatar-${req.params.userId}.jpg`);
+});
+
 router.use(isLoggedIn);
 
 /**
@@ -124,14 +132,5 @@ router.post("/avatar", async (req: Request, res: Response) => {
         sendError(res, error);
     }
 });
-
-/**
-    GET /api/user/avatar/:userId
-    Lädt den Avatar eines Nutzers auf den Server hoch.
-*/
-router.get("/avatar/:userId", async (req: Request, res: Response) => {
-    res.redirect(`/media/avatar-${req.params.userId}.jpg`);
-});
-
 
 export default router;
