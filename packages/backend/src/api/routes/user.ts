@@ -10,7 +10,8 @@ import {
     blockUser,
     unblockUser,
     resetPassword, 
-    verifyEmail
+    verifyEmail,
+    uploadAvatar
 } from "@services/user";
 
 /**
@@ -106,6 +107,19 @@ router.post("/unblock/:blockedUserId", async (req: Request, res: Response) => {
     try {
         await unblockUser(req);
         sendData(res);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    POST /api/user/avatar
+    Lädt den Avatar eines Nutzers auf den Server hoch.
+*/
+router.post("/avatar", async (req: Request, res: Response) => {
+    try {
+        const data = await uploadAvatar(req);
+        sendData(res, data);
     } catch(error: any) {
         sendError(res, error);
     }
