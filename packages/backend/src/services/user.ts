@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 import sharp from "sharp";
 
@@ -286,17 +286,12 @@ const uploadAvatar = async (req: Request) => {
 
     const avatarName = `avatar-${req.user.id}`;
     const avatarPath = path.join(AVATAR_PATH, avatarName + ".jpg");
-
-    await new Promise<void>((resolve, reject) => {
-        fs.writeFile(avatarPath, shapedAvatar, (error) => {
-            if(error) {
-                reject();
-                return;
-            }
-            
-            resolve();
-        });
-    });
+    
+    try {
+        await fs.writeFile(avatarPath, shapedAvatar);
+    } catch(error) {
+        throw error;
+    }
 
     return {
         id: avatarName
