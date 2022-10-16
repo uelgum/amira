@@ -125,4 +125,13 @@ router.post("/avatar", async (req: Request, res: Response) => {
     }
 });
 
+/**
+    GET /api/user/avatar/:userId
+    Lädt den Avatar eines Nutzers auf den Server hoch.
+*/
+router.get("/avatar/:userId", async (req: Request, res: Response) => {
+    res.redirect(`/media/avatar-${req.params.userId}.jpg`);
+});
+
+
 export default router;
