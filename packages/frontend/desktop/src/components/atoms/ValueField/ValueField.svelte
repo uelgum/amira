@@ -12,7 +12,7 @@
         padding: 0.75em;
         border: 1px solid $black-lightest;
         border-radius: 0.25em;
-        justify-content: space-around;
         align-items: center;
+        word-break: break-all;
     }
 </style>
