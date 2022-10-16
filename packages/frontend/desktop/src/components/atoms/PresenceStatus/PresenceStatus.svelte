@@ -1,6 +1,8 @@
 <script lang="ts" context="module">
     // #region Types
     type Status = "online" | "away" | "dnd" | "offline";
+
+    type Size = "sm" | "lg";
     // #endregion
 </script>
 
@@ -9,9 +11,14 @@
         Typ des Presence-Status.
     */
     export let type: Status;
+
+    /**
+        Größe des Presence-Status.
+    */
+    export let size: Size = "sm";
 </script>
 
-<div class="presence-status {type}"/>
+<div class="presence-status {size} {type}"/>
 
 <style lang="scss">
     @use "@amira/shared/scss/colors" as *;
@@ -22,6 +29,16 @@
         height: 0.5rem;
         border-radius: 50%;
         transition: background 0.25s ease;
+
+        &.sm {
+            width: 0.5rem;
+            height: 0.5rem;
+        }
+
+        &.lg {
+            width: 1rem;
+            height: 1rem;
+        }
 
         &.online { background: $green; }
         &.away { background: $yellow; }
