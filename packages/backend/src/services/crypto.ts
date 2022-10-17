@@ -24,7 +24,6 @@ const hashPassword = async (password: string) => {
     return bcrypt.hash(password, salt);
 };
 
-
 /**
     Vergleicht einen mit Bcrypt erstellten Passwort-Hash.
 */
