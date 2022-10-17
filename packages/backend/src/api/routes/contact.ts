@@ -4,6 +4,7 @@ import { Request, Response, Router } from "express";
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
 import {
+    getPresenceStatus,
     acceptContactRequest,
     rejectContactRequest,
     removeContact,
@@ -17,6 +18,19 @@ import {
 const router = Router();
 
 router.use(isLoggedIn);
+
+/**
+    POST /api/contact/presence/:userId
+    Sendet eine Kontakt-Anfrage an einen Nutzer.
+*/
+router.get("/presence/:userId", async (req: Request, res: Response) => {
+    try {
+        const data = await getPresenceStatus(req);
+        sendData(res, data);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
 
 /**
     POST /api/contact/request
