@@ -14,7 +14,7 @@ import type { UploadedFile } from "express-fileupload";
 /**
     Größenlimit für Avatare. Entspricht `1MB`.
 */
-const AVATAR_SIZE_LIMIT = 1000000;
+const AVATAR_FILE_SIZE_LIMIT = 1000000;
 
 /**
     Pfad zum Avatar-Ordner.
@@ -60,7 +60,7 @@ const uploadAvatar = async (req: Request) => {
         throw new AmiraError(400, "INVALID_FILE_EXTENSION");
     }
 
-    if(file.size > AVATAR_SIZE_LIMIT) {
+    if(file.size > AVATAR_FILE_SIZE_LIMIT) {
         throw new AmiraError(400, "FILE_SIZE_LIMIT_EXCEEDED");
     }
 
