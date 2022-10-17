@@ -12,7 +12,34 @@ import {
 import exists from "@utils/exists";
 
 // Types
-import type { Request } from "express";
+import { raw, Request } from "express";
+
+/**
+    Ruft alle Kontakte eines Nutzers ab.
+*/
+const getContacts = async (req: Request) => {
+    const userId = req.user.id;
+
+    const rawContacts = await Contact.findAll({
+        where: {
+            [ Op.or ]: [
+                { id1: userId },
+                { id2: userId }
+            ],
+            confirmed: true
+        }
+    });
+
+    const contacts = rawContacts.map((contact) => {
+        return {
+            contactId: (contact.id1 === userId) ? contact.id2 : contact.id1
+        };
+    });
+
+    return {
+        contacts
+    };
+};
 
 /**
     Sendet eine Kontakt-Anfrage an einen Nutzer.
@@ -203,6 +230,7 @@ const removeContact = async (req: Request) => {
 };
 
 export {
+    getContacts,
     sendContactRequest,
     withdrawContactRequest,
     acceptContactRequest,
