@@ -24,8 +24,6 @@ const onPresenceUpdate = (socketManager: SocketManager, socket: Socket, data: Da
         return;
     }
 
-    console.log("Presence Update:", status);
-
     socketManager.presence.set(socketId, status);
     sendPresenceUpdate(socketId, status);
 };
