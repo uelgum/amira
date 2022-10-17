@@ -1,4 +1,5 @@
 import onDisconnect from "@api/events/disconnect";
+import onPresenceUpdate from "@api/events/presenceUpdate";
 
 // Types
 import type { Socket } from "socket.io";
@@ -17,6 +18,11 @@ class SocketManager {
         Kollektion aller aktiven Debounces.
     */
     public debounces: Map<string, NodeJS.Timeout>;
+
+    /**
+        Kollektion aller aktuellen Presence-Status.
+    */
+    public presence: Map<string, string>;
     // #endregion
 
     /**
@@ -25,6 +31,7 @@ class SocketManager {
     constructor() {
         this.sockets = new Map();
         this.debounces = new Map();
+        this.presence = new Map();
     }
 
     /**
@@ -65,8 +72,8 @@ class SocketManager {
             oldSocket.disconnect();
         }
 
-        // TODO Events hinzufügen
         socket.on("disconnect", onDisconnect.bind(null, this, socket));
+        socket.on("presenceUpdate", onPresenceUpdate.bind(null, this, socket));
 
         this.sockets.set(socketId, socket);
     }
@@ -75,11 +82,14 @@ class SocketManager {
         Entfernt einen Socket aus dem Manager.
     */
     public remove(socket: Socket) {
+        const socketId = socket.user.id;
+
         if(socket.connected) {
             socket.disconnect();
         }
 
-        this.sockets.delete(socket.user.id);
+        this.presence.delete(socketId);
+        this.sockets.delete(socketId);
     }
 
     /**
