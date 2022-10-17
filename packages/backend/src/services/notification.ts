@@ -29,13 +29,13 @@ type ContactNotificationData = {
 };
 
 /**
-    Presence-Status.
+    Art des Presence-Status.
 */
-enum PresenceStatus {
-    ONLINE,
-    DND,
-    AWAY,
-    OFFLINE
+enum PresenceType {
+    ONLINE = "online",
+    AWAY = "away",
+    DND = "dnd",
+    OFFLINE = "offline"
 };
 // #endregion
 
@@ -157,7 +157,7 @@ const sendContactAcceptedNotification = async (data: ContactNotificationData) =>
 /**
     Schickt ein Presence-Update an alle verbundenen Kontakte in Echtzeit.
 */
-const sendPresenceUpdate = async (userId: string, status: PresenceStatus) => {
+const sendPresenceUpdate = async (userId: string, status: PresenceType) => {
     const user = await User.findOne({
         where: {
             id: userId
@@ -231,7 +231,10 @@ const sendMailNotification = async (recipientId: string, fullName: string) => {
 };
 
 export {
-    PresenceStatus,
+    PresenceType
+};
+
+export {
     getNotifications,
     deleteNotification,
     sendContactRequestNotification,
