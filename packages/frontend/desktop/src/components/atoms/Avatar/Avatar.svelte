@@ -17,7 +17,7 @@
     */
     export let size: Size;
 
-    const url = `${config.apiBaseUrl}/user/avatar/${id}`;
+    const url = `${config.apiBaseUrl}/avatar/${id}`;
 </script>
 
 <img
