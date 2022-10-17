@@ -6,6 +6,7 @@ import AmiraError from "@structs/error";
 import User from "@models/user";
 import { validateLoginData, validateRegisterData } from "@services/validator";
 import { generateId } from "@services/id";
+import { generateAvatar } from "@services/avatar";
 import { sendVerificationEmail } from "@services/email";
 import {
     comparePassword,
@@ -150,6 +151,7 @@ const register = async (req: Request) => {
     });
 
     await user.save();
+    await generateAvatar(user.id);
 
     sendVerificationEmail({
         userId: user.id,
