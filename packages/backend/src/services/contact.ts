@@ -12,7 +12,7 @@ import {
 import exists from "@utils/exists";
 
 // Types
-import { raw, Request } from "express";
+import { Request } from "express";
 
 /**
     Ruft alle Kontakte eines Nutzers ab.
