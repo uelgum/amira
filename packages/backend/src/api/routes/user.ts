@@ -11,7 +11,6 @@ import {
     unblockUser,
     resetPassword, 
     verifyEmail,
-    uploadAvatar
 } from "@services/user";
 
 /**
@@ -71,14 +70,6 @@ router.post("/pubkey/:userId", async (req: Request, res: Response) => {
     }
 });
 
-/**
-    GET /api/user/avatar/:userId
-    Lädt den Avatar eines Nutzers auf den Server hoch.
-*/
-router.get("/avatar/:userId", (req: Request, res: Response) => {
-    res.redirect(`/media/avatar-${req.params.userId}.jpg`);
-});
-
 router.use(isLoggedIn);
 
 /**
@@ -115,19 +106,6 @@ router.post("/unblock/:blockedUserId", async (req: Request, res: Response) => {
     try {
         await unblockUser(req);
         sendData(res);
-    } catch(error: any) {
-        sendError(res, error);
-    }
-});
-
-/**
-    POST /api/user/avatar
-    Lädt den Avatar eines Nutzers auf den Server hoch.
-*/
-router.post("/avatar", async (req: Request, res: Response) => {
-    try {
-        const data = await uploadAvatar(req);
-        sendData(res, data);
     } catch(error: any) {
         sendError(res, error);
     }

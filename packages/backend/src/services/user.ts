@@ -23,16 +23,6 @@ import type { Request } from "express";
 import type { UploadedFile } from "express-fileupload";
 
 /**
-    Pfad zum Avatar-Ordner.
-*/
-const AVATAR_PATH = path.join(__dirname, "../../uploads");
-
-/**
-    Größenlimit für Avatare. Entspricht `1MB`.
-*/
-const AVATAR_SIZE_LIMIT = 1000000;
-
-/**
     Maximales Alter einer Verifizierung. Entspricht `24h`.
 */
 const MAX_VERIFICATION_AGE = 1000 * 60 * 60 * 24;
@@ -254,56 +244,11 @@ const getPublicKey = async (req: Request) => {
     };
 };
 
-/**
-    Speichert den Avatar eines Nutzers auf dem Server.
-*/
-const uploadAvatar = async (req: Request) => {
-    if(!req.files) {
-        throw new AmiraError(400, "INVALID_DATA");
-    }
-
-    const avatar = req.files.avatar as UploadedFile;
-
-    if(!avatar) {
-        throw new AmiraError(400, "INVALID_DATA");
-    }
-
-    if(![ "image/png", "image/jpeg" ].includes(avatar.mimetype)) {
-        throw new AmiraError(400, "INVALID_FILE_EXTENSION");
-    }
-
-    if(avatar.size > AVATAR_SIZE_LIMIT) {
-        throw new AmiraError(400, "FILE_SIZE_LIMIT_EXCEEDED");
-    }
-
-    const shapedAvatar = await sharp(avatar.data)
-        .resize({
-            width: 512,
-            height: 512
-        })
-        .jpeg()
-        .toBuffer();
-
-    const avatarName = `avatar-${req.user.id}`;
-    const avatarPath = path.join(AVATAR_PATH, avatarName + ".jpg");
-    
-    try {
-        await fs.writeFile(avatarPath, shapedAvatar);
-    } catch(error) {
-        throw error;
-    }
-
-    return {
-        id: avatarName
-    };
-};
-
 export {
     verifyEmail,
     resetPassword,
     blockUser,
     unblockUser,
     addPublicKey,
-    getPublicKey,
-    uploadAvatar
+    getPublicKey
 };
