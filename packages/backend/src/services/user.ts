@@ -1,8 +1,3 @@
-import fs from "fs/promises";
-import path from "path";
-import sharp from "sharp";
-
-// Intern
 import AmiraError from "@structs/error";
 import User from "@models/user";
 import Email from "@models/email";
@@ -20,7 +15,6 @@ import exists from "@utils/exists";
 
 // Types
 import type { Request } from "express";
-import type { UploadedFile } from "express-fileupload";
 
 /**
     Maximales Alter einer Verifizierung. Entspricht `24h`.
