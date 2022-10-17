@@ -2,10 +2,12 @@ import { Op } from "sequelize";
 
 // Intern
 import AmiraError from "@structs/error";
+import sockets from "@loaders/sockets";
 import Contact from "@models/contact";
 import Block from "@models/block";
 import User from "@models/user";
 import {
+    PresenceType,
     sendContactAcceptedNotification,
     sendContactRequestNotification
 } from "@services/notification";
@@ -38,6 +40,26 @@ const getContacts = async (req: Request) => {
 
     return {
         contacts
+    };
+};
+
+/**
+    Ruft den Presence-Status eines Nutzers ab.
+*/
+const getPresenceStatus = async (req: Request) => {
+    const { userId } = req.params;
+
+    if(!userId) {
+        throw new AmiraError(400, "INVALID_DATA");    
+    }
+
+    const status = sockets.has(userId) ?
+        sockets.presence.get(userId) :
+        PresenceType.OFFLINE;
+
+    return {
+        userId,
+        status
     };
 };
 
@@ -231,6 +253,7 @@ const removeContact = async (req: Request) => {
 
 export {
     getContacts,
+    getPresenceStatus,
     sendContactRequest,
     withdrawContactRequest,
     acceptContactRequest,
