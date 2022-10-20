@@ -4,13 +4,13 @@ import { Request, Response, Router } from "express";
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
 import {
+    getContactStatus,
     getPresenceStatus,
     acceptContactRequest,
     rejectContactRequest,
     removeContact,
     sendContactRequest,
     withdrawContactRequest,
-    getContactStatus
 } from "@services/contact";
 
 /**
