@@ -16,6 +16,15 @@ import exists from "@utils/exists";
 // Types
 import { Request } from "express";
 
+// #region Types
+enum ContactStatus {
+    CONFIRMED = "confirmed",
+    STRANGERS = "strangers",
+    PENDING_OUTGOING = "pendingOutgoing",
+    PENDING_INCOMING = "pendingIncoming"
+};
+// #endregion
+
 /**
     Ruft alle Kontakte eines Nutzers ab.
 */
@@ -41,6 +50,39 @@ const getContacts = async (req: Request) => {
     return {
         contacts
     };
+};
+
+/**
+    Ruft den Kontakt-Status eines Nutzers ab.
+*/
+const getContactStatus = async (req: Request) => {
+    const { userId } = req.params;
+
+    if(!userId) {
+        throw new AmiraError(400, "INVALID_DATA");    
+    }
+
+    const contact = await Contact.findOne({
+        where: {
+            id1: req.user.id,
+            id2: userId,
+            confirmed: true
+        }
+    });
+
+    if(!contact) {
+        return { status: ContactStatus.STRANGERS };
+    }
+
+    if(contact.confirmed) {
+        return { status: ContactStatus.CONFIRMED };
+    }
+
+    if(contact.id1 === req.user.id && !contact.confirmed) {
+        return { status: ContactStatus.PENDING_OUTGOING };
+    }
+
+    return { status: ContactStatus.PENDING_INCOMING };
 };
 
 /**
@@ -247,6 +289,7 @@ const removeContact = async (req: Request) => {
 
 export {
     getContacts,
+    getContactStatus,
     getPresenceStatus,
     sendContactRequest,
     withdrawContactRequest,
