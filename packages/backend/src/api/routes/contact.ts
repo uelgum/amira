@@ -9,7 +9,8 @@ import {
     rejectContactRequest,
     removeContact,
     sendContactRequest,
-    withdrawContactRequest
+    withdrawContactRequest,
+    getContactStatus
 } from "@services/contact";
 
 /**
@@ -18,6 +19,19 @@ import {
 const router = Router();
 
 router.use(isLoggedIn);
+
+/**
+    GET /api/contact/status/:userId
+    Ruft den Kontakt-Status eines Nutzers ab.
+*/
+router.get("/status/:userId", async (req: Request, res: Response) => {
+    try {
+        const data = await getContactStatus(req);
+        sendData(res, data);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
 
 /**
     GET /api/contact/presence/:userId
