@@ -204,10 +204,8 @@ const rejectContactRequest = async (req: Request) => {
 
     const contact = await Contact.findOne({
         where: {
-            [ Op.or ]: [
-                { id1: userId, id2: senderId },
-                { id1: senderId, id2: userId }
-            ],
+            id1: senderId,
+            id2: userId,
             confirmed: false
         }
     });
