@@ -10,16 +10,18 @@ import sequelize from "@loaders/sequelize";
 type Contact = Model & {
     /**
         ID des ersten Partners.
+        Entspricht demjenigen, der die Kontakt-Anfrage **geschickt** hat.
     */
     id1: string;
 
     /**
         ID des zweiten Partners.
+        Entspricht demjenigen, der die Kontakt-Anfrage **empfangen** hat.
     */
     id2: string;
 
     /**
-        Ob der Kontakt noch nicht bestätigt ist.
+        Ob der Kontakt bestätigt ist.
     */
     confirmed: boolean;
 };
