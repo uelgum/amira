@@ -20,8 +20,8 @@ const router = Router();
 router.use(isLoggedIn);
 
 /**
-    POST /api/contact/presence/:userId
-    Sendet eine Kontakt-Anfrage an einen Nutzer.
+    GET /api/contact/presence/:userId
+    Ruft den Presence-Status eines Nutzers ab.
 */
 router.get("/presence/:userId", async (req: Request, res: Response) => {
     try {
