@@ -58,7 +58,7 @@ const getContacts = async (req: Request) => {
 const getContactStatus = async (req: Request) => {
     const { userId } = req.params;
 
-    if(!userId) {
+    if(!userId || req.user.id === userId) {
         throw new AmiraError(400, "INVALID_DATA");    
     }
 
