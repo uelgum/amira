@@ -129,10 +129,8 @@ const withdrawContactRequest = async (req: Request) => {
 
     const contact = await Contact.findOne({
         where: {
-            [ Op.or ]: [
-                { id1: userId, id2: recipientId },
-                { id1: recipientId, id2: userId }
-            ],
+            id1: userId,
+            id2: recipientId,
             confirmed: false
         }
     });
