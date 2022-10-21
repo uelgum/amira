@@ -21,7 +21,7 @@ router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
 router.use("/avatar", avatarRoutes);
 router.use("/contact", contactRoutes);
-router.use("/notification", noticationRoutes);
+router.use("/notifications", noticationRoutes);
 router.use("/app", appRouter);
 
 router.use((_, res: Response) => {
