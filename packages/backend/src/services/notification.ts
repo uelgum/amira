@@ -1,12 +1,8 @@
-import { Op } from "sequelize";
-
-// Intern
 import AmiraError from "@structs/error";
-import sockets from "@loaders/sockets";
 import Notification, { NotificationType } from "@models/notification";
 import User from "@models/user";
-import Contact from "@models/contact";
 import { generateId } from "@services/id";
+import sockets from "@loaders/sockets";
 import exists from "@utils/exists";
 
 // Types
@@ -14,38 +10,39 @@ import type { Request } from "express";
 
 // #region Types
 /**
-    Daten für Benachrichtungen für Kontakt-Anfragen.
+    Daten zur Erstellung einer Benachrichtigung.
 */
-type ContactNotificationData = {
+type NotificationData = {
     /**
-        ID des Kontaktes.
+        ID des Empfängers.
     */
-    recipientId: string;
+    receiverId: string;
 
     /**
-        Voller Name des Kontaktes.
+        Art der Benachrichtigung.
     */
-    fullName: string;
-};
+    type: NotificationType;
 
-/**
-    Art des Presence-Status.
-*/
-enum PresenceType {
-    ONLINE = "online",
-    AWAY = "away",
-    DND = "dnd",
-    OFFLINE = "offline"
+    /**
+        Zusätzliche Daten.
+    */
+    data?: Record<string, string | number>;
+
+    /**
+        Optionaler Link in der Benachrichtigung. Kann verwendet werden, um direkt auf
+        das Ziel zu verweisen (z.B. **User** hat dir eine Nachricht geschickt).
+    */
+    link?: string;
 };
 // #endregion
 
 /**
     Ruft alle Benachrichtigungen eines Nutzers ab.
 */
-const getNotifications = async (userId: string) => {
-    const userExists = await exists(User, {
-        id: userId
-    });
+const getNotifications = async (req: Request) => {
+    const userId = req.user.id;
+    
+    const userExists = await exists(User, { id: userId });
 
     if(!userExists) {
         throw new AmiraError(404, "USER_NOT_FOUND");
@@ -53,16 +50,17 @@ const getNotifications = async (userId: string) => {
 
     const rawNotifications = await Notification.findAll({
         where: {
-            recipientId: userId
+            userId
         }
     });
 
-    const notifications = rawNotifications.map((notification) => {
+    const notifications = rawNotifications.map((n) => {
         return {
-            id: notification.id,
-            type: notification.type,
-            content: notification.content,
-            createdAt: notification.createdAt
+            id: n.id,
+            type: n.type,
+            data: n.data,
+            link: n.link,
+            createdAt: n.createdAt
         };
     });
 
@@ -72,19 +70,46 @@ const getNotifications = async (userId: string) => {
 };
 
 /**
-    Entfernt eine Benachrichtung.
+    Erstellt eine Benachrichtigung.
+*/
+const createNotification = async (notificationData: NotificationData) => {
+    const { receiverId, type, data, link } = notificationData;
+
+    const notification = await Notification.create({
+        id: generateId(),
+        receiverId,
+        type,
+        data,
+        link,
+        createdAt: Date.now()
+    });
+
+    await notification.save();
+
+    sendRealtimeNotification(receiverId);
+};
+
+/**
+    Löscht eine Benachrichtigung eines Nutzers.
 */
 const deleteNotification = async (req: Request) => {
+    const userId = req.user.id;
     const { notificationId } = req.params;
 
     if(!notificationId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
+    const userExists = await exists(User, { id: userId });
+
+    if(!userExists) {
+        throw new AmiraError(404, "USER_NPT_FOUND");
+    }
+
     const notification = await Notification.findOne({
         where: {
             id: notificationId
-        } 
+        }
     });
 
     if(!notification) {
@@ -95,150 +120,19 @@ const deleteNotification = async (req: Request) => {
 };
 
 /**
-    Erstellt eine Benachrichtung für eine Kontakt-Anfrage.
+    Schickt eine Benachrichtigung an einen Nutzer in Echtzeit.
 */
-const sendContactRequestNotification = async (data: ContactNotificationData) => {
-    const { recipientId, fullName } = data;
+const sendRealtimeNotification = (userId: string) => {
+    if(!sockets.has(userId)) return;
 
-    const createdAt = Date.now();
-    const content = `${fullName} hat Dir eine Kontakt-Anfrage geschickt.`;
+    const socket = sockets.get(userId);
 
-    const notification = await Notification.create({
-        id: generateId(),
-        type: NotificationType.CONTACT_REQUEST,
-        recipientId,
-        content,
-        createdAt
-    });
-
-    await notification.save();
-
-    if(sockets.has(recipientId)) {
-        const socket = sockets.get(recipientId);
-        
-        socket.emit("notification", {
-            type: NotificationType.CONTACT_REQUEST,
-            content,
-            createdAt
-        });
-    }
-};
-
-/**
-    Erstellt eine Benachrichtung für eine Annahme einer Kontakt-Anfrage.
-*/
-const sendContactAcceptedNotification = async (data: ContactNotificationData) => {
-    const { recipientId, fullName } = data;
-
-    const createdAt = Date.now();
-    const content = `${fullName} hat Deine Kontakt-Anfrage angenommen.`;
-
-    const notification = await Notification.create({
-        id: generateId(),
-        type: NotificationType.CONTACT_ACCEPTED,
-        recipientId,
-        content,
-        createdAt
-    });
-
-    await notification.save();
-
-    if(sockets.has(recipientId)) {
-        const socket = sockets.get(recipientId);
-        
-        socket.emit("notification", {
-            type: NotificationType.CONTACT_REQUEST,
-            content,
-            createdAt
-        });
-    }
-};
-
-/**
-    Schickt ein Presence-Update an alle verbundenen Kontakte in Echtzeit.
-*/
-const sendPresenceUpdate = async (userId: string, status: PresenceType) => {
-    const user = await User.findOne({
-        where: {
-            id: userId
-        }
-    });
-
-    if(!user) return;
-
-    const contacts = await Contact.findAll({
-        where: {
-            [ Op.or ]: [
-                { id1: userId },
-                { id2: userId }
-            ],
-            confirmed: true
-        }
-    });
-
-    if(contacts.length === 0) return;
-
-    for(const contact of contacts) {
-        // ID des anderen Nutzers finden
-        const contactId = (userId === contact.id1) ? contact.id2 : contact.id1;
-
-        if(!sockets.has(contactId)) continue;
-
-        const socket = sockets.get(contactId);
-
-        socket.emit("presenceUpdate", {
-            id: userId,
-            status,
-            fullName: `${user.firstName} ${user.lastName}`
-        });
-    }
-};
-
-/**
-    Schickt eine Mail-Benachrichtung an den Nutzer.
-*/
-const sendMailNotification = async (recipientId: string, fullName: string) => {
-    const user = await User.findOne({
-        where: {
-            id: recipientId
-        }
-    });
-
-    if(!user) return;
-
-    const createdAt = Date.now();
-    const content = `${fullName} hat dir eine Nachricht geschickt.`;
-
-    const notification = await Notification.create({
-        id: generateId(),
-        type: NotificationType.NEW_MAIL,
-        recipientId,
-        content,
-        createdAt
-    });
-
-    await notification.save();
-
-    if(!sockets.has(recipientId)) return;
-
-    const socket = sockets.get(recipientId);
-
-    socket.emit("notification", {
-        type: NotificationType.NEW_MAIL,
-        content,
-        createdAt
-    });
-};
-
-export {
-    PresenceType
+    socket.emit("notification");
 };
 
 export {
     getNotifications,
+    createNotification,
     deleteNotification,
-    sendContactRequestNotification,
-    sendContactAcceptedNotification,
-    sendPresenceUpdate,
-    sendMailNotification
+    sendRealtimeNotification
 };
