@@ -19,16 +19,21 @@ enum ContactStatus {
 */
 type Contact = Model & {
     /**
+        ID des Kontaktes.
+    */
+    id: string;
+
+    /**
         ID des ersten Partners.
         Entspricht demjenigen, der die Kontakt-Anfrage **geschickt** hat.
     */
-    id1: string;
+    userId1: string;
 
     /**
         ID des zweiten Partners.
         Entspricht demjenigen, der die Kontakt-Anfrage **empfangen** hat.
     */
-    id2: string;
+    userId2: string;
 
     /**
         Status des Kontaktes.
@@ -48,13 +53,20 @@ type Contact = Model & {
 const ContactModel = sequelize.define<Contact>(
     "Contact",
     {
-        id1: {
+        id: {
             type: DataTypes.STRING(20),
+            primaryKey: true,
             allowNull: false
         },
-        id2: {
+        userId1: {
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: false,
+            field: "user_id1"
+        },
+        userId2: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            field: "user_id2"
         },
         status: {
             type: DataTypes.INTEGER,
