@@ -7,10 +7,12 @@ import sequelize from "@loaders/sequelize";
 /**
     Art der Benachrichtung.
 */
+/**
+    Art der Benachrichtigung.
+*/
 enum NotificationType {
-    CONTACT_REQUEST,
-    CONTACT_ACCEPTED,
-    NEW_MAIL
+    CONTACT_REQUEST_INCOMING = 0,
+    CONTATT_REQUEST_ACCEPTED
 };
 
 /**
@@ -18,22 +20,33 @@ enum NotificationType {
 */
 type Notification = Model & {
     /**
-        ID der Banachrichtung.
+        ID der Benachrichtigung.
     */
     id: string;
 
     /**
-        Art der Benachrichtung.
+        ID des Empfängers.
+    */
+    receiverId: string;
+
+    /**
+        Art der Benachrichtigung.
     */
     type: NotificationType;
 
     /**
-        Inhalt der Benachrichtung.
+        Zusätzliche Daten.
     */
-    content: string;
+    data?: Record<string, string | number>;
 
     /**
-        Erstelldatum der Benachrichtung.
+        Optionaler Link in der Benachrichtigung. Kann verwendet werden, um direkt auf
+        das Ziel zu verweisen (z.B. **User** hat dir eine Nachricht geschickt).
+    */
+    link?: string;
+
+    /**
+        Erstelldatum der Benachrichtigung.
     */
     createdAt: number;
 };
@@ -48,32 +61,36 @@ const NotificationModel = sequelize.define<Notification>(
         id: {
             type: DataTypes.STRING(20),
             primaryKey: true,
+            allowNull: false
+        },
+        receiverId: {
+            type: DataTypes.STRING(20),
             allowNull: false,
-            unique: true
+            field: "receiver_id"
         },
         type: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        recipientId: {
-            type: DataTypes.STRING(20),
-            allowNull: false,
-            field: "recipient_id"
+        data: {
+            type: DataTypes.JSONB,
+            allowNull: true
         },
-        content: {
-            type: DataTypes.TEXT,
-            allowNull: false
+        link: {
+            type: DataTypes.STRING,
+            allowNull: true
         },
         createdAt: {
             type: DataTypes.BIGINT,
-            allowNull: false,
+            allowNull: true,
             field: "created_at"
-        }
+        },
     }
 );
 
 export {
-    NotificationType
+    Notification,
+    NotificationType,
 };
 
 export default NotificationModel;
