@@ -40,7 +40,6 @@ const BlockModel = sequelize.define<Block>(
             type: DataTypes.STRING(20),
             primaryKey: true,
             allowNull: false,
-            unique: true
         },
         userId: {
             type: DataTypes.STRING(20),
