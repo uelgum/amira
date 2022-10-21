@@ -5,6 +5,16 @@ import sequelize from "@loaders/sequelize";
 
 // #region Types
 /**
+    Status des Kontaktes.
+*/
+enum ContactStatus {
+    STRANGERS = 0,
+    CONFIRMED,
+    PENDING_OUTGOING,
+    PENDING_INCOMING
+};
+
+/**
     Kontakt-Model in der Datenbank.
 */
 type Contact = Model & {
@@ -21,9 +31,14 @@ type Contact = Model & {
     id2: string;
 
     /**
-        Ob der Kontakt bestätigt ist.
+        Status des Kontaktes.
     */
-    confirmed: boolean;
+    status: ContactStatus;
+
+    /**
+        Erstelldatum des Kontaktes.
+    */
+    createdAt: number;
 };
 // #endregion
 
@@ -41,9 +56,14 @@ const ContactModel = sequelize.define<Contact>(
             type: DataTypes.STRING(20),
             allowNull: false
         },
-        confirmed: {
-            type: DataTypes.BOOLEAN,
+        status: {
+            type: DataTypes.INTEGER,
             allowNull: false
+        },
+        createdAt: {
+            type: DataTypes.BIGINT,
+            allowNull: false,
+            field: "created_at"
         }
     }
 );
