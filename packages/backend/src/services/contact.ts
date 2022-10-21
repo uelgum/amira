@@ -2,28 +2,14 @@ import { Op } from "sequelize";
 
 // Intern
 import AmiraError from "@structs/error";
-import sockets from "@loaders/sockets";
-import Contact from "@models/contact";
-import Block from "@models/block";
+import Contact, { ContactStatus } from "@models/contact";
 import User from "@models/user";
-import {
-    PresenceType,
-    sendContactAcceptedNotification,
-    sendContactRequestNotification
-} from "@services/notification";
+import Block from "@models/block";
+import { generateId } from "@services/id";
 import exists from "@utils/exists";
 
 // Types
-import { Request } from "express";
-
-// #region Types
-enum ContactStatus {
-    CONFIRMED = "confirmed",
-    STRANGERS = "strangers",
-    PENDING_OUTGOING = "pendingOutgoing",
-    PENDING_INCOMING = "pendingIncoming"
-};
-// #endregion
+import type { Request } from "express";
 
 /**
     Ruft alle Kontakte eines Nutzers ab.
@@ -37,13 +23,14 @@ const getContacts = async (req: Request) => {
                 { id1: userId },
                 { id2: userId }
             ],
-            confirmed: true
+            status: ContactStatus.CONFIRMED
         }
     });
 
-    const contacts = rawContacts.map((contact) => {
+    const contacts = rawContacts.map((c) => {
         return {
-            contactId: (contact.id1 === userId) ? contact.id2 : contact.id1
+            id: c.id,
+            contactId: (c.userId1 === userId) ? c.userId2 : c.userId1
         };
     });
 
@@ -53,127 +40,71 @@ const getContacts = async (req: Request) => {
 };
 
 /**
-    Ruft den Kontakt-Status eines Nutzers ab.
-*/
-const getContactStatus = async (req: Request) => {
-    const { userId } = req.params;
-
-    if(!userId || req.user.id === userId) {
-        throw new AmiraError(400, "INVALID_DATA");    
-    }
-
-    const contact = await Contact.findOne({
-        where: {
-            id1: req.user.id,
-            id2: userId,
-            confirmed: true
-        }
-    });
-
-    if(!contact) {
-        return { status: ContactStatus.STRANGERS };
-    }
-
-    if(contact.confirmed) {
-        return { status: ContactStatus.CONFIRMED };
-    }
-
-    if(contact.id1 === req.user.id && !contact.confirmed) {
-        return { status: ContactStatus.PENDING_OUTGOING };
-    }
-
-    return { status: ContactStatus.PENDING_INCOMING };
-};
-
-/**
-    Ruft den Presence-Status eines Nutzers ab.
-*/
-const getPresenceStatus = async (req: Request) => {
-    const { userId } = req.params;
-
-    if(!userId) {
-        throw new AmiraError(400, "INVALID_DATA");    
-    }
-
-    const status = sockets.has(userId) ?
-        sockets.presence.get(userId) :
-        PresenceType.OFFLINE;
-
-    return {
-        userId,
-        status
-    };
-};
-
-/**
-    Sendet eine Kontakt-Anfrage an einen Nutzer.
+    Schickt eine Kontakt-Anfrage an einen Nutzer.
 */
 const sendContactRequest = async (req: Request) => {
     const userId = req.user.id;
-    const { recipientId } = req.body;
+    const { contactId } = req.body;
 
-    if(!recipientId || userId === recipientId) {
+    if(!contactId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
-    const recipientExists = await exists(User, { id: recipientId });
+    const userExists = await exists(User, { id: contactId });
 
-    if(!recipientExists) {
-        throw new AmiraError(404, "RECIPIENT_NOT_FOUND");
+    if(!userExists) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
-    // Blockliste überprüfen
-    const isBlocked = await exists(Block, {
+    const contactExists = await exists(Contact, {
         [ Op.or ]: [
-            { userId: recipientId, blockedUserId: userId },
-            { userId, blockedUserId: recipientId }
+            { userId1: userId, userId2: contactId },
+            { userId1: contactId, userId2: userId }
         ]
     });
 
-    if(isBlocked) {
+    if(contactExists) {
+        throw new AmiraError(400, "CONTACT_ALREADY_EXISTS");
+    }
+
+    const blockExists = await exists(Block, {
+        [ Op.or ]: [
+            { userId: contactId, blockedUserId: userId },
+            { userId: userId, blockedUserId: contactId }
+        ]
+    });
+
+    if(blockExists) {
         throw new AmiraError(403, "USER_BLOCKED");
     }
 
     const contact = await Contact.create({
-        id1: userId,
-        id2: recipientId,
-        confirmed: false
+        id: generateId(),
+        userId1: userId,
+        userId2: contactId,
+        status: ContactStatus.PENDING,
+        createdAt: Date.now()
     });
 
     await contact.save();
-
-    const sender = await User.findOne({
-        where: {
-            id: userId
-        }
-    });
-
-    if(!sender) {
-        throw new AmiraError(404, "SENDER_NOT_FOUND");
-    }
-
-    sendContactRequestNotification({
-        recipientId,
-        fullName: `${sender.firstName} ${sender.lastName}`
-    });
 };
 
 /**
-    Zieht eine Kontakt-Anfrage an einen Nutzer zurück.
+    Zieht eine versendete Kontakt-Anfrage zurück.
 */
 const withdrawContactRequest = async (req: Request) => {
     const userId = req.user.id;
-    const { recipientId } = req.body;
+    const { contactId } = req.body;
 
-    if(!recipientId) {
+    if(!contactId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
     const contact = await Contact.findOne({
         where: {
-            id1: userId,
-            id2: recipientId,
-            confirmed: false
+            userId1: userId,
+            userId2: contactId,
+            status: ContactStatus.PENDING
         }
     });
 
@@ -185,21 +116,21 @@ const withdrawContactRequest = async (req: Request) => {
 };
 
 /**
-    Akzeptiert eine Kontakt-Anfrage eines Nutzers.
+    Bestätigt eine Kontakt-Anfrage eines anderen Nutzers.
 */
 const acceptContactRequest = async (req: Request) => {
     const userId = req.user.id;
-    const { senderId } = req.body;
+    const { contactId } = req.body;
 
-    if(!senderId) {
+    if(!contactId) {
         throw new AmiraError(400, "INVALID_DATA");
     }
 
     const contact = await Contact.findOne({
         where: {
-            id1: senderId,
-            id2: userId,
-            confirmed: false
+            userId1: contactId,
+            userId2: userId,
+            status: ContactStatus.PENDING
         }
     });
 
@@ -207,60 +138,14 @@ const acceptContactRequest = async (req: Request) => {
         throw new AmiraError(404, "CONTACT_NOT_FOUND");
     }
 
-    const senderExists = await exists(User, { id: senderId });
+    contact.status = ContactStatus.CONFIRMED;
+    contact.createdAt = Date.now();
 
-    if(!senderExists) {
-        await contact.destroy();
-        throw new AmiraError(404, "SENDER_NOT_FOUND");
-    }
-
-    contact.confirmed = true;
     await contact.save();
-
-    const recipient = await User.findOne({
-        where: {
-            id: userId
-        }
-    });
-
-    if(!recipient) {
-        throw new AmiraError(404, "RECIPIENT_NOT_FOUND");
-    }
-
-    sendContactAcceptedNotification({
-        recipientId: recipient.id,
-        fullName: `${recipient.firstName} ${recipient.lastName}`
-    });
 };
 
 /**
-    Lehnt eine Kontakt-Anfrage eines Nutzers ab.
-*/
-const rejectContactRequest = async (req: Request) => {
-    const userId = req.user.id;
-    const { senderId } = req.body;
-
-    if(!senderId) {
-        throw new AmiraError(400, "INVALID_DATA");
-    }
-
-    const contact = await Contact.findOne({
-        where: {
-            id1: senderId,
-            id2: userId,
-            confirmed: false
-        }
-    });
-
-    if(!contact) {
-        throw new AmiraError(404, "CONTACT_NOT_FOUND");
-    }
-
-    await contact.destroy();
-};
-
-/**
-    Entfernt einen bestehenden Kontakt mit einem Nutzer.
+    Entfernt einen bestehenden Kontakt.
 */
 const removeContact = async (req: Request) => {
     const userId = req.user.id;
@@ -273,10 +158,10 @@ const removeContact = async (req: Request) => {
     const contact = await Contact.findOne({
         where: {
             [ Op.or ]: [
-                { id1: userId, id2: contactId },
-                { id1: contactId, id2: userId }
+                { userId1: userId, userId2: contactId },
+                { userId1: contactId, userId2: userId }
             ],
-            confirmed: true
+            status: ContactStatus.CONFIRMED
         }
     });
 
@@ -289,11 +174,8 @@ const removeContact = async (req: Request) => {
 
 export {
     getContacts,
-    getContactStatus,
-    getPresenceStatus,
     sendContactRequest,
     withdrawContactRequest,
     acceptContactRequest,
-    rejectContactRequest,
     removeContact
 };
