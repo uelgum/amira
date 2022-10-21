@@ -68,4 +68,8 @@ const ContactModel = sequelize.define<Contact>(
     }
 );
 
+export {
+    ContactStatus
+};
+
 export default ContactModel;
