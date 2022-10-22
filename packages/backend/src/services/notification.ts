@@ -50,7 +50,7 @@ const getNotifications = async (req: Request) => {
 
     const rawNotifications = await Notification.findAll({
         where: {
-            userId
+            receiverId: userId
         }
     });
 
