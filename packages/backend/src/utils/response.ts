@@ -1,4 +1,5 @@
 import AmiraError from "@structs/error";
+import logger from "@loaders/logger";
 
 // Types
 import type { Response } from "express";
@@ -20,6 +21,10 @@ const sendData = (res: Response, data?: Record<string, any>) => {
 const sendError = (res: Response, error: Error) => {
     const status = (error instanceof AmiraError) ? error.status : 500;
     const code = (error instanceof AmiraError) ? error.code : "INTERNAL_ERROR";
+
+    if(status === 500) {
+        logger.error(error);
+    }
 
     res.status(status);
     res.json({
