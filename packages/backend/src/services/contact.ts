@@ -115,7 +115,7 @@ const sendContactRequest = async (req: Request) => {
 };
 
 /**
-    Zieht eine versendete Kontakt-Anfrage zurück.
+    Zieht eine versandte Kontakt-Anfrage zurück.
 */
 const withdrawContactRequest = async (req: Request) => {
     const userId = req.user.id;
