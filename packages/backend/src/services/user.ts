@@ -22,6 +22,35 @@ import type { Request } from "express";
 const MAX_VERIFICATION_AGE = 1000 * 60 * 60 * 24;
 
 /**
+    Ruft Informationen über einen Nutzer ab.
+*/
+const getUserInfo = async (req: Request) => {
+    const { userId } = req.params;
+
+    if(!userId) {
+        throw new AmiraError(400, "INVALID_DATA");
+    }
+
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    });
+
+    if(!user) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    return {
+        id: user.id,
+        fullName: `${user.firstName} ${user.lastName}`,
+        isAdmin: user.admin,
+        lastLoginAt: user.lastLoginAt,
+        createdAt: user.createdAt
+    };
+};
+
+/**
     Verifiziert die E-Mail eines Nutzers.
 */
 const verifyEmail = async (req: Request) => {
@@ -239,6 +268,7 @@ const getPublicKey = async (req: Request) => {
 };
 
 export {
+    getUserInfo,
     verifyEmail,
     resetPassword,
     blockUser,
