@@ -11,8 +11,8 @@ import sequelize from "@loaders/sequelize";
     Art der Benachrichtigung.
 */
 enum NotificationType {
-    CONTACT_REQUEST_INCOMING = 0,
-    CONTATT_REQUEST_ACCEPTED
+    CONTACT_REQUEST_INCOMING = "contactRequestIncoming",
+    CONTACT_REQUEST_ACCEPTED = "contactRequestAccepted"
 };
 
 /**
@@ -69,7 +69,7 @@ const NotificationModel = sequelize.define<Notification>(
             field: "receiver_id"
         },
         type: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         data: {
