@@ -11,7 +11,9 @@ import {
     unblockUser,
     resetPassword, 
     verifyEmail,
+    getUserInfo,
 } from "@services/user";
+import { getContactStatus } from "@services/contact";
 
 /**
     User-Router.
@@ -71,6 +73,26 @@ router.post("/pubkey/:userId", async (req: Request, res: Response) => {
 });
 
 router.use(isLoggedIn);
+
+/**
+    GET /api/user/:userId
+    Ruft Informationen über einen Nutzer ab.
+*/
+router.get("/:userId", async (req: Request, res: Response) => {
+    try {
+        const userInfo = await getUserInfo(req);
+        const contactStatus = await getContactStatus(req, req.params.userId);
+
+        const data = {
+            ...userInfo,
+            ...contactStatus
+        };
+
+        sendData(res, data);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
 
 /**
     GET /api/user/pubkey/:userId
