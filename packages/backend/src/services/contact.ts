@@ -5,7 +5,9 @@ import AmiraError from "@structs/error";
 import Contact, { ContactStatus } from "@models/contact";
 import User from "@models/user";
 import Block from "@models/block";
+import { NotificationType } from "@models/notification";
 import { generateId } from "@services/id";
+import { createNotification } from "@services/notification";
 import exists from "@utils/exists";
 
 // Types
@@ -112,6 +114,26 @@ const sendContactRequest = async (req: Request) => {
     });
 
     await contact.save();
+
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    });
+
+    if(!user) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    createNotification({
+        receiverId: contact.userId2,
+        type: NotificationType.CONTACT_REQUEST_INCOMING,
+        data: {
+            contactId: userId,
+            fullName: `${user.firstName} ${user.lastName}`
+        },
+        link: `/profile/${userId}`
+    });
 };
 
 /**
@@ -167,6 +189,26 @@ const acceptContactRequest = async (req: Request) => {
     contact.createdAt = Date.now();
 
     await contact.save();
+
+    const user = await User.findOne({
+        where: {
+            id: userId
+        }
+    });
+
+    if(!user) {
+        throw new AmiraError(404, "USER_NOT_FOUND");
+    }
+
+    createNotification({
+        receiverId: contact.userId1,
+        type: NotificationType.CONTACT_REQUEST_ACCEPTED,
+        data: {
+            contactId: userId,
+            fullName: `${user.firstName} ${user.lastName}`
+        },
+        link: `/profile/${user.id}`
+    });
 };
 
 /**
