@@ -1,28 +1,31 @@
-import { PresenceType, sendPresenceUpdate } from "@services/notification";
+import { sendPresenceUpdate, PresenceStatusType } from "@services/presence";
 
 // Types
 import type { Socket } from "socket.io";
 import type SocketManager from "@structs/socketManager";
 
 // #region Types
+/**
+    Erhaltene Daten.
+*/
 type Data = {
-    status: PresenceType;
+    status: PresenceStatusType;
 };
 // #endregion
 
-const allowedStatusTypes = Object.values(PresenceType);
-
 /**
-    Handler für das `connect`-Event.
-    Wird ausgeführt, sobald ein Socket eine Verbindung herstellt.
+    Handler für das `presenceUpdate`-Event.
+    Wird ausgeführt, sobald ein Nutzer seinen Presence-Status ändert.
 */
 const onPresenceUpdate = (socketManager: SocketManager, socket: Socket, data: Data) => {
     const socketId = socket.user.id;
-    const status = data.status;
+    const { status } = data;
 
-    if(!allowedStatusTypes.includes(status)) {
-        return;
-    }
+    if(!status) return;
+
+    const isValidStatus = Object.values(PresenceStatusType).includes(status);
+
+    if(!isValidStatus) return;
 
     socketManager.presence.set(socketId, status);
     sendPresenceUpdate(socketId, status);
