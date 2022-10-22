@@ -42,8 +42,9 @@ const getContacts = async (req: Request) => {
 /**
     Ruft den Kontakt-Status zwischen zwei Nutzern ab.
 */
-const getContactStatus = async (req: Request, contactId: string) => {
+const getContactStatus = async (req: Request, cId?: string) => {
     const userId = req.user.id;
+    const contactId = cId || req.params.contactId;
 
     const contact = await Contact.findOne({
         where: {
@@ -55,10 +56,12 @@ const getContactStatus = async (req: Request, contactId: string) => {
     });
 
     if(!contact) {
-        return ContactStatus.STRANGERS;
+        return { status: ContactStatus.STRANGERS };
     }
 
-    return contact.status;
+    return {
+        status: contact.status
+    };
 };
 
 /**
