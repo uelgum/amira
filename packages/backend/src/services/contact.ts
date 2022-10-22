@@ -40,6 +40,28 @@ const getContacts = async (req: Request) => {
 };
 
 /**
+    Ruft den Kontakt-Status zwischen zwei Nutzern ab.
+*/
+const getContactStatus = async (req: Request, contactId: string) => {
+    const userId = req.user.id;
+
+    const contact = await Contact.findOne({
+        where: {
+            [ Op.or ]: [
+                { userId1: userId, userId2: contactId },
+                { userId1: contactId, userId2: userId }
+            ]
+        }
+    });
+
+    if(!contact) {
+        return ContactStatus.STRANGERS;
+    }
+
+    return contact.status;
+};
+
+/**
     Schickt eine Kontakt-Anfrage an einen Nutzer.
 */
 const sendContactRequest = async (req: Request) => {
@@ -174,6 +196,7 @@ const removeContact = async (req: Request) => {
 
 export {
     getContacts,
+    getContactStatus,
     sendContactRequest,
     withdrawContactRequest,
     acceptContactRequest,
