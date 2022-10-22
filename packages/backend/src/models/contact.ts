@@ -8,9 +8,9 @@ import sequelize from "@loaders/sequelize";
     Status des Kontaktes.
 */
 enum ContactStatus {
-    STRANGERS,
-    PENDING,
-    CONFIRMED
+    STRANGERS = "strangers",
+    PENDING = "pending",
+    CONFIRMED = "confirmed"
 };
 
 /**
@@ -68,7 +68,7 @@ const ContactModel = sequelize.define<Contact>(
             field: "user_id2"
         },
         status: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         createdAt: {
