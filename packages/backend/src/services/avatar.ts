@@ -2,7 +2,7 @@ import fs from "fs/promises";
 import { createWriteStream } from "fs";
 import path from "path";
 import sharp from "sharp";
-import pureimage from "pureimage";
+import * as pureimage from "pureimage";
 
 // Intern
 import AmiraError from "@structs/error";
