@@ -48,6 +48,10 @@ const getContactStatus = async (req: Request, cId?: string) => {
     const userId = req.user.id;
     const contactId = cId || req.params.contactId;
 
+    if(userId === contactId) {
+        return null;
+    }
+
     const contact = await Contact.findOne({
         where: {
             [ Op.or ]: [
