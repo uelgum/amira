@@ -60,23 +60,23 @@ const getContactStatus = async (req: Request, cId?: string) => {
     });
 
     if(!contact) {
-        return { status: ContactStatus.STRANGERS };
+        return { contactStatus: ContactStatus.STRANGERS };
     }
 
     const isPending = (contact.status === ContactStatus.PENDING);
 
     // Nutzer hat eine Anfrage geschickt
     if(isPending && contact.userId1 === userId) {
-        return { status: ContactStatus.PENDING_OUTGOING };
+        return { contactStatus: ContactStatus.PENDING_OUTGOING };
     }
 
     // Nutzer erhält eine Anfrage
     if(isPending && contact.userId2 === userId) {
-        return { status: ContactStatus.PENDING_INCOMING };
+        return { contactStatus: ContactStatus.PENDING_INCOMING };
     }
 
     return {
-        status: ContactStatus.CONFIRMED
+        contactStatus: ContactStatus.CONFIRMED
     };
 };
 
