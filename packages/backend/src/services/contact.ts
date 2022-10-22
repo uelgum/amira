@@ -48,9 +48,7 @@ const getContactStatus = async (req: Request, cId?: string) => {
     const userId = req.user.id;
     const contactId = cId || req.params.contactId;
 
-    if(userId === contactId) {
-        return null;
-    }
+    if(userId === contactId) return;
 
     const contact = await Contact.findOne({
         where: {
@@ -65,8 +63,20 @@ const getContactStatus = async (req: Request, cId?: string) => {
         return { status: ContactStatus.STRANGERS };
     }
 
+    const isPending = (contact.status === ContactStatus.PENDING);
+
+    // Nutzer hat eine Anfrage geschickt
+    if(isPending && contact.userId1 === userId) {
+        return { status: ContactStatus.PENDING_OUTGOING };
+    }
+
+    // Nutzer erhält eine Anfrage
+    if(isPending && contact.userId2 === userId) {
+        return { status: ContactStatus.PENDING_INCOMING };
+    }
+
     return {
-        status: contact.status
+        status: ContactStatus.CONFIRMED
     };
 };
 
