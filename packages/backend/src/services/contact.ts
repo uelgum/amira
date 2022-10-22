@@ -174,7 +174,7 @@ const acceptContactRequest = async (req: Request) => {
 */
 const removeContact = async (req: Request) => {
     const userId = req.user.id;
-    const { contactId } = req.body;
+    const { contactId } = req.params;
 
     if(!contactId) {
         throw new AmiraError(400, "INVALID_DATA");
