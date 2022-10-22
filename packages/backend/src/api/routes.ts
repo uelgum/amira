@@ -20,7 +20,7 @@ const router = Router();
 router.use("/auth", authRoutes);
 router.use("/user", userRoutes);
 router.use("/avatar", avatarRoutes);
-router.use("/contact", contactRoutes);
+router.use("/contacts", contactRoutes);
 router.use("/notifications", noticationRoutes);
 router.use("/app", appRouter);
 
