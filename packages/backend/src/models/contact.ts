@@ -10,6 +10,8 @@ import sequelize from "@loaders/sequelize";
 enum ContactStatus {
     STRANGERS = "strangers",
     PENDING = "pending",
+    PENDING_INCOMING = "pendingIncoming",
+    PENDING_OUTGOING = "pendingOutgoing",
     CONFIRMED = "confirmed"
 };
 
