@@ -4,13 +4,12 @@ import { Request, Response, Router } from "express";
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
 import { sendData, sendError } from "@utils/response";
 import {
+    getContacts,
     getContactStatus,
-    getPresenceStatus,
-    acceptContactRequest,
-    rejectContactRequest,
-    removeContact,
     sendContactRequest,
     withdrawContactRequest,
+    acceptContactRequest,
+    removeContact
 } from "@services/contact";
 
 /**
@@ -21,10 +20,23 @@ const router = Router();
 router.use(isLoggedIn);
 
 /**
-    GET /api/contact/status/:userId
-    Ruft den Kontakt-Status eines Nutzers ab.
+    GET /api/contacts
+    Ruft alle Kontakte eines Nutzers ab.
 */
-router.get("/status/:userId", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
+    try {
+        const data = await getContacts(req);
+        sendData(res, data);
+    } catch(error: any) {
+        sendError(res, error);
+    }
+});
+
+/**
+    GET /api/contacts/:contactId
+    Ruft den Kontakt-Status zwischen zwei Nutzern ab.
+*/
+router.get("/:contactId", async (req: Request, res: Response) => {
     try {
         const data = await getContactStatus(req);
         sendData(res, data);
@@ -34,23 +46,10 @@ router.get("/status/:userId", async (req: Request, res: Response) => {
 });
 
 /**
-    GET /api/contact/presence/:userId
-    Ruft den Presence-Status eines Nutzers ab.
+    POST /api/contacts/send
+    Schickt eine Kontakt-Anfrage an einen Nutzer.
 */
-router.get("/presence/:userId", async (req: Request, res: Response) => {
-    try {
-        const data = await getPresenceStatus(req);
-        sendData(res, data);
-    } catch(error: any) {
-        sendError(res, error);
-    }
-});
-
-/**
-    POST /api/contact/request
-    Sendet eine Kontakt-Anfrage an einen Nutzer.
-*/
-router.post("/request", async (req: Request, res: Response) => {
+router.post("/send", async (req: Request, res: Response) => {
     try {
         await sendContactRequest(req);
         sendData(res);
@@ -60,8 +59,8 @@ router.post("/request", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/contact/withdraw
-    Zieht eine Kontakt-Anfrage an einen Nutzer zurück.
+    POST /api/contacts/withdraw
+    Schickt eine Kontakt-Anfrage an einen Nutzer.
 */
 router.post("/withdraw", async (req: Request, res: Response) => {
     try {
@@ -73,8 +72,8 @@ router.post("/withdraw", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/contact/accept
-    Akzeptiert eine Kontakt-Anfrage eines Nutzers.
+    POST /api/contacts/accept
+    Bestätigt eine Kontakt-Anfrage eines anderen Nutzers.
 */
 router.post("/accept", async (req: Request, res: Response) => {
     try {
@@ -86,23 +85,10 @@ router.post("/accept", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/contact/accept
-    Lehnt eine Kontakt-Anfrage eines Nutzers ab.
+    POST /api/contacts/remove/:contactId
+    Entfernt einen bestehenden Kontakt.
 */
-router.post("/reject", async (req: Request, res: Response) => {
-    try {
-        await rejectContactRequest(req);
-        sendData(res);
-    } catch(error: any) {
-        sendError(res, error);
-    }
-});
-
-/**
-    POST /api/contact/accept
-    Entfernt einen bestehenden Kontakt mit einem Nutzer.
-*/
-router.post("/remove", async (req: Request, res: Response) => {
+router.post("/remove/:contactId", async (req: Request, res: Response) => {
     try {
         await removeContact(req);
         sendData(res);
