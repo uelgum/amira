@@ -7,6 +7,7 @@ import User from "@models/user";
 import Block from "@models/block";
 import { NotificationType } from "@models/notification";
 import { generateId } from "@services/id";
+import { getPresenceStatus } from "@services/presence";
 import { createNotification } from "@services/notification";
 import exists from "@utils/exists";
 
@@ -29,12 +30,28 @@ const getContacts = async (req: Request) => {
         }
     });
 
-    const contacts = rawContacts.map((c) => {
-        return {
-            id: c.id,
-            contactId: (c.userId1 === userId) ? c.userId2 : c.userId1
-        };
-    });
+    const contacts = [];
+
+    for(const contact of rawContacts) {
+        const contactId = (contact.userId1 === userId) ?
+            contact.userId2 :
+            contact.userId1;
+
+        const user = await User.findOne({
+            where: {
+                id: contactId
+            }
+        });
+
+        if(!user) continue;
+
+        contacts.push({
+            id: contact.id,
+            contactId,
+            fullName: `${user.firstName} ${user.lastName}`,
+            presenceStatus: getPresenceStatus(contactId)
+        });
+    }
 
     return {
         contacts
