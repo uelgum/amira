@@ -4,7 +4,8 @@ import { writable } from "svelte/store";
 type Notification = {
     id: string;
     type: string;
-    content: string;
+    data: Record<string, string | number>;
+    link?: string;
     createdAt: number;
 };
 // #endregion
