@@ -22,8 +22,8 @@ const getContacts = async (req: Request) => {
     const rawContacts = await Contact.findAll({
         where: {
             [ Op.or ]: [
-                { id1: userId },
-                { id2: userId }
+                { userId1: userId },
+                { userId2: userId }
             ],
             status: ContactStatus.CONFIRMED
         }
