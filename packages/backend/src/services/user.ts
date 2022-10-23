@@ -3,6 +3,7 @@ import User from "@models/user";
 import Email from "@models/email";
 import Block from "@models/block";
 import { generateId } from "@services/id";
+import { getPresenceStatus } from "@services/presence";
 import { validatePasswordResetData } from "@services/validator";
 import {
     encrypt,
@@ -46,7 +47,8 @@ const getUserInfo = async (req: Request) => {
         fullName: `${user.firstName} ${user.lastName}`,
         isAdmin: user.admin,
         lastLoginAt: user.lastLoginAt,
-        createdAt: user.createdAt
+        createdAt: user.createdAt,
+        presenceStatus: getPresenceStatus(user.id)
     };
 };
 
