@@ -55,11 +55,7 @@ const updateNotes = async (req: Request) => {
     const userId = req.user.id;
     const passwordKey = req.user.key;
 
-    const { content } = req.body;
-
-    if(!content) {
-        throw new AmiraError(400, "INVALID_DATA");
-    }
+    const content = req.body.content || "";
 
     if(content.length > 1000) {
         throw new AmiraError(400, "NOTES_LENGTH_EXCEEDED");
