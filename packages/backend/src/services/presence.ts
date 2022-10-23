@@ -17,6 +17,13 @@ enum PresenceStatusType {
 // #endregion
 
 /**
+    Ruft den Presence-Status eines Nutzers ab.
+*/
+const getPresenceStatus = (userId: string) => {
+    return sockets.presence.get(userId) || PresenceStatusType.OFFLINE;
+};
+
+/**
     Schickt ein Presence-Update an alle Kontakte eines Nutzers.
 */
 const sendPresenceUpdate = async (userId: string, presenceStatus: PresenceStatusType) => {
@@ -49,5 +56,6 @@ export {
 };
 
 export {
+    getPresenceStatus,
     sendPresenceUpdate
 };
