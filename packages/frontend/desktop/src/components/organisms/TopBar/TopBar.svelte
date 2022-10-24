@@ -15,6 +15,7 @@
     import menuIcon from "@amira/shared/svg/menu.svg";
     import bellIcon from "@amira/shared/svg/bell.svg";
     import downloadIcon from "@amira/shared/svg/downloadGreen.svg";
+    import api from "@internal/api";
 
     let menu = "";
 
@@ -71,6 +72,12 @@
         if(target.id.startsWith("user-menu")) return;
 
         menu = (menu === newMenu) ? "" : newMenu;
+
+        if(menu === "notification") {
+            for(const notification of $notifications) {
+                api.post(`/noitifications/delete/${notification.id}`);
+            }
+        }
     };
 
     /**
