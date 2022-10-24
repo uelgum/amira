@@ -8,6 +8,7 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
+    import { navigate } from "svelte-routing";
 
     // Intern
     import api from "@internal/api";
@@ -21,28 +22,28 @@
     import SmallText from "@atoms/SmallText";
 
     /**
-        Entfernt eine Benachrichtigung.
+        Wird ausgeführt, sobald der Nutzer auf die Benachrichtigung klickt.
     */
-    const deleteNotification = async (id: string) => {
-        $notifications = $notifications.filter((n) => n.id !== id);
-        await api.post(`/notification/delete/${id}`);
+    const handleClick = (link?: string) => {
+        if(link) {
+            navigate(link);
+        }
     };
 
     /**
         On-Mount.
     */
     onMount(async () => {
-        const res = await api.get<Response>("/notification/get");
+        if($notifications.length > 0) return;
+        
+        const res = await api.get<Response>("/notifications");
 
         if(res.status === "err") {
             // TODO Etwas machen
             return;
         }
 
-        notifications.update((n) => [
-            ...n,
-            ...res.data.notifications
-        ]);
+        notifications.set(res.data.notifications);
     });
 </script>
 
@@ -57,9 +58,10 @@
     <NotificationContainer>
         {#if $notifications.length > 0}
             {#each $notifications as n}
-                <Notification createdAt={n.createdAt} on:click={() => deleteNotification(n.id)}>
-                    {n.content}
-                </Notification>
+                <Notification
+                    notification={n}
+                    on:click={() => handleClick(n.link)}
+                />
             {/each}
         {:else}
             <div id="notification-menu__up-to-date">
