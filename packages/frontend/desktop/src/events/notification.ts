@@ -12,7 +12,7 @@ type Response = {
 // #endregion
 
 /**
-    Wird ausgeführt, wenn die Socket-Verbindung scheitert.
+    Wird ausgeführt, sobald eine neue Benachrichtigung ankommt.
 */
 socket.on("notification", async () => {
     const res = await api.get<Response>("/notifications");
