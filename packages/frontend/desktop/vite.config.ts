@@ -15,6 +15,7 @@ export default defineConfig({
     },
     resolve: {
         alias: [
+            { find: "@apps", replacement: path.join(__dirname, "src/apps") },
             { find: "@atoms", replacement: path.join(__dirname, "src/components/atoms") },
             { find: "@molecules", replacement: path.join(__dirname, "src/components/molecules") },
             { find: "@organisms", replacement: path.join(__dirname, "src/components/organisms") },

@@ -3,6 +3,7 @@
     "compilerOptions": {
         "baseUrl": "./src",
         "paths": {
+            "@apps/*": [ "./apps/*" ],
             "@atoms/*": [ "./components/atoms/*" ],
             "@molecules/*": [ "./components/molecules/*" ],
             "@organisms/*": [ "./components/organisms/*" ],
