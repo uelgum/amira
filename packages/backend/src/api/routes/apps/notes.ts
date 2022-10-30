@@ -10,10 +10,10 @@ import { getNotes, updateNotes } from "@services/apps/notes";
 const router = Router();
 
 /**
-    GET /api/app/notes/get
+    GET /api/app/notes
     Ruft die Notizen eines Nutzers ab.
 */
-router.get("/get", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
     try {
         const data = await getNotes(req);
         sendData(res, data);
@@ -23,10 +23,10 @@ router.get("/get", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/app/notes/update
+    POST /api/app/notes
     Aktualisiert die Notizen eines Nutzers.
 */
-router.post("/update", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
     try {
         await updateNotes(req);
         sendData(res);
