@@ -25,14 +25,18 @@ const getNotes = async (req: Request) => {
         throw new AmiraError(404, "USER_NOT_FOUND");
     }
 
-    const notes = await Notes.findOne({
+    let notes = await Notes.findOne({
         where: {
             userId
         }
     });
 
     if(!notes) {
-        throw new AmiraError(404, "NOTES_NOT_FOUND");
+        notes = await Notes.create({
+            id: generateId(),
+            userId,
+            content: ""
+        });
     }
 
     const userKey = decrypt(user.keys.userKey, passwordKey);
@@ -66,11 +70,7 @@ const updateNotes = async (req: Request) => {
     });
 
     if(!notesExists) {
-        await Notes.create({
-            id: generateId(),
-            userId,
-            content: ""
-        });
+        throw new AmiraError(404, "NOTES_NOT_FOUND");
     }
 
     const user = await User.findOne({
