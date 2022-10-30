@@ -1,5 +1,5 @@
 import socket from "@internal/socket";
-import contacts from "@stores/contacts";
+import { contacts } from "@stores/contacts";
 
 // Types
 import type { PresenceStatus } from "@stores/presenceStatus";
@@ -15,12 +15,11 @@ type Data = {
     Wird ausgeführt, sobald ein Presence-Update eines Kontaktes ankommt.
 */
 socket.on("presenceUpdate", (data: Data) => {
-    const { userId, status } = data;
+    const { userId, status } = data;;
 
-    contacts.update((c) => {
-        return {
-            ...c,
-            [ userId ]: status
-        };
+    contacts.update(($contacts) => {
+        const contactIndex = $contacts.findIndex((contact) => contact.contactId === userId);
+        $contacts[contactIndex].presenceStatus = status;
+        return $contacts;
     });
 }); 
