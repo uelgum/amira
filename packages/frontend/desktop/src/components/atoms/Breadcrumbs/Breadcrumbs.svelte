@@ -22,6 +22,7 @@
     .breadcrumbs {
         display: flex;
         color: $white-lightest;
+        font-size: 0.85em;
         gap: 0.5em;
         user-select: none;
     }
