@@ -39,7 +39,7 @@ router.post("/add", async (req: Request, res: Response) => {
     POST /api/app/dailies/delete/:dailyId
     Löscht eine Daily eines Nutzers.
 */
-router.post("/add", async (req: Request, res: Response) => {
+router.post("/delete", async (req: Request, res: Response) => {
     try {
         await deleteDaily(req);
         sendData(res);
