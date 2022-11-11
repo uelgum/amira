@@ -24,7 +24,7 @@ router.get("/get", async (req: Request, res: Response) => {
 
 /**
     POST /api/app/dailies/add
-    Ruft alle Dailies eines Nutzers ab.
+    Fügt eine neue Daily hinzu.
 */
 router.post("/add", async (req: Request, res: Response) => {
     try {
