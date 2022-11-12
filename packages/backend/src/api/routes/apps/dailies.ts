@@ -10,10 +10,10 @@ import { addDaily, deleteDaily, getDailies } from "@services/apps/dailies";
 const router = Router();
 
 /**
-    GET /api/app/dailies/get
+    GET /api/app/dailies
     Ruft alle Dailies eines Nutzers ab.
 */
-router.get("/get", async (req: Request, res: Response) => {
+router.get("/", async (req: Request, res: Response) => {
     try {
         const data = await getDailies(req);
         sendData(res, data);
@@ -23,10 +23,10 @@ router.get("/get", async (req: Request, res: Response) => {
 });
 
 /**
-    POST /api/app/dailies/add
+    POST /api/app/dailies
     Fügt eine neue Daily hinzu.
 */
-router.post("/add", async (req: Request, res: Response) => {
+router.post("/", async (req: Request, res: Response) => {
     try {
         const data = await addDaily(req);
         sendData(res, data);
