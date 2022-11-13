@@ -1,8 +1,11 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 
 // Intern
 import { sendData, sendError } from "@utils/response";
 import { addDaily, deleteDaily, getDailies } from "@services/apps/dailies";
+
+// Types
+import type { Request, Response } from "express";
 
 /**
     Router für die Dailies-App.
