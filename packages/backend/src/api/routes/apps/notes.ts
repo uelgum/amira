@@ -1,8 +1,11 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 
 // Intern
 import { sendData, sendError } from "@utils/response";
 import { getNotes, updateNotes } from "@services/apps/notes";
+
+// Types
+import type { Request, Response } from "express";
 
 /**
     Router für die Notes-App.
