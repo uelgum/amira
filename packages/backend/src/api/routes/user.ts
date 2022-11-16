@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 
 // Intern
 import isLoggedIn from "@api/middleware/http/isLoggedIn";
@@ -14,6 +14,9 @@ import {
     getUserInfo,
 } from "@services/user";
 import { getContactStatus } from "@services/contact";
+
+// Types
+import type { Request, Response } from "express";
 
 /**
     User-Router.

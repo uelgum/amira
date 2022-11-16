@@ -1,9 +1,12 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 
 // Intern
 import isLoggedOut from "@api/middleware/http/isLoggedOut";
 import { sendData, sendError } from "@utils/response";
 import { login, register } from "@services/auth";
+
+// Types
+import type { Request, Response } from "express";
 
 /**
     Auth-Router.
