@@ -1,4 +1,4 @@
-import { Response, Router } from "express";
+import { Router } from "express";
 
 // Intern
 import AmiraError from "@structs/error";
@@ -11,6 +11,9 @@ import avatarRoutes from "@api/routes/avatar";
 import contactRoutes from "@api/routes/contact";
 import noticationRoutes from "@api/routes/notification";
 import appRouter from "@api/routes/apps";
+
+// Types
+import type { Response } from "express";
 
 /**
     API-Router.
