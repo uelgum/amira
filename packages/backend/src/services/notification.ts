@@ -1,8 +1,8 @@
 import AmiraError from "@structs/error";
+import sockets from "@loaders/sockets";
 import Notification, { NotificationType } from "@models/notification";
 import User from "@models/user";
 import { generateId } from "@services/id";
-import sockets from "@loaders/sockets";
 import exists from "@utils/exists";
 
 // Types
